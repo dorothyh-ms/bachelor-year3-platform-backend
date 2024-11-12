@@ -1,13 +1,13 @@
-package be.kdg.prog6.boundedcontextB;
+package be.kdg.integration5.boundedcontextA;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BoundedContextBApplication {
+public class BoundedContextAApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BoundedContextBApplication.class, args);
+        SpringApplication.run(BoundedContextAApplication.class, args);
     }
 
 }

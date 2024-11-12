@@ -1,4 +1,4 @@
-package be.kdg.prog6.boundedcontextA.adapters.in;
+package be.kdg.integration5.boundedcontextA.adapters.in;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
