@@ -10,7 +10,7 @@
       ports:
         - '3306:3306'
       networks:
-        - backend
+        - banditGames
       volumes:
         - ./mysql/data:/var/lib/mysql
 
@@ -23,7 +23,7 @@
         - "5672:5672" #AMQP
         - "15672:15672" #MGMT
       networks:
-        - backend
+        - banditGames
       volumes:
         - ./rabbitmq/data/:/var/lib/rabbitmq/
         - ./rabbitmq/log/:/var/log/rabbitmq/
@@ -67,7 +67,7 @@
     kc:
       name: kc-network
       driver: bridge
-    backend:
+    banditGames:
       name: back-network
       driver: bridge
 
