@@ -1,1 +1,1 @@
-# TemplateProject
+# BanditGames
