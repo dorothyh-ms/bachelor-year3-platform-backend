@@ -7,7 +7,7 @@ import org.springframework.context.annotation.FilterType;
 
 @SpringBootApplication
 @ComponentScan(excludeFilters = {
-        @ComponentScan.Filter(type = FilterType.REGEX, pattern="be.kdg.prog6.*.*Application")
+        @ComponentScan.Filter(type = FilterType.REGEX, pattern="be.kdg.integration5.*.*Application")
 })
 public class CompleteApplication {
 
