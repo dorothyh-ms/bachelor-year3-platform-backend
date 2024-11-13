@@ -5,7 +5,6 @@ plugins {
 
 dependencies {
     implementation project(":common")
-    implementation project(':platform')
+    implementation project(':boundedContextA')
     implementation project(':boundedContextB')
-    implementation 'mysql:mysql-connector-java:8.0.33'
 }
