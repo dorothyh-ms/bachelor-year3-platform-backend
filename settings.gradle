@@ -2,5 +2,5 @@ rootProject.name = 'BanditGames'
 
 include 'application'
 include 'common'
-include 'boundedContextA'
+include 'platform'
 include 'boundedContextB'
