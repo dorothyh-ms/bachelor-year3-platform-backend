@@ -1,44 +1,44 @@
 package be.kdg.integration5.platform.adapters.out.db.mappers;
 
-import be.kdg.integration5.platform.adapters.out.db.entities.UserEntity;
-import be.kdg.integration5.platform.domain.User;
+import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
+import be.kdg.integration5.platform.domain.Player;
 
 public class UserMapper {
 
-    // Convert UserEntity to User
-    public static User toUser(UserEntity userEntity) {
-        if (userEntity == null) {
+    // Convert PlayerJpaEntity to Player
+    public static Player toUser(PlayerJpaEntity playerJpaEntity) {
+        if (playerJpaEntity == null) {
             return null;
         }
 
-        User user = new User();
-        user.setPlayerId(userEntity.getPlayerId());
-        user.setUsername(userEntity.getUsername());
-        user.setLastName(userEntity.getLastName());
-        user.setFirstName(userEntity.getFirstName());
-        user.setAge(userEntity.getAge());
-        user.setGender(userEntity.getGender());
-        user.setLocation(userEntity.getLocation());
+        Player player = new Player();
+        player.setPlayerId(playerJpaEntity.getPlayerId());
+        player.setUsername(playerJpaEntity.getUsername());
+        player.setLastName(playerJpaEntity.getLastName());
+        player.setFirstName(playerJpaEntity.getFirstName());
+        player.setAge(playerJpaEntity.getAge());
+        player.setGender(playerJpaEntity.getGender());
+        player.setLocation(playerJpaEntity.getLocation());
 
-        return user;
+        return player;
     }
 
-    // Convert User to UserEntity
-    public static UserEntity toUserEntity(User user) {
-        if (user == null) {
+    // Convert Player to PlayerJpaEntity
+    public static PlayerJpaEntity toUserEntity(Player player) {
+        if (player == null) {
             return null;
         }
 
-        UserEntity userEntity = new UserEntity();
-        userEntity.setPlayerId(user.getPlayerId());
-        userEntity.setUsername(user.getUsername());
-        userEntity.setLastName(user.getLastName());
-        userEntity.setFirstName(user.getFirstName());
-        userEntity.setAge(user.getAge());
-        userEntity.setGender(user.getGender());
-        userEntity.setLocation(user.getLocation());
+        PlayerJpaEntity playerJpaEntity = new PlayerJpaEntity();
+        playerJpaEntity.setPlayerId(player.getPlayerId());
+        playerJpaEntity.setUsername(player.getUsername());
+        playerJpaEntity.setLastName(player.getLastName());
+        playerJpaEntity.setFirstName(player.getFirstName());
+        playerJpaEntity.setAge(player.getAge());
+        playerJpaEntity.setGender(player.getGender());
+        playerJpaEntity.setLocation(player.getLocation());
 
-        return userEntity;
+        return playerJpaEntity;
     }
 }
 

@@ -1,13 +1,30 @@
-package be.kdg.integration5.platform.domain;
+package be.kdg.integration5.platform.adapters.out.db.entities;
 
+import be.kdg.integration5.platform.domain.Gender;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
 import java.util.UUID;
 
-public class User {
+@Entity
+@Table(catalog="platform", name="players")
+public class PlayerJpaEntity {
+
+    @Id
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "player_id", updatable = false, nullable = false)
     private UUID playerId = UUID.randomUUID();
     private String username;
+
+    @Column(name = "last_name", updatable = false, nullable = false)
     private String lastName;
+
+    @Column(name = "first_name", updatable = false, nullable = false)
     private String firstName;
     private int age;
+
+    @Enumerated(value = EnumType.STRING)
     private Gender gender;
     private String location;
 
@@ -67,7 +84,7 @@ public class User {
         this.location = location;
     }
 
-    public User(UUID playerId, String username, String lastName, String firstName, int age, Gender gender, String location) {
+    public PlayerJpaEntity(UUID playerId, String username, String lastName, String firstName, int age, Gender gender, String location) {
         this.playerId = playerId;
         this.username = username;
         this.lastName = lastName;
@@ -77,12 +94,12 @@ public class User {
         this.location = location;
     }
 
-    public User() {
+    public PlayerJpaEntity() {
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "PlayerJpaEntity{" +
                 "playerId=" + playerId +
                 ", username='" + username + '\'' +
                 ", lastName='" + lastName + '\'' +

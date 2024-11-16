@@ -1,0 +1,5 @@
+# Search players use case
+
+GET http://localhost:8091/api/players?username=play
+Content-Type: application/json
+Accept: application/json

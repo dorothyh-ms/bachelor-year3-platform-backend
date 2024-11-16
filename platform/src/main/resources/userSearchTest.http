@@ -1,2 +1,0 @@
-POST http://localhost:8090/api/searchUser?username=doe
-Content-Type: application/json
