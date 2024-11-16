@@ -4,6 +4,6 @@ import be.kdg.integration5.platform.domain.Player;
 
 import java.util.List;
 
-public interface GetPlayersUsesCase {
+public interface GetPlayerUseCase {
     List<Player> getPlayers(String username);
 }

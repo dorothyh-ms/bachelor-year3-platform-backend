@@ -1,17 +1,17 @@
 package be.kdg.integration5.platform.core;
 
 import be.kdg.integration5.platform.domain.Player;
-import be.kdg.integration5.platform.ports.in.GetPlayersUsesCase;
+import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
 import be.kdg.integration5.platform.ports.out.PlayerLoadPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class GetPlayersUseCaseImpl implements GetPlayersUsesCase {
+public class DefaultPlayerUseCase implements GetPlayerUseCase {
     private final PlayerLoadPort userPort;
 
-    public GetPlayersUseCaseImpl(PlayerLoadPort userPort) {
+    public DefaultPlayerUseCase(PlayerLoadPort userPort) {
         this.userPort = userPort;
     }
 
