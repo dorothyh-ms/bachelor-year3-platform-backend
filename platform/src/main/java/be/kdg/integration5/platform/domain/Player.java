@@ -1,20 +1,8 @@
-package be.kdg.integration5.platform.adapters.out.db.entities;
+package be.kdg.integration5.platform.domain;
 
-import be.kdg.integration5.platform.domain.Gender;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.JdbcTypeCode;
-
-import java.sql.Types;
 import java.util.UUID;
 
-@Entity
-public class UserEntity {
-
-    @Id
-    @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "user", updatable = false, nullable = false)
+public class Player {
     private UUID playerId = UUID.randomUUID();
     private String username;
     private String lastName;
@@ -79,7 +67,7 @@ public class UserEntity {
         this.location = location;
     }
 
-    public UserEntity(UUID playerId, String username, String lastName, String firstName, int age, Gender gender, String location) {
+    public Player(UUID playerId, String username, String lastName, String firstName, int age, Gender gender, String location) {
         this.playerId = playerId;
         this.username = username;
         this.lastName = lastName;
@@ -89,12 +77,12 @@ public class UserEntity {
         this.location = location;
     }
 
-    public UserEntity() {
+    public Player() {
     }
 
     @Override
     public String toString() {
-        return "UserEntity{" +
+        return "Player{" +
                 "playerId=" + playerId +
                 ", username='" + username + '\'' +
                 ", lastName='" + lastName + '\'' +
