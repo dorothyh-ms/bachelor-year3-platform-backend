@@ -80,6 +80,10 @@ public class Player {
     public Player() {
     }
 
+    public Invite createInvite(Player recipient, Lobby lobby){
+        return new Invite(UUID.randomUUID(), this, recipient, lobby);
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -92,4 +96,6 @@ public class Player {
                 ", location='" + location + '\'' +
                 '}';
     }
+
+
 }

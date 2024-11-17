@@ -54,14 +54,15 @@
         - KC_DB_URL_DATABASE=keycloak
         - KC_DB_USERNAME=keycloak
         - KC_DB_PASSWORD=password
-      command: start-dev
+      command: start-dev --import-realm
+      volumes:
+        - ./banditgames-realm.json:/opt/keycloak/data/import/banditgames-realm.json
       ports:
         - "8180:8080"
       depends_on:
         - idp_mysql
       networks:
         - kc
-
 
   networks:
     kc:

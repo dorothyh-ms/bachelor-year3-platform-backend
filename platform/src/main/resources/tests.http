@@ -1,5 +1,39 @@
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&username=player1&password=password&grant_type=password&scope=openid
+
+> {%
+    client.global.set("access_token", response.body.access_token)
+%}
+
+
+###
+
 # Search players use case
 
 GET http://localhost:8091/api/players?username=play
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+# Get games use case
+
+###
+
+GET http://localhost:8091/api/games
 Content-Type: application/json
 Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+
+# Create lobby use case
+
+###
+
+POST http://localhost:8091/api/games/05c99486-9f64-49d4-bbb4-22e40d649ada/lobbies
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+

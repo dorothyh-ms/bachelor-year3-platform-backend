@@ -14,7 +14,7 @@ public class PlayerJpaEntity {
     @Id
     @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "player_id", updatable = false, nullable = false)
-    private UUID playerId = UUID.randomUUID();
+    private UUID playerId;
     private String username;
 
     @Column(name = "last_name", updatable = false, nullable = false)

@@ -3,10 +3,12 @@ package be.kdg.integration5.platform.adapters.in.web;
 
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
 import be.kdg.integration5.platform.domain.Player;
-import be.kdg.integration5.platform.ports.in.GetPlayersUsesCase;
+import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,16 +16,17 @@ import java.util.List;
 @RestController
 @RequestMapping("/players")
 public class PlayerController {
-    private final GetPlayersUsesCase getPlayersUsesCase;
+    private final GetPlayerUseCase getPlayerUseCase;
 
-    public PlayerController(GetPlayersUsesCase getPlayersUsesCase) {
-        this.getPlayersUsesCase = getPlayersUsesCase;
+    public PlayerController(GetPlayerUseCase getPlayerUseCase) {
+        this.getPlayerUseCase = getPlayerUseCase;
     }
 
 
     @GetMapping
-    public ResponseEntity<List<PlayerDto>> searchUser(@RequestParam String username) {
-        List<Player> players = getPlayersUsesCase.getPlayers(username);
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<List<PlayerDto>> searchUser(@RequestParam String username, @AuthenticationPrincipal Jwt token) {
+        List<Player> players = getPlayerUseCase.getPlayers(username);
         if (!players.isEmpty()) {
             return new ResponseEntity<>(players.stream().map(player -> new PlayerDto(player.getPlayerId(), player.getUsername())).toList(),
                             HttpStatus.OK);
