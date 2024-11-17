@@ -32,8 +32,11 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
             return Optional.of(new Lobby(
                     lobbyJpa.getId(),
                     GameMapper.toGame(lobbyJpa.getGame()),
-                    PlayerMapper.toPlayer(lobbyJpa.getInitiatingPlayer())
-            ));
+                    PlayerMapper.toPlayer(lobbyJpa.getInitiatingPlayer()),
+                    PlayerMapper.toPlayer(lobbyJpa.getJoinedPlayer()),
+                    lobbyJpa.getLobbyStatus(),
+                    lobbyJpa.getDateCreated()
+                    ));
         }
         return Optional.empty();
     }

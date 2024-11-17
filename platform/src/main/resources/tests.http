@@ -41,6 +41,17 @@ Authorization: Bearer {{access_token}}
     client.global.set("lobby_id", response.body.id)
 %}
 
+
+
+###
+
+# Player attempts to join own lobby - should fail
+
+PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
 ###
 
 POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
@@ -53,10 +64,18 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 %}
 
 
-###
 
 ###
-# Join lobby use case
+
+# Player2 joins lobby - should succeed
+PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+###
+
+# Player2 joins lobby (now closed) - should fail
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
