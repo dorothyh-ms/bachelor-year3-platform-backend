@@ -23,7 +23,8 @@ public class LobbyDbAdapter implements LobbyCreatePort {
                 lobby.getId(),
                 GameMapper.toGameJpaEntity(lobby.getGame()),
                 UserMapper.toUserEntity(lobby.getInitiatingPlayer()),
-                lobby.getDateCreated()
+                lobby.getDateCreated(),
+                lobby.getStatus()
         ));
     }
 }

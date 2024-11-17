@@ -62,7 +62,8 @@ public class GameController {
                         lobby.getInitiatingPlayer().getPlayerId(),
                         lobby.getInitiatingPlayer().getUsername()
                 ),
-                lobby.getDateCreated()
+                lobby.getDateCreated(),
+                lobby.getStatus()
         ), HttpStatus.OK);
     }
 

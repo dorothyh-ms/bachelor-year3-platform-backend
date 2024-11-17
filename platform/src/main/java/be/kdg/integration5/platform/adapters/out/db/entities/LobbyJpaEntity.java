@@ -1,6 +1,7 @@
 package be.kdg.integration5.platform.adapters.out.db.entities;
 
 import be.kdg.integration5.platform.domain.Game;
+import be.kdg.integration5.platform.domain.LobbyStatus;
 import be.kdg.integration5.platform.domain.Player;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -15,26 +16,51 @@ public class LobbyJpaEntity {
 
     @Id
     @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "player_id", updatable = false, nullable = false)
+    @Column(name = "lobby_id", updatable = false, nullable = false)
     private UUID id;
 
     @ManyToOne
+    @JoinColumn(name = "game_id", updatable = false, nullable = false)
     private GameJpaEntity game;
 
     @ManyToOne
+    @JoinColumn(name = "initiating_player_id", updatable = false, nullable = false)
     private PlayerJpaEntity initiatingPlayer;
 
     private LocalDateTime dateCreated;
+
+    private LobbyStatus lobbyStatus;
+
+    @ManyToOne
+    @JoinColumn(name = "joined_player_id", nullable = true)
+    private PlayerJpaEntity joinedPlayer;
 
     public LobbyJpaEntity() {
     }
 
 
-    public LobbyJpaEntity(UUID id, GameJpaEntity game, PlayerJpaEntity initiatingPlayer, LocalDateTime dateCreated) {
+    public LobbyJpaEntity(UUID id, GameJpaEntity game, PlayerJpaEntity initiatingPlayer, LocalDateTime dateCreated, LobbyStatus lobbyStatus) {
         this.id = id;
         this.game = game;
         this.initiatingPlayer = initiatingPlayer;
         this.dateCreated = dateCreated;
+        this.lobbyStatus = lobbyStatus;
+    }
+
+    public LobbyStatus getLobbyStatus() {
+        return lobbyStatus;
+    }
+
+    public void setLobbyStatus(LobbyStatus lobbyStatus) {
+        this.lobbyStatus = lobbyStatus;
+    }
+
+    public PlayerJpaEntity getJoinedPlayer() {
+        return joinedPlayer;
+    }
+
+    public void setJoinedPlayer(PlayerJpaEntity joinedPlayer) {
+        this.joinedPlayer = joinedPlayer;
     }
 
     public UUID getId() {
