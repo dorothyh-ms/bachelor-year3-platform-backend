@@ -12,7 +12,7 @@ public class LobbyDto {
     private GameDto gameDto;
 
     private PlayerDto createdBy;
-
+    private PlayerDto joinedPlayer;
     private LocalDateTime createdDate;
     private LobbyStatus lobbyStatus;
 
@@ -20,6 +20,15 @@ public class LobbyDto {
         this.id = id;
         this.gameDto = gameDto;
         this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.lobbyStatus = lobbyStatus;
+    }
+
+    public LobbyDto(UUID id, GameDto gameDto, PlayerDto createdBy, PlayerDto joinedPlayer, LocalDateTime createdDate, LobbyStatus lobbyStatus) {
+        this.id = id;
+        this.gameDto = gameDto;
+        this.createdBy = createdBy;
+        this.joinedPlayer = joinedPlayer;
         this.createdDate = createdDate;
         this.lobbyStatus = lobbyStatus;
     }
@@ -62,5 +71,13 @@ public class LobbyDto {
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public PlayerDto getJoinedPlayer() {
+        return joinedPlayer;
+    }
+
+    public void setJoinedPlayer(PlayerDto joinedPlayer) {
+        this.joinedPlayer = joinedPlayer;
     }
 }

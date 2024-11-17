@@ -1,7 +1,7 @@
 package be.kdg.integration5.platform.adapters.out.db;
 
 import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
-import be.kdg.integration5.platform.adapters.out.db.mappers.UserMapper;
+import be.kdg.integration5.platform.adapters.out.db.mappers.PlayerMapper;
 import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerRepository;
 import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.ports.out.PlayerLoadPort;
@@ -21,7 +21,7 @@ public class PlayerDbAdapter implements PlayerLoadPort {
 
     @Override
     public List<Player> loadPlayers(String username) {
-        return playerRepository.findPlayerJpaEntitiesByUsernameContainingIgnoreCase(username).stream().map(UserMapper::toUser).toList();
+        return playerRepository.findPlayerJpaEntitiesByUsernameContainingIgnoreCase(username).stream().map(PlayerMapper::toPlayer).toList();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class PlayerDbAdapter implements PlayerLoadPort {
         Optional<PlayerJpaEntity> optionalPlayerJpaEntity = playerRepository.findById(uuid);
         if (optionalPlayerJpaEntity.isPresent()){
             PlayerJpaEntity playerJpaEntity = optionalPlayerJpaEntity.get();
-            return Optional.of(UserMapper.toUser(playerJpaEntity));
+            return Optional.of(PlayerMapper.toPlayer(playerJpaEntity));
         }
         return Optional.empty();
     }

@@ -29,6 +29,7 @@ public class LobbyJpaEntity {
 
     private LocalDateTime dateCreated;
 
+    @Enumerated(value = EnumType.STRING)
     private LobbyStatus lobbyStatus;
 
     @ManyToOne
@@ -45,6 +46,15 @@ public class LobbyJpaEntity {
         this.initiatingPlayer = initiatingPlayer;
         this.dateCreated = dateCreated;
         this.lobbyStatus = lobbyStatus;
+    }
+
+    public LobbyJpaEntity(UUID id, GameJpaEntity game, PlayerJpaEntity initiatingPlayer, LocalDateTime dateCreated, LobbyStatus lobbyStatus, PlayerJpaEntity joinedPlayer) {
+        this.id = id;
+        this.game = game;
+        this.initiatingPlayer = initiatingPlayer;
+        this.dateCreated = dateCreated;
+        this.lobbyStatus = lobbyStatus;
+        this.joinedPlayer = joinedPlayer;
     }
 
     public LobbyStatus getLobbyStatus() {

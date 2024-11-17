@@ -1,8 +1,9 @@
 package be.kdg.integration5.platform.ports.in;
 
+import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 
 public interface PlayerJoinsLobbyUseCase {
 
-    public void joinLobby(JoinLobbyCommand command);
+    public Lobby joinLobby(JoinLobbyCommand command);
 }

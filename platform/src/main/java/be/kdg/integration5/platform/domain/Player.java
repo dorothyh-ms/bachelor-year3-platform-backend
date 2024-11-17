@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.domain;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Player {
@@ -97,5 +98,16 @@ public class Player {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return Objects.equals(username, player.username);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(username);
+    }
 }
