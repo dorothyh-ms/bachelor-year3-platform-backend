@@ -3,10 +3,10 @@ package be.kdg.integration5.platform.adapters.out.db.mappers;
 import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
 import be.kdg.integration5.platform.domain.Player;
 
-public class UserMapper {
+public class PlayerMapper {
 
     // Convert PlayerJpaEntity to Player
-    public static Player toUser(PlayerJpaEntity playerJpaEntity) {
+    public static Player toPlayer(PlayerJpaEntity playerJpaEntity) {
         if (playerJpaEntity == null) {
             return null;
         }
@@ -24,7 +24,7 @@ public class UserMapper {
     }
 
     // Convert Player to PlayerJpaEntity
-    public static PlayerJpaEntity toUserEntity(Player player) {
+    public static PlayerJpaEntity toPlayerJpaEntity(Player player) {
         if (player == null) {
             return null;
         }

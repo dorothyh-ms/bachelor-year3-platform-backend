@@ -15,6 +15,8 @@ public class PlayerJpaEntity {
     @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "player_id", updatable = false, nullable = false)
     private UUID playerId;
+
+    @Column(name = "username", updatable = false, nullable = false, unique = true)
     private String username;
 
     @Column(name = "last_name", updatable = false, nullable = false)
