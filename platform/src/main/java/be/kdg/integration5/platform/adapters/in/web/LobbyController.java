@@ -4,9 +4,10 @@ package be.kdg.integration5.platform.adapters.in.web;
 import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.LobbyDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
+import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Lobby;
+import be.kdg.integration5.platform.ports.in.GetLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
-import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,9 +26,12 @@ import java.util.UUID;
 public class LobbyController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
+    private final GetLobbyUseCase getLobbyUseCase;
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase) {
+
+    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
+        this.getLobbyUseCase = getLobbyUseCase;
     }
 
     @PatchMapping("/{lobbyId}")
@@ -53,5 +58,29 @@ public class LobbyController {
                 lobby.getStatus()
 
         ), HttpStatus.OK);
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<List<LobbyDto>> getActiveLobbies() {
+        LOGGER.info("Looking for open lobbies ");
+        List<Lobby> lobbies = getLobbyUseCase.getLobbies();
+        if (!lobbies.isEmpty()) {
+            return new ResponseEntity<>(
+                    lobbies.stream().map(lobby ->
+                            new LobbyDto(lobby.getId(),
+                                new GameDto(
+                                        lobby.getGame().getId(),
+                                        lobby.getGame().getName()),
+                                new PlayerDto(
+                                        lobby.getInitiatingPlayer().getPlayerId(),
+                                        lobby.getInitiatingPlayer().getUsername()),
+                     null,
+                                lobby.getDateCreated(),
+                                lobby.getStatus())).toList(),
+                    HttpStatus.OK);
+        }
+        LOGGER.info("there were no open lobbies");
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

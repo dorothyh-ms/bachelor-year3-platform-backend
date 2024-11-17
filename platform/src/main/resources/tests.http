@@ -8,18 +8,15 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 %}
 
 
-###
-
-# Search players use case
+### Search players use case
 
 GET http://localhost:8091/api/players?username=play
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 
-# Get games use case
 
-###
+### Get games use case
 
 GET http://localhost:8091/api/games
 Content-Type: application/json
@@ -28,9 +25,7 @@ Authorization: Bearer {{access_token}}
 
 
 
-# Create lobby use case
-
-###
+### Create lobby use case
 
 POST http://localhost:8091/api/games/05c99486-9f64-49d4-bbb4-22e40d649ada/lobbies
 Content-Type: application/json
@@ -41,11 +36,14 @@ Authorization: Bearer {{access_token}}
     client.global.set("lobby_id", response.body.id)
 %}
 
+### Get open lobbies
 
+GET http://localhost:8091/api/lobbies
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
 
-###
-
-# Player attempts to join own lobby - should fail
+### Player attempts to join own lobby - should fail
 
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
@@ -65,17 +63,18 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 
 
-###
+### Player2 joins lobby - should succeed
 
-# Player2 joins lobby - should succeed
+
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
-###
 
-# Player2 joins lobby (now closed) - should fail
+### Player2 joins lobby (now closed) - should fail
+
+
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json

@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface PlayerLoadPort {
-List<Player> loadPlayers(String username);
+    List<Player> loadPlayers(String username);
 
     Optional<Player> loadPlayerById(UUID uuid);
 }
