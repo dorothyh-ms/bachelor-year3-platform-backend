@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface LobbyLoadPort {
 
-    List<Lobby> loadLobbiesByActiveStatus();
+    List<Lobby> loadActiveLobbies();
 
 
     public Optional<Lobby> loadLobby(UUID lobbyId);

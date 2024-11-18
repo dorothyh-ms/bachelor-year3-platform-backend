@@ -14,10 +14,7 @@ import be.kdg.integration5.platform.ports.out.PlayerLoadPort;
 import jakarta.persistence.Lob;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort {
@@ -30,14 +27,14 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
 
 
     @Override
-    public List<Lobby> loadLobbiesByActiveStatus() {
+    public List<Lobby> loadActiveLobbies() {
         List<LobbyJpaEntity> lobbyJpaEntityList = lobbyRepository.getAllByLobbyStatusIs(LobbyStatus.OPEN);
         if (lobbyJpaEntityList != null){
             List<Lobby> lobbyList = new ArrayList<>();
             lobbyJpaEntityList.forEach(lobbyJpaEntity -> lobbyList.add(LobbyMapper.toLobby(lobbyJpaEntity)));
             return lobbyList;
         } else {
-            return null;
+            return List.of();
         }
     }
 

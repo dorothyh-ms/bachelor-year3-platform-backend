@@ -17,6 +17,6 @@ public class DefaultGetLobbyUseCase implements GetLobbyUseCase {
 
     @Override
     public List<Lobby> getLobbies() {
-        return lobbyLoadPort.loadLobbiesByActiveStatus();
+        return lobbyLoadPort.loadActiveLobbies();
     }
 }
