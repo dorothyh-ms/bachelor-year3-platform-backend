@@ -80,3 +80,27 @@ PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
+
+### Obtain Admin Token
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+username=admin&password=admin&grant_type=password&client_id=admin-cli
+
+> {%
+    client.global.set("admin_token", response.body.access_token)
+%}
+
+###
+
+POST http://localhost:8180/admin/realms/banditgames/users
+Content-Type: application/json
+Authorization: Bearer {{admin_token}}
+
+{
+  "username": "newuser",
+  "enabled": true,
+  "email": "newuser@example.com",
+  "firstName": "New",
+  "lastName": "User"
+}
