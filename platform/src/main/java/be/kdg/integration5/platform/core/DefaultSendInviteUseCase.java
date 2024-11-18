@@ -3,6 +3,7 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.exceptions.InvalidPlayerException;
 import be.kdg.integration5.platform.ports.in.GetLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
@@ -29,10 +30,14 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     public Invite createInvite(UUID sender, String recipient, UUID lobbyId) {
         Optional<Player> senderPlayer = getPlayerUseCase.getPlayerById(sender);
         if (senderPlayer.isEmpty()) {
-            throw new IllegalArgumentException("Sender not found");
+            throw new InvalidPlayerException("Sender not found");
         }
         Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new IllegalArgumentException("Lobby not found"));
-        Invite invite = new Invite(UUID.randomUUID(), senderPlayer.get(), getPlayerUseCase.getPlayers(recipient).get(0), lobby);
+        Player recipientPlayer = getPlayerUseCase.getPlayers(recipient).get(0);
+        if (recipientPlayer == null) {
+            throw new InvalidPlayerException("Recipient not found");
+        }
+        Invite invite = new Invite(UUID.randomUUID(), senderPlayer.get(), recipientPlayer, lobby);
         inviteCreatePort.createInvite(invite);
         return invite;
     }
