@@ -2,11 +2,14 @@ package be.kdg.integration5.platform.adapters.in.web;
 
 
 import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
+import be.kdg.integration5.platform.adapters.in.web.dtos.InviteDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.LobbyDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
 import be.kdg.integration5.platform.domain.Game;
+import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.ports.in.GetLobbyUseCase;
+import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 import org.slf4j.Logger;
@@ -27,11 +30,13 @@ public class LobbyController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
     private final GetLobbyUseCase getLobbyUseCase;
+    private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
 
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase) {
+    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.getLobbyUseCase = getLobbyUseCase;
+        this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
     }
 
     @PatchMapping("/{lobbyId}")
@@ -82,5 +87,15 @@ public class LobbyController {
         }
         LOGGER.info("there were no open lobbies");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+    @PostMapping("/{lobbyId}/invite")
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token, @PathVariable UUID lobbyId, @RequestParam String username) {
+        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
+        Invite invite = playerCreatesInviteUseCase.createInvite(userId, username, lobbyId);
+        return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
     }
 }

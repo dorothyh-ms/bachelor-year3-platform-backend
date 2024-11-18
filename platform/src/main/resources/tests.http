@@ -43,6 +43,13 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Player1 invites player2
+
+POST http://localhost:8091/api/lobbies/{{lobby_id}}/invite?username=player2
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
 ### Player attempts to join own lobby - should fail
 
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}

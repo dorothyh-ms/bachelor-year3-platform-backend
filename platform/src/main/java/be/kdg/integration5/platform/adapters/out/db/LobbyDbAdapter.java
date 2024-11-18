@@ -1,28 +1,31 @@
 package be.kdg.integration5.platform.adapters.out.db;
 
+import be.kdg.integration5.platform.adapters.out.db.entities.InviteJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.LobbyJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
+import be.kdg.integration5.platform.adapters.out.db.mappers.InviteMapper;
 import be.kdg.integration5.platform.adapters.out.db.mappers.LobbyMapper;
 import be.kdg.integration5.platform.adapters.out.db.mappers.PlayerMapper;
+import be.kdg.integration5.platform.adapters.out.db.repositories.InviteRepository;
 import be.kdg.integration5.platform.adapters.out.db.repositories.LobbyRepository;
+import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.LobbyStatus;
-import be.kdg.integration5.platform.ports.out.LobbyCreatePort;
-import be.kdg.integration5.platform.ports.out.LobbyJoinedPort;
-import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
-import be.kdg.integration5.platform.ports.out.PlayerLoadPort;
+import be.kdg.integration5.platform.ports.out.*;
 import jakarta.persistence.Lob;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
 @Repository
-public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort {
+public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort, InviteCreatePort {
 
     private final LobbyRepository lobbyRepository;
+    private final InviteRepository inviteRepository;
 
-    public LobbyDbAdapter(LobbyRepository lobbyRepository) {
+    public LobbyDbAdapter(LobbyRepository lobbyRepository, InviteRepository inviteRepository) {
         this.lobbyRepository = lobbyRepository;
+        this.inviteRepository = inviteRepository;
     }
 
 
@@ -76,5 +79,10 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
                 lobby.getStatus(),
                 PlayerMapper.toPlayerJpaEntity(lobby.getJoinedPlayer())
         ));
+    }
+
+    @Override
+    public void createInvite(Invite invite) {
+        inviteRepository.save(InviteMapper.toInviteJpaEntity(invite));
     }
 }
