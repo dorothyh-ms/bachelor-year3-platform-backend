@@ -11,6 +11,7 @@ import be.kdg.integration5.platform.ports.out.InviteCreatePort;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -33,11 +34,14 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
             throw new InvalidPlayerException("Sender not found");
         }
         Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new IllegalArgumentException("Lobby not found"));
-        Player recipientPlayer = getPlayerUseCase.getPlayers(recipient).get(0);
-        if (recipientPlayer == null) {
+        List<Player> recipientPlayer = getPlayerUseCase.getPlayers(recipient);
+        Player invitee;
+        if (recipientPlayer.isEmpty()) {
             throw new InvalidPlayerException("Recipient not found");
+        } else {
+            invitee = recipientPlayer.get(0);
         }
-        Invite invite = new Invite(UUID.randomUUID(), senderPlayer.get(), recipientPlayer, lobby);
+        Invite invite = new Invite(UUID.randomUUID(), senderPlayer.get(), invitee, lobby);
         inviteCreatePort.createInvite(invite);
         return invite;
     }
