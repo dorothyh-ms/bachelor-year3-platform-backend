@@ -2,17 +2,19 @@ package be.kdg.integration5.platform.adapters.out.db;
 
 import be.kdg.integration5.platform.adapters.out.db.entities.LobbyJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
+import be.kdg.integration5.platform.adapters.out.db.mappers.LobbyMapper;
 import be.kdg.integration5.platform.adapters.out.db.mappers.PlayerMapper;
 import be.kdg.integration5.platform.adapters.out.db.repositories.LobbyRepository;
 import be.kdg.integration5.platform.domain.Lobby;
+import be.kdg.integration5.platform.domain.LobbyStatus;
 import be.kdg.integration5.platform.ports.out.LobbyCreatePort;
 import be.kdg.integration5.platform.ports.out.LobbyJoinedPort;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
 import be.kdg.integration5.platform.ports.out.PlayerLoadPort;
+import jakarta.persistence.Lob;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort {
@@ -23,6 +25,18 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
         this.lobbyRepository = lobbyRepository;
     }
 
+
+    @Override
+    public List<Lobby> loadActiveLobbies() {
+        List<LobbyJpaEntity> lobbyJpaEntityList = lobbyRepository.getAllByLobbyStatusIs(LobbyStatus.OPEN);
+        if (lobbyJpaEntityList != null){
+            List<Lobby> lobbyList = new ArrayList<>();
+            lobbyJpaEntityList.forEach(lobbyJpaEntity -> lobbyList.add(LobbyMapper.toLobby(lobbyJpaEntity)));
+            return lobbyList;
+        } else {
+            return List.of();
+        }
+    }
 
     @Override
     public Optional<Lobby> loadLobby(UUID lobbyId) {
