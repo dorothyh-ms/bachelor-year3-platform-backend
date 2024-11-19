@@ -1,9 +1,11 @@
-package be.kdg.integration5.platform.domain;
+package be.kdg.integration5.platform.adapters.in.web.dtos;
+
+import be.kdg.integration5.platform.domain.Lobby;
+import be.kdg.integration5.platform.domain.Player;
 
 import java.util.UUID;
 
-public class Invite {
-
+public class InviteDto {
     private UUID id;
 
 
@@ -15,18 +17,11 @@ public class Invite {
 
     private Lobby lobby;
 
-    private InviteStatus inviteStatus;
-
-
-    public Invite(UUID id, Player sender, Player recipient, Lobby lobby) {
+    public InviteDto(UUID id, Player sender, Player recipient, Lobby lobby) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
-        this.inviteStatus = InviteStatus.OPEN;
-    }
-
-    public Invite() {
     }
 
     public UUID getId() {
@@ -59,25 +54,5 @@ public class Invite {
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
-    }
-
-    public InviteStatus getInviteStatus() {
-        return inviteStatus;
-    }
-
-    public void setInviteStatus(InviteStatus inviteStatus) {
-        this.inviteStatus = inviteStatus;
-    }
-
-    void accepted( ){
-        this.inviteStatus = InviteStatus.ACCEPTED;
-    }
-
-    void denied(){
-        this.inviteStatus = InviteStatus.DENIED;
-    }
-
-    void expired(){
-        this.inviteStatus = InviteStatus.EXPIRED;
     }
 }

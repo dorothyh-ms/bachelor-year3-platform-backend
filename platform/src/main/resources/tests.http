@@ -10,11 +10,13 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 ### Search players use case
 
-GET http://localhost:8091/api/players?username=play
+GET http://localhost:8091/api/players?username=player2
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
-
+> {%
+    client.global.set("player2_id", response.body.playerId)
+%}
 
 ### Get games use case
 
@@ -42,6 +44,17 @@ GET http://localhost:8091/api/lobbies
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
+
+### Player1 invites player2
+
+POST http://localhost:8091/api/lobbies/{{lobby_id}}/invite
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "userId": "e12bb6fd-8e23-40fd-95cc-f318abf3c38c"
+}
 
 ### Player attempts to join own lobby - should fail
 
