@@ -1,9 +1,6 @@
 package be.kdg.integration5.platform.adapters.out.db.entities;
 
-import be.kdg.integration5.platform.domain.InviteExpired;
 import be.kdg.integration5.platform.domain.InviteStatus;
-import be.kdg.integration5.platform.domain.Lobby;
-import be.kdg.integration5.platform.domain.Player;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
@@ -37,10 +34,6 @@ public class InviteJpaEntity {
 
     @Enumerated(value = EnumType.STRING)
     private InviteStatus inviteStatus;
-
-    @Enumerated(value = EnumType.STRING)
-    private InviteExpired inviteExpired;
-
 
     public UUID getId() {
         return id;
@@ -82,24 +75,15 @@ public class InviteJpaEntity {
         this.inviteStatus = inviteStatus;
     }
 
-    public InviteExpired getInviteExpired() {
-        return inviteExpired;
-    }
-
-    public void setInviteExpired(InviteExpired inviteExpired) {
-        this.inviteExpired = inviteExpired;
-    }
-
     public InviteJpaEntity() {
     }
 
-    public InviteJpaEntity(UUID id, PlayerJpaEntity sender, PlayerJpaEntity recipient, LobbyJpaEntity lobby, InviteStatus inviteStatus, InviteExpired inviteExpired) {
+    public InviteJpaEntity(UUID id, PlayerJpaEntity sender, PlayerJpaEntity recipient, LobbyJpaEntity lobby, InviteStatus inviteStatus) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
         this.inviteStatus = inviteStatus;
-        this.inviteExpired = inviteExpired;
     }
 
 

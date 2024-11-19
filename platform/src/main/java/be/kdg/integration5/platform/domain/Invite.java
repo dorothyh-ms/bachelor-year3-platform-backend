@@ -17,14 +17,13 @@ public class Invite {
 
     private InviteStatus inviteStatus;
 
-    private InviteExpired inviteExpired = InviteExpired.NOT_EXPIRED;
-
 
     public Invite(UUID id, Player sender, Player recipient, Lobby lobby) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
+        this.inviteStatus = InviteStatus.OPEN;
     }
 
     public Invite() {
@@ -70,21 +69,15 @@ public class Invite {
         this.inviteStatus = inviteStatus;
     }
 
-    public InviteExpired getInviteExpired() {
-        return inviteExpired;
-    }
-
-    public void setInviteExpired(InviteExpired inviteExpired) {
-        this.inviteExpired = inviteExpired;
-    }
-
-    void inviteeAccepts( ){
-        this.inviteExpired = InviteExpired.EXPIRED;
+    void accepted( ){
         this.inviteStatus = InviteStatus.ACCEPTED;
     }
 
-    void InviteeDeclines(){
-        this.inviteExpired = InviteExpired.EXPIRED;
+    void denied(){
         this.inviteStatus = InviteStatus.DENIED;
+    }
+
+    void expired(){
+        this.inviteStatus = InviteStatus.EXPIRED;
     }
 }

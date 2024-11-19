@@ -22,6 +22,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -93,9 +94,12 @@ public class LobbyController {
 
     @PostMapping("/{lobbyId}/invite")
     @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token, @PathVariable UUID lobbyId, @RequestParam String username) {
+    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token,
+                                                  @PathVariable UUID lobbyId,
+                                                  @RequestBody Map<String, String> body) {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
-        Invite invite = playerCreatesInviteUseCase.createInvite(userId, username, lobbyId);
+        UUID invitedUserId = UUID.fromString(body.get("userId"));
+        Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
         return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
     }
 }
