@@ -9,6 +9,7 @@ import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.ports.in.GetLobbyUseCase;
+import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
@@ -32,12 +33,14 @@ public class LobbyController {
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
     private final GetLobbyUseCase getLobbyUseCase;
     private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
+    private final PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase;
 
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase) {
+    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase, PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.getLobbyUseCase = getLobbyUseCase;
         this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
+        this.playerAcceptsInviteUseCase = playerAcceptsInviteUseCase;
     }
 
     @PatchMapping("/{lobbyId}")
@@ -100,6 +103,13 @@ public class LobbyController {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         UUID invitedUserId = UUID.fromString(body.get("userId"));
         Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
+        return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
+    }
+
+    @PatchMapping("/invite/{inviteId}/accept")
+    public ResponseEntity<InviteDto> acceptInvite(@AuthenticationPrincipal Jwt token, @PathVariable UUID inviteId) {
+        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
+        Invite invite = playerAcceptsInviteUseCase.playerAcceptsInvite(inviteId, userId);
         return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
     }
 }

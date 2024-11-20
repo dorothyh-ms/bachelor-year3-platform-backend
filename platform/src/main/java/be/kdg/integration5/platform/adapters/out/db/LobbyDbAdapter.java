@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 
 @Repository
-public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort, InviteCreatePort {
+public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLoadPort, InviteCreatePort, InviteLoadPort, InviteUpdatePort {
 
     private final LobbyRepository lobbyRepository;
     private final InviteRepository inviteRepository;
@@ -83,6 +83,18 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
 
     @Override
     public void createInvite(Invite invite) {
+        inviteRepository.save(InviteMapper.toInviteJpaEntity(invite));
+    }
+
+    @Override
+    public Optional<Invite> loadInvite(UUID inviteId) {
+        Optional<InviteJpaEntity> invite = inviteRepository.findById(inviteId);
+        return invite.map(InviteMapper::toInvite);
+
+    }
+
+    @Override
+    public void updateInvite(Invite invite) {
         inviteRepository.save(InviteMapper.toInviteJpaEntity(invite));
     }
 }
