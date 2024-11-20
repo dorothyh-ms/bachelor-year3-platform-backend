@@ -107,9 +107,26 @@ public class LobbyController {
     }
 
     @PatchMapping("/invite/{inviteId}/accept")
-    public ResponseEntity<InviteDto> acceptInvite(@AuthenticationPrincipal Jwt token, @PathVariable UUID inviteId) {
+    public ResponseEntity<LobbyDto> acceptInvite(@AuthenticationPrincipal Jwt token, @PathVariable UUID inviteId) {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
-        Invite invite = playerAcceptsInviteUseCase.playerAcceptsInvite(inviteId, userId);
-        return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
+        Lobby lobby = playerAcceptsInviteUseCase.playerAcceptsInvite(inviteId, userId);
+        return new ResponseEntity<>(new LobbyDto(
+                lobby.getId(),
+                new GameDto(
+                        lobby.getGame().getId(),
+                        lobby.getGame().getName()
+                ),
+                new PlayerDto(
+                        lobby.getInitiatingPlayer().getPlayerId(),
+                        lobby.getInitiatingPlayer().getUsername()
+                ),
+                new PlayerDto(
+                        lobby.getJoinedPlayer().getPlayerId(),
+                        lobby.getJoinedPlayer().getUsername()
+                ),
+                lobby.getDateCreated(),
+                lobby.getStatus()
+
+        ), HttpStatus.OK);
     }
 }

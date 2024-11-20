@@ -34,7 +34,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         this.inviteUpdatePort = inviteUpdatePort;
     }
 
-    public Invite playerAcceptsInvite(UUID inviteId, UUID userId) {
+    public Lobby playerAcceptsInvite(UUID inviteId, UUID userId) {
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
         if (optionalInvite.isEmpty()) {
@@ -68,7 +68,6 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             log.error("Invite accepted");
             invite.accepted();
             lobby.admitPlayer(invite.getRecipient());
-//            lobby.setJoinedPlayer(invite.getRecipient());
             inviteUpdatePort.updateInvite(invite);
             lobbyJoinedPort.lobbyJoined(lobby);
         } else if (invite.getInviteStatus().equals(InviteStatus.EXPIRED)) {
@@ -81,6 +80,6 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             log.error("Invite already declined");
             throw new InvalidInviteException("Invite has already been declined");
         }
-        return invite;
+        return lobby;
     }
 }
