@@ -38,46 +38,46 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
         if (optionalInvite.isEmpty()) {
-            log.error("Invite not found");
+            log.debug("Invite not found");
             throw new InvalidInviteException("Invite not found");
         } else {
-            log.error("Invite found");
+            log.debug("Invite found");
             invite = optionalInvite.get();
         }
         if (!invite.getRecipient().getPlayerId().equals(userId)) {
-            log.error("User not recipient of invite");
+            log.debug("User not recipient of invite");
             throw new InvalidInviteException("User is not the recipient of the invite");
         }
 
         Optional<Lobby> lobbyOptional = LobbyLoadPort.loadLobby(invite.getLobby().getId());
         Lobby lobby;
         if (lobbyOptional.isEmpty()) {
-            log.error("Lobby not found");
+            log.debug("Lobby not found");
             throw new InvalidLobbyException("Lobby not found");
         } else {
-            log.error("Lobby found");
+            log.info("Lobby found");
             lobby = lobbyOptional.get();
         }
 
         if (lobby.getStatus().equals(LobbyStatus.CLOSED)) {
-            log.error("Lobby is closed");
+            log.debug("Lobby is closed");
             throw new InvalidLobbyException("Lobby is closed");
         }
 
         if (invite.getInviteStatus().equals(InviteStatus.OPEN)) {
-            log.error("Invite accepted");
+            log.info("Invite accepted");
             invite.accepted();
             lobby.admitPlayer(invite.getRecipient());
             inviteUpdatePort.updateInvite(invite);
             lobbyJoinedPort.lobbyJoined(lobby);
         } else if (invite.getInviteStatus().equals(InviteStatus.EXPIRED)) {
-            log.error("Invite expired");
+            log.debug("Invite expired");
             throw new ExpiredInviteException("Invite has expired");
         } else if (invite.getInviteStatus().equals(InviteStatus.ACCEPTED)) {
-            log.error("Invite already accepted");
+            log.debug("Invite already accepted");
             throw new InvalidInviteException("Invite has already been accepted");
         } else if (invite.getInviteStatus().equals(InviteStatus.DENIED)) {
-            log.error("Invite already declined");
+            log.debug("Invite already declined");
             throw new InvalidInviteException("Invite has already been declined");
         }
         return lobby;
