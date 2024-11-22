@@ -32,15 +32,11 @@ public class LobbyController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
     private final GetLobbyUseCase getLobbyUseCase;
-    private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
-    private final PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase;
 
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase, PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase) {
+    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.getLobbyUseCase = getLobbyUseCase;
-        this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
-        this.playerAcceptsInviteUseCase = playerAcceptsInviteUseCase;
     }
 
     @PatchMapping("/{lobbyId}")
@@ -93,40 +89,4 @@ public class LobbyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
-
-    @PostMapping("/{lobbyId}/invite")
-    @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token,
-                                                  @PathVariable UUID lobbyId,
-                                                  @RequestBody Map<String, String> body) {
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
-        UUID invitedUserId = UUID.fromString(body.get("userId"));
-        Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
-        return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
-    }
-
-    @PatchMapping("/invite/{inviteId}/accept")
-    public ResponseEntity<LobbyDto> acceptInvite(@AuthenticationPrincipal Jwt token, @PathVariable UUID inviteId) {
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
-        Lobby lobby = playerAcceptsInviteUseCase.playerAcceptsInvite(inviteId, userId);
-        return new ResponseEntity<>(new LobbyDto(
-                lobby.getId(),
-                new GameDto(
-                        lobby.getGame().getId(),
-                        lobby.getGame().getName()
-                ),
-                new PlayerDto(
-                        lobby.getInitiatingPlayer().getPlayerId(),
-                        lobby.getInitiatingPlayer().getUsername()
-                ),
-                new PlayerDto(
-                        lobby.getJoinedPlayer().getPlayerId(),
-                        lobby.getJoinedPlayer().getUsername()
-                ),
-                lobby.getDateCreated(),
-                lobby.getStatus()
-
-        ), HttpStatus.OK);
-    }
 }

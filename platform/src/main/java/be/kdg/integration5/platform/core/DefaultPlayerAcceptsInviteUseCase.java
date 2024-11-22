@@ -1,12 +1,7 @@
 package be.kdg.integration5.platform.core;
 
-import be.kdg.integration5.platform.domain.Invite;
-import be.kdg.integration5.platform.domain.InviteStatus;
-import be.kdg.integration5.platform.domain.Lobby;
-import be.kdg.integration5.platform.domain.LobbyStatus;
-import be.kdg.integration5.platform.exceptions.ExpiredInviteException;
-import be.kdg.integration5.platform.exceptions.InvalidInviteException;
-import be.kdg.integration5.platform.exceptions.InvalidLobbyException;
+import be.kdg.integration5.platform.domain.*;
+import be.kdg.integration5.platform.exceptions.*;
 import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.out.InviteLoadPort;
 import be.kdg.integration5.platform.ports.out.InviteUpdatePort;
@@ -27,14 +22,26 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
     private final LobbyJoinedPort lobbyJoinedPort;
     private final InviteUpdatePort inviteUpdatePort;
 
-    public DefaultPlayerAcceptsInviteUseCase(InviteLoadPort inviteLoadPort, be.kdg.integration5.platform.ports.out.LobbyLoadPort lobbyLoadPort, LobbyJoinedPort lobbyJoinedPort, InviteUpdatePort inviteUpdatePort) {
+    public DefaultPlayerAcceptsInviteUseCase(InviteLoadPort inviteLoadPort, LobbyLoadPort lobbyLoadPort, LobbyJoinedPort lobbyJoinedPort, InviteUpdatePort inviteUpdatePort) {
         this.inviteLoadPort = inviteLoadPort;
         LobbyLoadPort = lobbyLoadPort;
         this.lobbyJoinedPort = lobbyJoinedPort;
         this.inviteUpdatePort = inviteUpdatePort;
     }
 
-    public Lobby playerAcceptsInvite(UUID inviteId, UUID userId) {
+    public Lobby playerAnswersInvite(UUID inviteId, UUID userId, String action) {
+        InviteAction decision = InviteAction.fromString(action);
+        if (decision.equals(InviteAction.ACCEPT)) {
+            return playerAcceptsInvite(inviteId, userId);
+        } else if (decision.equals(InviteAction.DECLINE)) {
+            return playerDeclinesInvite(inviteId, userId);
+        } else {
+            log.debug("Invalid action");
+            throw new InvalidInviteActionException("Invalid action: " + action);
+        }
+    }
+
+    private Lobby playerAcceptsInvite(UUID inviteId, UUID userId) {
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
         if (optionalInvite.isEmpty()) {
@@ -46,7 +53,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         }
         if (!invite.getRecipient().getPlayerId().equals(userId)) {
             log.debug("User not recipient of invite");
-            throw new InvalidInviteException("User is not the recipient of the invite");
+            throw new InvalidInviteUserException("User is not the recipient of the invite");
         }
 
         Optional<Lobby> lobbyOptional = LobbyLoadPort.loadLobby(invite.getLobby().getId());
@@ -64,22 +71,27 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             throw new InvalidLobbyException("Lobby is closed");
         }
 
-        if (invite.getInviteStatus().equals(InviteStatus.OPEN)) {
+        if (invite.isOpen()) {
             log.info("Invite accepted");
             invite.accepted();
             lobby.admitPlayer(invite.getRecipient());
             inviteUpdatePort.updateInvite(invite);
             lobbyJoinedPort.lobbyJoined(lobby);
-        } else if (invite.getInviteStatus().equals(InviteStatus.EXPIRED)) {
+        } else if (invite.isExpired()) {
             log.debug("Invite expired");
             throw new ExpiredInviteException("Invite has expired");
-        } else if (invite.getInviteStatus().equals(InviteStatus.ACCEPTED)) {
+        } else if (invite.isAccepted()) {
             log.debug("Invite already accepted");
             throw new InvalidInviteException("Invite has already been accepted");
-        } else if (invite.getInviteStatus().equals(InviteStatus.DENIED)) {
+        } else if (invite.isDenied()) {
             log.debug("Invite already declined");
             throw new InvalidInviteException("Invite has already been declined");
         }
         return lobby;
+    }
+
+    private Lobby playerDeclinesInvite(UUID inviteId, UUID userId) {
+//            TODO: implement decline invite
+        return null;
     }
 }

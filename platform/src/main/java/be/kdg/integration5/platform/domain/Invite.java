@@ -80,4 +80,18 @@ public class Invite {
     public void expired(){
         this.inviteStatus = InviteStatus.EXPIRED;
     }
+
+    public boolean isOpen(){
+        return this.inviteStatus.equals(InviteStatus.OPEN);
+    }
+    public boolean isAccepted(){
+        return this.inviteStatus.equals(InviteStatus.ACCEPTED);
+    }
+
+    public boolean isDenied(){
+        return this.inviteStatus.equals(InviteStatus.DENIED);
+    }
+    public boolean isExpired(){
+        return this.inviteStatus.equals(InviteStatus.EXPIRED);
+    }
 }

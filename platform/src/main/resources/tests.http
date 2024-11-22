@@ -47,7 +47,7 @@ Authorization: Bearer {{access_token}}
 
 ### Player1 invites player2
 
-POST http://localhost:8091/api/lobbies/{{lobby_id}}/invite
+POST http://localhost:8091/api/invites/{{lobby_id}}/invite
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -81,11 +81,14 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 ### Player2 uses invite to join
 
-PATCH http://localhost:8091/api/lobbies/invite/{{invite_id}}/accept
+PATCH http://localhost:8091/api/invites/{{invite_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+{
+  "action": "ACCEPT"
+}
 
 ### Get open lobbies - should fail (no open lobbies, 204)
 
