@@ -13,7 +13,7 @@ public class PlayerJoinedLobbyAmqpPublisher implements LobbyJoinedPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerJoinedLobbyAmqpPublisher.class);
 
-    private static final String EXCHANGE_NAME = "shipping_order_commands";
+    private static final String EXCHANGE_NAME = "games_topic_exchange";
     private final RabbitTemplate rabbitTemplate;
 
     public PlayerJoinedLobbyAmqpPublisher(RabbitTemplate rabbitTemplate) {
@@ -23,9 +23,13 @@ public class PlayerJoinedLobbyAmqpPublisher implements LobbyJoinedPort {
     @Override
     public void lobbyJoined(Lobby lobby) {
         LOGGER.info("PlayerJoinedLobbyAmqpPublisher is running lobbyJoined with lobby {}", lobby);
-        rabbitTemplate.convertAndSend(EXCHANGE_NAME, String.format("start.command.{}", lobby.getGame().getName()), new StartGameCommand(
+        String routingKey = String.format("game.%s.start", lobby.getGame().getName().toLowerCase());
+
+        StartGameCommand command = new StartGameCommand(
                 lobby.getInitiatingPlayer().getPlayerId(),
                 lobby.getJoinedPlayer().getPlayerId()
-        ));
+        );
+        LOGGER.info("PlayerJoinedLobbyAmqpPublisher is sending command {} with routing key {}", command, routingKey);
+        rabbitTemplate.convertAndSend(EXCHANGE_NAME, routingKey, command);
     }
 }

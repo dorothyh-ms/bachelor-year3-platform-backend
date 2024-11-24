@@ -9,43 +9,41 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
 
 @Configuration
-@Profile("!test")
 public class RabbitMQTopology {
 
 
     // Queues
-    public static final String START_GAME_QUEUE = "start_game_queue";
+    public static final String BATTLESHIP_START_QUEUE = "battleship_queue";
 
 
     // Exchanges
-    public static final String START_GAME_COMMANDS = "start_game_commands";
+    public static final String GAMES_TOPIC_EXCHANGE = "games_topic_exchange";
 
 
     @Bean
-    Queue startGameCommandQueue() {
-        return new Queue(START_GAME_QUEUE, false);
+    Queue battleshipQueue() {
+        return new Queue(BATTLESHIP_START_QUEUE, false);
     }
 
 
     @Bean
-    TopicExchange startGameExchange() {
-        return new TopicExchange(START_GAME_COMMANDS);
+    TopicExchange gameTopicExchange() {
+        return new TopicExchange(GAMES_TOPIC_EXCHANGE);
     }
 
 
     @Bean
-    Binding bindPurchaseOrderFulfilledEventExchangeToPurchaseOrderCommandQueue(
-            Queue startGameCommandQueue,
-            TopicExchange startGameExchange
+    Binding bindGameTopicExchangeToBattleshipQueue(
+            Queue battleshipQueue,
+            TopicExchange gameTopicExchange
     ){
         return BindingBuilder
-                .bind(startGameCommandQueue)
-                .to(startGameExchange)
-                .with("start.command.*");
+                .bind(battleshipQueue)
+                .to(gameTopicExchange)
+                .with("game.battleship.start");
     }
 
 

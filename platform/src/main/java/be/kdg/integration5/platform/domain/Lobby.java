@@ -100,4 +100,16 @@ public class Lobby {
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    @Override
+    public String toString() {
+        return "Lobby{" +
+                "id=" + id +
+                ", game=" + game +
+                ", initiatingPlayer=" + initiatingPlayer +
+                ", joinedPlayer=" + joinedPlayer +
+                ", status=" + status +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }
