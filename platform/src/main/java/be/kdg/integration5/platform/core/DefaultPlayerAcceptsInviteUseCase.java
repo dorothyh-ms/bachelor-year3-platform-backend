@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -18,14 +19,14 @@ import java.util.UUID;
 public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUseCase {
     private static final Logger log = LoggerFactory.getLogger(DefaultPlayerAcceptsInviteUseCase.class);
     private final InviteLoadPort inviteLoadPort;
-    private final LobbyLoadPort LobbyLoadPort;
-    private final LobbyJoinedPort lobbyJoinedPort;
+    private final LobbyLoadPort lobbyLoadPort;
+    private final List<LobbyJoinedPort> lobbyJoinedPorts;
     private final InviteUpdatePort inviteUpdatePort;
 
-    public DefaultPlayerAcceptsInviteUseCase(InviteLoadPort inviteLoadPort, LobbyLoadPort lobbyLoadPort, LobbyJoinedPort lobbyJoinedPort, InviteUpdatePort inviteUpdatePort) {
+    public DefaultPlayerAcceptsInviteUseCase(InviteLoadPort inviteLoadPort, LobbyLoadPort lobbyLoadPort, List<LobbyJoinedPort> lobbyJoinedPorts, InviteUpdatePort inviteUpdatePort) {
         this.inviteLoadPort = inviteLoadPort;
-        LobbyLoadPort = lobbyLoadPort;
-        this.lobbyJoinedPort = lobbyJoinedPort;
+        this.lobbyLoadPort = lobbyLoadPort;
+        this.lobbyJoinedPorts = lobbyJoinedPorts;
         this.inviteUpdatePort = inviteUpdatePort;
     }
 
@@ -56,7 +57,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             throw new InvalidInviteUserException("User is not the recipient of the invite");
         }
 
-        Optional<Lobby> lobbyOptional = LobbyLoadPort.loadLobby(invite.getLobby().getId());
+        Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
         Lobby lobby;
         if (lobbyOptional.isEmpty()) {
             log.debug("Lobby not found");
@@ -76,7 +77,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             invite.accepted();
             lobby.admitPlayer(invite.getRecipient());
             inviteUpdatePort.updateInvite(invite);
-            lobbyJoinedPort.lobbyJoined(lobby);
+            lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
         } else if (invite.isExpired()) {
             log.debug("Invite expired");
             throw new ExpiredInviteException("Invite has expired");
