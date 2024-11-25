@@ -62,6 +62,14 @@
       "clientRole" : false,
       "containerId" : "1ec228b1-6ac7-4a8a-9291-765e7858c676",
       "attributes" : { }
+    },       {
+      "id": "ffee0d46-7c25-4ad1-9707-180a4ccf26e4",
+      "name": "player",
+      "description": "",
+      "composite": false,
+      "clientRole": false,
+      "containerId": "ec6a4bf6-ac1a-4747-ac3a-67770888c52c",
+      "attributes": {}
     }, {
       "id" : "5f6c9304-c01f-4a1e-8a0b-9e3b620e8191",
       "name" : "default-roles-banditgames",
@@ -445,7 +453,7 @@
       } ],
       "disableableCredentialTypes" : [ ],
       "requiredActions" : [ ],
-      "realmRoles" : [ "default-roles-banditgames" ],
+      "realmRoles" : [ "default-roles-banditgames" ,"player"],
       "notBefore" : 0,
       "groups" : [ ]
     }
