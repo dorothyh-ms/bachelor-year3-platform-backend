@@ -3,4 +3,5 @@ rootProject.name = 'BanditGames'
 include 'application'
 include 'common'
 include 'platform'
+include 'chatbot'
 
