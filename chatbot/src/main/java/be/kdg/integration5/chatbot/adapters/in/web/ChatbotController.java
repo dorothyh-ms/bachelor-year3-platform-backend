@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 
 @RestController
-@RequestMapping("/chatbot")
+@RequestMapping("/api/chatbot")
 public class ChatbotController{
 
     private final GetAnswerUseCase getAnswerUseCase;
