@@ -1,4 +1,4 @@
-package be.kdg.prog6.auth;
+package be.kdg.integration5.auth;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
