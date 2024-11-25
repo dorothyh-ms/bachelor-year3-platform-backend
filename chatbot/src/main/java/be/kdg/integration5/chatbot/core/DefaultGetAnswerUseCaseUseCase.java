@@ -1,15 +1,15 @@
 package be.kdg.integration5.chatbot.core;
 
-import be.kdg.integration5.chatbot.ports.in.GetAnswer;
+import be.kdg.integration5.chatbot.ports.in.GetAnswerUseCase;
 import be.kdg.integration5.chatbot.ports.out.AnswerLoadPort;
 import org.springframework.stereotype.Service;
 
-//@Service
-public class DefaultGetAnswer implements GetAnswer {
+@Service
+public class DefaultGetAnswerUseCaseUseCase implements GetAnswerUseCase {
 
    private final AnswerLoadPort answerLoadPort;
 
-    public DefaultGetAnswer(AnswerLoadPort answerLoadPort) {
+    public DefaultGetAnswerUseCaseUseCase(AnswerLoadPort answerLoadPort) {
         this.answerLoadPort = answerLoadPort;
     }
 
