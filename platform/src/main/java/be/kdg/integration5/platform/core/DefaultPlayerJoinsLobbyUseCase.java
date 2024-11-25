@@ -2,6 +2,7 @@ package be.kdg.integration5.platform.core;
 
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.exceptions.PlayerNotAdmittedToLobbyException;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
@@ -27,12 +28,15 @@ public class DefaultPlayerJoinsLobbyUseCase implements PlayerJoinsLobbyUseCase {
 
     @Override
     public Lobby joinLobby(JoinLobbyCommand command) {
-        Optional<Lobby> lobbyOptional =lobbyLoadPort.loadLobby(command.lobbyId());
+        Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(command.lobbyId());
         Optional<Player> playerOptional = playerLoadPort.loadPlayerById(command.joinPlayerId());
-        if (lobbyOptional.isPresent() && playerOptional.isPresent()){
+        if (lobbyOptional.isPresent() && playerOptional.isPresent()) {
             Lobby lobby = lobbyOptional.get();
             Player player = playerOptional.get();
-            lobby.admitPlayer(player);
+            boolean playerWasAdmitted = lobby.admitPlayer(player);
+            if (!playerWasAdmitted) {
+                throw new PlayerNotAdmittedToLobbyException("Player could not be admitted to the requested lobby");
+            }
             lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
             return lobby;
         }

@@ -1,7 +1,6 @@
 package be.kdg.integration5.platform.domain;
 
-import be.kdg.integration5.platform.exceptions.ClosedLobbyException;
-import be.kdg.integration5.platform.exceptions.InvalidLobbyPlayerException;
+
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -37,15 +36,21 @@ public class Lobby {
         this.dateCreated = dateCreated;
     }
 
-    public void admitPlayer(Player player) {
-        if ( this.status.equals(LobbyStatus.CLOSED)){
-            throw new ClosedLobbyException("Cannot join a closed lobby");
+    private boolean isClosed(){
+        return this.status.equals(LobbyStatus.CLOSED);
+    }
+
+
+    public boolean admitPlayer(Player player) {
+        if ( this.isClosed()){
+            return false;
         }
         if (player.equals(initiatingPlayer)){
-            throw new InvalidLobbyPlayerException("Player cannot join lobby that he/she created");
+            return false;
         }
         this.joinedPlayer = player;
         setStatus(LobbyStatus.CLOSED);
+        return true;
     }
 
     public UUID getId() {
@@ -94,5 +99,17 @@ public class Lobby {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    @Override
+    public String toString() {
+        return "Lobby{" +
+                "id=" + id +
+                ", game=" + game +
+                ", initiatingPlayer=" + initiatingPlayer +
+                ", joinedPlayer=" + joinedPlayer +
+                ", status=" + status +
+                ", dateCreated=" + dateCreated +
+                '}';
     }
 }

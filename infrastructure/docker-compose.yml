@@ -69,6 +69,6 @@
       name: kc-network
       driver: bridge
     banditGames:
-      name: back-network
+      name: bg-games-back-network
       driver: bridge
 

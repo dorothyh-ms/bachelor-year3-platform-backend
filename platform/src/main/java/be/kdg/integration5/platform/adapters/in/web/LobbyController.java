@@ -67,8 +67,8 @@ public class LobbyController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<List<LobbyDto>> getActiveLobbies() {
-        LOGGER.info("Looking for open lobbies ");
+    public ResponseEntity<List<LobbyDto>> getActiveLobbies(@AuthenticationPrincipal Jwt token) {
+        LOGGER.info("Looking for open lobbies with token {} ", token);
         List<Lobby> lobbies = getLobbyUseCase.getLobbies();
         if (!lobbies.isEmpty()) {
             return new ResponseEntity<>(
