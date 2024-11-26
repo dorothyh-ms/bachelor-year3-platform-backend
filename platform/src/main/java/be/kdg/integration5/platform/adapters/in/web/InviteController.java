@@ -70,7 +70,7 @@ public class InviteController {
         ), HttpStatus.OK);
     }
 
-    @GetMapping("player/{userId}")
+    @GetMapping("player")
     @PreAuthorize("hasAuthority('player')")
     public ResponseEntity<List<InviteDto>> getAllInvites(@AuthenticationPrincipal Jwt token) {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
