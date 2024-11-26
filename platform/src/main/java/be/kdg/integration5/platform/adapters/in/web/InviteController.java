@@ -79,7 +79,7 @@ public class InviteController {
             return new ResponseEntity<>(invites.stream().map(invite -> new InviteDto(invite.getId(),
                         invite.getSender(),
                         invite.getRecipient(),
-                        invite.getLobby()))
+                        invite.getLobby(), invite.getInviteStatus()))
                     .toList(),
                     HttpStatus.OK);
         } else {
