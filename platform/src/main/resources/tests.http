@@ -47,7 +47,7 @@ Authorization: Bearer {{access_token}}
 
 ### Player1 invites player2
 
-POST http://localhost:8091/api/lobbies/{{lobby_id}}/invite
+POST http://localhost:8091/api/invites/{{lobby_id}}/invite
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -55,6 +55,10 @@ Authorization: Bearer {{access_token}}
 {
   "userId": "e12bb6fd-8e23-40fd-95cc-f318abf3c38c"
 }
+
+> {%
+    client.global.set("invite_id", response.body.id)
+%}
 
 ### Player attempts to join own lobby - should fail
 
@@ -75,14 +79,16 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 %}
 
 
+### Player2 uses invite to join
 
-### Player2 joins lobby - should succeed
-
-
-PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+PATCH http://localhost:8091/api/invites/{{invite_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
+
+{
+  "action": "ACCEPT"
+}
 
 ### Get open lobbies - should fail (no open lobbies, 204)
 

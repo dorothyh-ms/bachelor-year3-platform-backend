@@ -9,6 +9,7 @@ import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.ports.in.GetLobbyUseCase;
+import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
@@ -31,13 +32,11 @@ public class LobbyController {
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
     private final GetLobbyUseCase getLobbyUseCase;
-    private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
 
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase) {
+    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, GetLobbyUseCase getLobbyUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.getLobbyUseCase = getLobbyUseCase;
-        this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
     }
 
     @PatchMapping("/{lobbyId}")
@@ -90,16 +89,4 @@ public class LobbyController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
-
-    @PostMapping("/{lobbyId}/invite")
-    @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token,
-                                                  @PathVariable UUID lobbyId,
-                                                  @RequestBody Map<String, String> body) {
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
-        UUID invitedUserId = UUID.fromString(body.get("userId"));
-        Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
-        return new ResponseEntity<>(new InviteDto(invite.getId(), invite.getSender(), invite.getRecipient(), invite.getLobby()), HttpStatus.OK);
-    }
 }
