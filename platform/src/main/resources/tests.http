@@ -67,7 +67,7 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
-###
+### Login as player 2
 
 POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
 Content-Type: application/x-www-form-urlencoded
@@ -78,6 +78,12 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
     client.global.set("access_token", response.body.access_token)
 %}
 
+### Get all invites for player2
+
+GET http://localhost:8091/api/invites/player/{{access_token}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
 
 ### Player2 uses invite to join
 
