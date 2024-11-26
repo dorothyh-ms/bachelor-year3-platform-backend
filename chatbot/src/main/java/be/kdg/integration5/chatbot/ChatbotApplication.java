@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ChatbotApplication {
     private static final Logger log = LoggerFactory.getLogger(ChatbotApplication.class);
 
-
     public static void main(String[] args) {
         SpringApplication.run(ChatbotApplication.class, args);
         log.error("Starting Chatbot");

@@ -9,9 +9,14 @@ public class PythonFastApiAdapter implements AnswerLoadPort {
 
     private final RestTemplate restTemplate = new RestTemplate();
     private final String pythonApiUrl = "http://localhost:8000/api/chatbot";
+
+    public PythonFastApiAdapter() {
+
+    }
+
     @Override
     public String loadAnswer(String question) {
-        // Call the Python FastAPI endpoint
+
         String response = restTemplate.postForObject(pythonApiUrl, question, String.class);
         return response != null ? response : "Sorry, I couldn't process your question.";
     }
