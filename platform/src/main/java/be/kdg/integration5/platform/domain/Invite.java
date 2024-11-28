@@ -69,15 +69,29 @@ public class Invite {
         this.inviteStatus = inviteStatus;
     }
 
-    void accepted( ){
+    public void accepted( ){
         this.inviteStatus = InviteStatus.ACCEPTED;
     }
 
-    void denied(){
+    public void denied(){
         this.inviteStatus = InviteStatus.DENIED;
     }
 
-    void expired(){
+    public void expired(){
         this.inviteStatus = InviteStatus.EXPIRED;
+    }
+
+    public boolean isOpen(){
+        return this.inviteStatus.equals(InviteStatus.OPEN);
+    }
+    public boolean isAccepted(){
+        return this.inviteStatus.equals(InviteStatus.ACCEPTED);
+    }
+
+    public boolean isDenied(){
+        return this.inviteStatus.equals(InviteStatus.DENIED);
+    }
+    public boolean isExpired(){
+        return this.inviteStatus.equals(InviteStatus.EXPIRED);
     }
 }
