@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   ollama:
-    image: ollama
+    image: ollama/ollama
     container_name: ollama_container
     ports:
       - "11434:11434"
@@ -16,6 +16,21 @@ services:
       - ollama_network
     depends_on:
       - mysql_app_db
+
+  python_app:
+    build:
+      context: .  # Build from the current directory
+      dockerfile: python/Dockerfile  # Specify the Dockerfile if it's not named 'Dockerfile'
+    image: python_app_image:latest  # Specify the image name and tag
+    container_name: python_app_container
+    ports:
+      - "8080:8080"  # Expose your Python app's port
+    volumes:
+      - .:/app  # Mount the local directory to the container's /app directory
+    networks:
+      - ollama_network  # Connect it to the same network as ollama
+    depends_on:
+      - ollama
 
   mysql_app_db:
     image: mysql:9.0.1

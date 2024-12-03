@@ -4,3 +4,14 @@ Content-Type: application/json
 {
   "question": "What is the weather today?"
 }
+
+###
+
+POST http://127.0.0.1:8000/query_documents/
+Content-Type: application/json
+
+{
+  "question": "What are the main findings in the documents?"
+}
+
+
