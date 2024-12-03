@@ -5,6 +5,11 @@ infrastructure/idp_mysql_data/
 infrastructure/mysql/
 infrastructure/rabbitmq/
 
+.DS_Store
+platform/.DS_Store
+infrastructure/llms/
+
+
 ### Java ###
 # Compiled class file
 *.class
