@@ -4,6 +4,11 @@
 infrastructure/idp_mysql_data/
 infrastructure/mysql/
 infrastructure/rabbitmq/
+infrastructure/llms/
+
+# MacOS files
+platform/.DS_Store
+.DS_Store
 
 ### Java ###
 # Compiled class file
