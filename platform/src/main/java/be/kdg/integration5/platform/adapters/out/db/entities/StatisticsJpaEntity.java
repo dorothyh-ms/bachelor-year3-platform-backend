@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "statistics")
-public class StatisticsJPAEntity {
+public class StatisticsJpaEntity {
 
     @Id
     @Column(name = "match_id", columnDefinition = "BINARY(16)") // UUID in MySQL stored as binary(16)

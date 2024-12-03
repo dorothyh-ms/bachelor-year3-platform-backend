@@ -8,7 +8,7 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity
-@Table(catalog="platform", name="invites")
+@Table(catalog="platform", name="invite")
 public class InviteJpaEntity {
 
 

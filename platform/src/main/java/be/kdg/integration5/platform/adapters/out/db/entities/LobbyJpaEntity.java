@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(catalog="platform", name="lobbies")
+@Table(catalog="platform", name="lobby")
 public class LobbyJpaEntity {
 
     @Id

@@ -10,7 +10,7 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity
-@Table(catalog="platform", name="games")
+@Table(catalog="platform", name="game")
 public class GameJpaEntity {
 
     @Id

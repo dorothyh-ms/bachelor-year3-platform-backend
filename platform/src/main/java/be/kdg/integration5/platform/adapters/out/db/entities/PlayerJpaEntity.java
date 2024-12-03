@@ -8,7 +8,7 @@ import java.sql.Types;
 import java.util.UUID;
 
 @Entity
-@Table(catalog="platform", name="players")
+@Table(catalog="platform", name="player")
 public class PlayerJpaEntity {
 
     @Id
@@ -24,7 +24,10 @@ public class PlayerJpaEntity {
 
     @Column(name = "first_name", updatable = false, nullable = false)
     private String firstName;
+
+    //TODO: should be replaced by Birthdate
     private int age;
+
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
