@@ -11,7 +11,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.embeddings import OpenAIEmbeddings
+import subprocess
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -21,17 +21,21 @@ class QueryRequest(BaseModel):
     user_id: UUID  # Expect UUID for the user ID
     question: str
 
+def setup():
+    print("Pulling models...")
+    print(subprocess.run(["/app/entrypoint.sh"], shell=True))
 # Static file paths (you can change these based on your file location)
 TXT_PATHS = [os.path.join("txt", f) for f in os.listdir("txt") if f.endswith(".txt")]
 
 # Initialize Chroma client
 def get_chroma_client():
-    return chromadb.PersistentClient(path="../chroma_db")
+    return chromadb.PersistentClient(path="/app/chroma_db")
 
 # Global variables
 model_local = OllamaLLM(model="mistral")
 chroma_client = get_chroma_client()
 vectorstore = None
+setup()
 
 # Store conversation history (session-based, typically would be stored in a DB for real applications)
 conversation_history = {}

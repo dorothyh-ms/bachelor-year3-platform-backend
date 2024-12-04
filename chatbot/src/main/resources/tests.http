@@ -1,16 +1,17 @@
-POST http://localhost:8000/api/chatbot
-Content-Type: application/json
-
-{
-  "question": "What is the weather today?"
-}
+#POST http://localhost:8000/api/chatbot
+#Content-Type: application/json
+#
+#{
+#  "question": "What is the weather today?"
+#}
 
 ###
 
-POST http://127.0.0.1:8000/query_documents/
+POST http://0.0.0.0:8000/question/
 Content-Type: application/json
 
 {
+  "user_id": "e12bb6fd-8e23-40fd-95cc-f318abf3c38c",
   "question": "What are the main findings in the documents?"
 }
 
