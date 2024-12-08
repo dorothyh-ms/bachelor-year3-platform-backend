@@ -1,74 +1,86 @@
-  services:
-#    TODO: switch to postgres
-    mysql_app_db:
-      image: mysql:9.0.1
-      environment:
-        MYSQL_DATABASE: 'app_db'
-        MYSQL_USER: 'user'
-        MYSQL_PASSWORD: 'password'
-        MYSQL_ROOT_PASSWORD: 'password'
-      ports:
-        - '3306:3306'
-      networks:
-        - banditGames
-      volumes:
-        - ./mysql/data:/var/lib/mysql
 
-    app_rabbitmq:
-      image: rabbitmq:3.13.7-management-alpine
-      environment:
-        - RABBITMQ_DEFAULT_USER=myuser
-        - RABBITMQ_DEFAULT_PASS=mypassword
-      ports:
-        - "5672:5672" #AMQP
-        - "15672:15672" #MGMT
-      networks:
-        - banditGames
-      volumes:
-        - ./rabbitmq/data/:/var/lib/rabbitmq/
-        - ./rabbitmq/log/:/var/log/rabbitmq/
+services:
+  mysql_app_db:
+    image: mysql:9.0.1
+    environment:
+      MYSQL_DATABASE: 'app_db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    ports:
+      - '3306:3306'
+    networks:
+      - banditGames
+    volumes:
+      - ./mysql/data:/var/lib/mysql
 
+  app_rabbitmq:
+    image: rabbitmq:3.13.7-management-alpine
+    environment:
+      - RABBITMQ_DEFAULT_USER=myuser
+      - RABBITMQ_DEFAULT_PASS=mypassword
+    ports:
+      - "5672:5672" #AMQP
+      - "15672:15672" #MGMT
+    networks:
+      - banditGames
+    volumes:
+      - ./rabbitmq/data/:/var/lib/rabbitmq/
+      - ./rabbitmq/log/:/var/log/rabbitmq/
 
+  idp_mysql:
+    image: mysql:9.0.1
+    volumes:
+      - ./idp_mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    ports:
+      - '3307:3306'
+    networks:
+      - kc
 
-    idp_mysql:
-      image: mysql:9.0.1
-      volumes:
-        - ./idp_mysql_data:/var/lib/mysql
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: keycloak
-        MYSQL_USER: keycloak
-        MYSQL_PASSWORD: password
-      ports:
-        - '3307:3306'
-      networks:
-        - kc
+  idp_keycloak:
+    image: quay.io/keycloak/keycloak:25.0.5
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+      - KC_DB=mysql
+      - KC_DB_URL_HOST=idp_mysql
+      - KC_DB_URL_DATABASE=keycloak
+      - KC_DB_USERNAME=keycloak
+      - KC_DB_PASSWORD=password
+    command: start-dev --import-realm
+    volumes:
+      - ./banditgames-realm.json:/opt/keycloak/data/import/banditgames-realm.json
+    ports:
+      - "8180:8080"
+    depends_on:
+      - idp_mysql
+    networks:
+      - kc
 
-    idp_keycloak:
-      image: quay.io/keycloak/keycloak:25.0.5
-      environment:
-        - KEYCLOAK_ADMIN=admin
-        - KEYCLOAK_ADMIN_PASSWORD=admin
-        - KC_DB=mysql
-        - KC_DB_URL_HOST=idp_mysql
-        - KC_DB_URL_DATABASE=keycloak
-        - KC_DB_USERNAME=keycloak
-        - KC_DB_PASSWORD=password
-      command: start-dev --import-realm
-      volumes:
-        - ./banditgames-realm.json:/opt/keycloak/data/import/banditgames-realm.json
-      ports:
-        - "8180:8080"
-      depends_on:
-        - idp_mysql
-      networks:
-        - kc
+  game-recommender:
+    build:
+      context: ./game-recommender-api
+    command: sh -c "sleep 10s ; uvicorn main:app --host 0.0.0.0 --port 8000"
+    environment:
+      MYSQL_HOST: mysql_app_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "8000:8000"
+    networks:
+      - banditGames
+    depends_on:
+      - mysql_app_db
 
-  networks:
-    kc:
-      name: kc-network
-      driver: bridge
-    banditGames:
-      name: bg-games-back-network
-      driver: bridge
-
+networks:
+  kc:
+    name: kc-network
+    driver: bridge
+  banditGames:
+    name: bg-games-back-network
+    driver: bridge

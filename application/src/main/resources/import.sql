@@ -1,0 +1,326 @@
+INSERT INTO platform.players(player_id, username, last_name, first_name, age, gender, location ) VALUES ('fff2deb7-7bf2-43d5-8897-4ddd8edc6ab1', 'player1', 'player1', 'player1', 20, 'FEMALE', 'location1');
+INSERT INTO platform.players(player_id, username, last_name, first_name, age, gender, location ) VALUES ('e12bb6fd-8e23-40fd-95cc-f318abf3c38c', 'player2', 'player2', 'player2', 20, 'FEMALE', 'location2');
+
+
+
+INSERT INTO platform.games(game_id, name ) VALUES ('05c99486-9f64-49d4-bbb4-22e40d649ada', 'Battleship');
+INSERT INTO platform.games(game_id, name) VALUES ('08c31cbf-7a55-4156-923d-05f398337108', 'Chess');
+INSERT INTO platform.games(game_id, name) VALUES ('2e674330-7898-41b1-859c-b9b2b4808329', 'Checkers');
+INSERT INTO platform.games(game_id, name) VALUES ('a3e45088-45eb-4607-b48c-eb6294db4674', 'Connect 4');
+INSERT INTO platform.games(game_id, name) VALUES ('b7cc1c5e-06fb-470c-878e-2e9b4acaeabc', 'Azul');
+INSERT INTO platform.games(game_id, name) VALUES ('a2094c51-c8c3-4580-ada0-b7944887eac5', 'Othello');
+
+
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Chess', 'STRATEGY', 'INTERMEDIATE', 10.00, 'A classic game of strategy where players aim to checkmate the opponent’s king.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Risk', 'STRATEGY', 'ADVANCED', 15.00, 'A game of global domination where players control armies and engage in battles.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Sudoku', 'PUZZLE', 'BEGINNER', 5.00, 'A logic-based number placement game.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Tetris', 'PUZZLE', 'BEGINNER', 7.00, 'A tile-matching puzzle game where players fit falling blocks into lines.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Dungeons & Dragons', 'ADVENTURE', 'ADVANCED', 20.00, 'A role-playing game where players embark on fantasy adventures in a fictional world.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Codenames', 'PARTY', 'BEGINNER', 10.00, 'A social word game where players try to guess words based on clues.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Charades', 'PARTY', 'BEGINNER', 0.00, 'A fun group game where players act out words or phrases without speaking.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Poker', 'CARD_GAME', 'ADVANCED', 15.00, 'A popular gambling card game involving strategy, psychology, and skill.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Uno', 'CARD_GAME', 'BEGINNER', 8.00, 'A family card game where players aim to be the first to discard all their cards.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Yahtzee', 'DICE_GAME', 'BEGINNER', 10.00, 'A dice game where players roll dice to make various combinations and score points.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Catan Dice', 'DICE_GAME', 'INTERMEDIATE', 12.00, 'A simplified version of Catan using dice for resource gathering and trading.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Scrabble', 'WORD_GAME', 'INTERMEDIATE', 15.00, 'A word game where players create words using letter tiles on a board.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Boggle', 'WORD_GAME', 'BEGINNER', 5.00, 'A word game where players find words by connecting letters on a grid.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Trivial Pursuit', 'TRIVIA', 'INTERMEDIATE', 15.00, 'A trivia game where players answer questions from various categories to earn pie pieces.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'QuizUp', 'TRIVIA', 'INTERMEDIATE', 10.00, 'A mobile trivia game where players compete against others in real-time.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Monopoly', 'FAMILY', 'INTERMEDIATE', 18.00, 'A classic board game where players buy, sell, and trade properties to bankrupt their opponents.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Clue', 'FAMILY', 'BEGINNER', 12.00, 'A mystery game where players deduce who committed a crime, with what weapon, and in what room.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Pandemic', 'COOPERATIVE', 'INTERMEDIATE', 18.00, 'A cooperative game where players work together to stop global viral outbreaks.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Arkham Horror', 'COOPERATIVE', 'ADVANCED', 20.00, 'A cooperative adventure game set in H.P. Lovecraft’s Cthulhu Mythos.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Checkers', 'COMPETITIVE', 'BEGINNER', 5.00, 'A two-player strategy game where players jump over and capture the opponent’s pieces.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Ticket to Ride', 'COMPETITIVE', 'BEGINNER', 15.00, 'A railway-building game where players compete to complete train routes across the country.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Go', 'ABSTRACT', 'ADVANCED', 10.00, 'An ancient abstract strategy game where players aim to surround their opponent’s stones.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Othello', 'ABSTRACT', 'BEGINNER', 10.00, 'A game where players take turns placing discs to capture their opponent’s pieces.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Catan', 'ECONOMIC', 'INTERMEDIATE', 18.00, 'A game of resource management and trading where players build settlements on an island.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Power Grid', 'ECONOMIC', 'ADVANCED', 20.00, 'A game where players compete to build and manage power plants and resources.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Gloomhaven', 'ROLE_PLAYING', 'ADVANCED', 20.00, 'A cooperative role-playing game with tactical combat and evolving scenarios.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Dungeons & Dragons', 'ROLE_PLAYING', 'ADVANCED', 20.00, 'A game where players create characters and embark on adventures in a fantasy world.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Risk Legacy', 'LEGACY', 'ADVANCED', 20.00, 'A campaign version of Risk where the game evolves over time based on player choices.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Gloomhaven', 'LEGACY', 'ADVANCED', 20.00, 'A legacy-style role-playing game with evolving storylines and missions.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Werewolf', 'SOCIAL_DEDUCTION', 'BEGINNER', 12.00, 'A social deduction game where players must figure out who the werewolves are in the group.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Among Us', 'SOCIAL_DEDUCTION', 'BEGINNER', 10.00, 'A social deduction game where players work to fix a spaceship while uncovering an impostor.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Blood Bowl', 'SPORTS', 'ADVANCED', 20.00, 'A fantasy football game where players control teams of fantasy creatures.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Betrayal at Baldur\'s Gate', 'THEMATIC', 'INTERMEDIATE', 18.00, 'A thematic strategy game where players explore a haunted mansion and uncover a traitor.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Power Grid', 'ECONOMIC', 'INTERMEDIATE', 18.00, 'A game where players compete to build and manage power plants and resources.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Codenames: Duet', 'PARTY', 'BEGINNER', 10.00, 'A cooperative version of Codenames where two players work together to guess words.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Azul', 'ABSTRACT', 'INTERMEDIATE', 15.00, 'A tile-placement game where players compete to create beautiful mosaics.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Codenames: Pictures', 'PARTY', 'BEGINNER', 10.00, 'A version of Codenames where players guess words based on visual clues.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Welcome To...', 'ECONOMIC', 'INTERMEDIATE', 18.00, 'A roll-and-write game where players build their own suburban neighborhood.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Shadows over Camelot', 'COOPERATIVE', 'INTERMEDIATE', 20.00, 'A cooperative game set in the Arthurian legend where players work together to protect Camelot.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'DungeonQuest', 'ADVENTURE', 'ADVANCED', 20.00, 'An adventure game where players explore a dungeon to find treasure and escape alive.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), '7 Wonders', 'STRATEGY', 'INTERMEDIATE', 15.00, 'A game of civilization building where players create wonders and develop their empires.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Splendor', 'STRATEGY', 'BEGINNER', 15.00, 'A game where players collect gems and trade them for points in an effort to earn the most prestige.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Quoridor', 'ABSTRACT', 'BEGINNER', 10.00, 'An abstract strategy game where players build walls to block the opponent’s path to the center.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Bohnanza', 'ECONOMIC', 'BEGINNER', 10.00, 'A card game where players trade beans to earn coins.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Hive', 'ABSTRACT', 'INTERMEDIATE', 12.00, 'An abstract strategy game where players move insect pieces around a hexagonal board to surround the opponent’s queen bee.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Star Realms', 'DECK_BUILDING', 'BEGINNER', 15.00, 'A deck-building game set in a futuristic space universe where players fight to control the galaxy.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Shadow Hunters', 'SOCIAL_DEDUCTION', 'BEGINNER', 12.00, 'A hidden roles game where players are either hunters or shadows, trying to eliminate the other group.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Clank!', 'DECK_BUILDING', 'INTERMEDIATE', 15.00, 'A deck-building game where players explore a dungeon and attempt to steal treasure while avoiding danger.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Roll for the Galaxy', 'STRATEGY', 'INTERMEDIATE', 18.00, 'A dice game where players explore space and develop their own empires.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Sushi Go!', 'CARD_GAME', 'BEGINNER', 8.00, 'A fast-paced card game where players collect sushi dishes to score points.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Azul', 'ABSTRACT', 'INTERMEDIATE', 15.00, 'A tile-placement game where players compete to create beautiful mosaics.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Quoridor', 'ABSTRACT', 'BEGINNER', 10.00, 'An abstract strategy game where players build walls to block the opponent’s path to the center.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Bohnanza', 'ECONOMIC', 'BEGINNER', 10.00, 'A card game where players trade beans to earn coins.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Hive', 'ABSTRACT', 'INTERMEDIATE', 12.00, 'An abstract strategy game where players move insect pieces around a hexagonal board to surround the opponent’s queen bee.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Codenames: Pictures', 'PARTY', 'BEGINNER', 10.00, 'A version of Codenames where players guess words based on visual clues.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Welcome To...', 'ECONOMIC', 'INTERMEDIATE', 18.00, 'A roll-and-write game where players build their own suburban neighborhood.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'Shadows over Camelot', 'COOPERATIVE', 'INTERMEDIATE', 20.00, 'A cooperative game set in the Arthurian legend where players work together to protect Camelot.');
+INSERT INTO statistics.games (game_id, game_name, genre, difficulty_level, price, description) VALUES (UUID(), 'DungeonQuest', 'ADVENTURE', 'ADVANCED', 20.00, 'An adventure game where players explore a dungeon to find treasure and escape alive.');
+
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'USA');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'Germany');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'France');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'Canada');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'Brazil');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'United Kingdom');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'Australia');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'Japan');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'South Korea');
+INSERT INTO statistics.countries (id, name) VALUES (UUID(), 'India');
+
+-- Locations in USA
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'New York', (SELECT id FROM statistics.countries WHERE name = 'USA'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Los Angeles', (SELECT id FROM statistics.countries WHERE name = 'USA'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Chicago', (SELECT id FROM statistics.countries WHERE name = 'USA'));
+
+-- Locations in Germany
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Berlin', (SELECT id FROM statistics.countries WHERE name = 'Germany'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Munich', (SELECT id FROM statistics.countries WHERE name = 'Germany'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Hamburg', (SELECT id FROM statistics.countries WHERE name = 'Germany'));
+
+-- Locations in France
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Paris', (SELECT id FROM statistics.countries WHERE name = 'France'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Marseille', (SELECT id FROM statistics.countries WHERE name = 'France'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Lyon', (SELECT id FROM statistics.countries WHERE name = 'France'));
+
+-- Locations in Canada
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Toronto', (SELECT id FROM statistics.countries WHERE name = 'Canada'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Vancouver', (SELECT id FROM statistics.countries WHERE name = 'Canada'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Montreal', (SELECT id FROM statistics.countries WHERE name = 'Canada'));
+
+-- Locations in Brazil
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'São Paulo', (SELECT id FROM statistics.countries WHERE name = 'Brazil'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Rio de Janeiro', (SELECT id FROM statistics.countries WHERE name = 'Brazil'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Brasília', (SELECT id FROM statistics.countries WHERE name = 'Brazil'));
+
+-- Locations in the United Kingdom
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'London', (SELECT id FROM statistics.countries WHERE name = 'United Kingdom'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Manchester', (SELECT id FROM statistics.countries WHERE name = 'United Kingdom'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Birmingham', (SELECT id FROM statistics.countries WHERE name = 'United Kingdom'));
+
+-- Locations in Australia
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Sydney', (SELECT id FROM statistics.countries WHERE name = 'Australia'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Melbourne', (SELECT id FROM statistics.countries WHERE name = 'Australia'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Brisbane', (SELECT id FROM statistics.countries WHERE name = 'Australia'));
+
+-- Locations in Japan
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Tokyo', (SELECT id FROM statistics.countries WHERE name = 'Japan'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Osaka', (SELECT id FROM statistics.countries WHERE name = 'Japan'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Kyoto', (SELECT id FROM statistics.countries WHERE name = 'Japan'));
+
+-- Locations in South Korea
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Seoul', (SELECT id FROM statistics.countries WHERE name = 'South Korea'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Busan', (SELECT id FROM statistics.countries WHERE name = 'South Korea'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Incheon', (SELECT id FROM statistics.countries WHERE name = 'South Korea'));
+
+-- Locations in India
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Mumbai', (SELECT id FROM statistics.countries WHERE name = 'India'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Delhi', (SELECT id FROM statistics.countries WHERE name = 'India'));
+INSERT INTO statistics.locations (id, city, country_id) VALUES (UUID(), 'Bengaluru', (SELECT id FROM statistics.countries WHERE name = 'India'));
+
+
+-- Players
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'johndoe', 'John', 'Doe', '1990-05-15', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'New York' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'janedoe', 'Jane', 'Doe', '1992-08-22', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Berlin' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'michael25', 'Michael', 'Smith', '1985-11-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Paris' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'emily33', 'Emily', 'Jones', '1993-01-10', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Toronto' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'luizgarcia', 'Luiz', 'Garcia', '1988-02-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'luizgarcia', 'Luiz', 'Garcia', '1988-02-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'mariaramos', 'Maria', 'Ramos', '1992-07-22', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'pedrooliveira', 'Pedro', 'Oliveira', '1995-03-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'anacarvalho', 'Ana', 'Carvalho', '1987-12-15', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'juliopereira', 'Julio', 'Pereira', '1990-01-05', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'lucianasantos', 'Luciana', 'Santos', '1993-06-20', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'robertoalves', 'Roberto', 'Alves', '1985-08-14', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'fernandolima', 'Fernando', 'Lima', '1996-02-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'beatrizsousa', 'Beatriz', 'Sousa', '1991-11-19', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'ricardoborges', 'Ricardo', 'Borges', '1989-10-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'marialima', 'Maria', 'Lima', '1994-09-09', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'danielaraujo', 'Daniel', 'Araujo', '1986-11-25', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'raquelmartins', 'Raquel', 'Martins', '1997-04-17', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'marcosfreitas', 'Marcos', 'Freitas', '1983-09-29', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'isabellacosta', 'Isabela', 'Costa', '1990-06-11', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'brunogomes', 'Bruno', 'Gomes', '1989-04-27', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'danielaguimarães', 'Daniela', 'Guimarães', '1995-07-03', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'victorhugo', 'Victor', 'Hugo', '1992-10-13', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'luanacavalcante', 'Luana', 'Cavalcante', '1993-01-21', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'felipefernandes', 'Felipe', 'Fernandes', '1994-11-10', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'alineoliveira', 'Aline', 'Oliveira', '1996-05-28', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'João Pessoa' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'gustavofreitas', 'Gustavo', 'Freitas', '1992-02-16', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'rodrigomartins', 'Rodrigo', 'Martins', '1988-09-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília' LIMIT 1));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'the_urban_johnny', 'John', 'Doe', '1990-01-01', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'New York'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'sunny_smith', 'Jane', 'Smith', '1985-05-15', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'New York'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'alittle_alice', 'Alice', 'Johnson', '1992-08-25', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Los Angeles'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'boisterous_bob', 'Bob', 'Miller', '1988-03-10', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Los Angeles'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'charlie_chill', 'Charlie', 'Davis', '1994-11-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Chicago'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'debbie_dynamo', 'Deborah', 'Martinez', '1993-07-20', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Berlin'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'ethan_electric', 'Ethan', 'Gonzalez', '1990-09-10', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Munich'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'evie_explores', 'Eva', 'Rodriguez', '1987-02-02', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Hamburg'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'frankly_funny', 'Frank', 'Wilson', '1991-04-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Paris'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'grace_groovy', 'Grace', 'Lopez', '1995-01-01', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Marseille'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'lively_lyon', 'Lyon', 'Parker', '1990-05-22', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Lyon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'tiger_toronto', 'Jack', 'Taylor', '1992-12-07', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Toronto'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'vibrant_vancouver', 'Lily', 'Anderson', '1994-08-16', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Vancouver'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'moody_montreal', 'Mia', 'Thomas', '1991-09-23', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Montreal'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'sao_smart', 'Sofia', 'Martinez', '1993-10-15', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'brilliant_brasilia', 'Breno', 'Silva', '1994-01-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'raging_rio', 'Lucas', 'Costa', '1992-06-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'vivacious_victor', 'Victor', 'Santos', '1991-12-07', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'melodic_melbourne', 'Madeline', 'Parker', '1990-03-20', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'eager_eliza', 'Eliza', 'Graham', '1994-07-12', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'handsome_harry', 'Harry', 'Clark', '1991-03-05', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'jovial_jason', 'Jason', 'Morris', '1992-02-22', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Sydney'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'bold_ben', 'Ben', 'Johnson', '1995-10-19', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Tokyo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'quick_quinn', 'Quinn', 'White', '1990-11-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Berlin'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'daring_diana', 'Diana', 'Walker', '1993-12-14', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Paris'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'wonder_wendy', 'Wendy', 'Lopez', '1994-04-06', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Paris'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'calm_claire', 'Claire', 'Martinez', '1989-07-29', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'energetic_emma', 'Emma', 'Taylor', '1991-01-12', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'grinning_grace', 'Grace', 'Garcia', '1992-12-05', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'sociable_sam', 'Sam', 'Miller', '1993-06-01', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Tokyo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'independent_ian', 'Ian', 'Wright', '1988-10-22', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Osaka'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'curious_catherine', 'Catherine', 'Hall', '1991-09-17', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Marseille'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'wild_will', 'Will', 'Adams', '1987-01-11', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Lyon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'zany_zara', 'Zara', 'Bennett', '1992-06-20', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'mighty_mark', 'Mark', 'Mitchell', '1990-08-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brisbane'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'cheerful_charlie', 'Charlie', 'Young', '1994-04-11', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brisbane'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'playful_paul', 'Paul', 'Scott', '1989-07-15', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Birmingham'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'determined_dylan', 'Dylan', 'King', '1993-02-28', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Birmingham'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'sophisticated_sophia', 'Sophia', 'Thompson', '1992-12-12', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'inquisitive_isaac', 'Isaac', 'Gonzales', '1990-05-23', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Seoul'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'joyful_james', 'James', 'Brown', '1994-03-15', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Busan'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'mellow_mary', 'Mary', 'Carter', '1995-01-29', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Incheon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'genial_gina', 'Gina', 'Nelson', '1991-09-06', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Delhi'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'playful_peter', 'Peter', 'Ramirez', '1994-02-25', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Delhi'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'charming_chris', 'Chris', 'Evans', '1988-12-10', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Bengaluru'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'timid_tina', 'Tina', 'Peters', '1993-10-12', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Mumbai'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'lively_luke', 'Luke', 'Hughes', '1995-07-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Osaka'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'bold_bella', 'Bella', 'Shaw', '1992-11-05', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'innovative_india', 'India', 'Baker', '1993-09-17', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Mumbai'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'mellow_mike', 'Mike', 'Gordon', '1990-02-01', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brisbane'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'whimsical_william', 'William', 'Stewart', '1994-03-29', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Sydney'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'jolly_julie', 'Julie', 'Roberts', '1991-04-17', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Los Angeles'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'charming_charlie', 'Charlie', 'Walker', '1992-05-21', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'relaxed_rachel', 'Rachel', 'Woods', '1990-10-14', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Marseille'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'sporty_sam', 'Sam', 'Hill', '1993-06-05', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'fun_felix', 'Felix', 'Murphy', '1989-08-09', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Lyon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'creative_claire', 'Claire', 'Lee', '1991-12-01', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'imaginative_ian', 'Ian', 'Carter', '1992-07-08', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Tokyo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'adventurous_alex', 'Alex', 'Nelson', '1995-09-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Los Angeles'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'dazzling_daisy', 'Daisy', 'Allen', '1993-01-25', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Toronto'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'brilliant_benjamin', 'Benjamin', 'Morris', '1991-03-15', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Chicago'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'mysterious_mary', 'Mary', 'Parker', '1990-12-03', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Hamburg'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'energetic_ella', 'Ella', 'Gonzalez', '1994-11-09', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Toronto'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'passionate_peter', 'Peter', 'Adams', '1989-09-25', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'outgoing_olivia', 'Olivia', 'Reed', '1994-02-17', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Paris'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'witty_will', 'Will', 'Harrison', '1991-11-19', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Vancouver'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'charming_catherine', 'Catherine', 'James', '1995-03-30', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Seoul'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'adventurous_amber', 'Amber', 'Rodriguez', '1993-05-08', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Osaka'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'jovial_jared', 'Jared', 'White', '1990-12-11', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'fun_fiona', 'Fiona', 'Jackson', '1994-07-01', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Birmingham'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'playful_peter', 'Peter', 'Gonzales', '1992-01-18', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Marseille'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'spontaneous_sophia', 'Sophia', 'Taylor', '1995-12-09', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Bengaluru'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'dashing_daniel', 'Daniel', 'Scott', '1991-07-23', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Tokyo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'serene_sara', 'Sara', 'Garcia', '1993-08-13', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'dynamic_david', 'David', 'Smith', '1989-04-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Seoul'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'brave_bella', 'Bella', 'Green', '1994-09-21', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Lyon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'vibrant_virgil', 'Virgil', 'Walker', '1992-04-28', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Chicago'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'bright_ben', 'Ben', 'Martin', '1991-10-15', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Bengaluru'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'curious_chloe', 'Chloe', 'Hughes', '1993-06-25', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Berlin'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'cheerful_carl', 'Carl', 'Davis', '1992-02-12', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES ('fff2deb7-7bf2-43d5-8897-4ddd8edc6ab1', 'player1', 'player1', 'player2', '2004-04-15', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'New York'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES ('e12bb6fd-8e23-40fd-95cc-f318abf3c38c', 'player2', 'player2', 'player2', '2004-07-20', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Los Angeles'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player3', 'Michael', 'Johnson', '1992-02-10', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Chicago'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player4', 'Sarah', 'Williams', '1987-11-30', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Berlin'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player5', 'David', 'Miller', '1995-09-12', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Munich'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player6', 'Emma', 'Davis', '1993-06-04', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Hamburg'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player7', 'Lucas', 'Brown', '1989-12-25', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Paris'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player8', 'Olivia', 'Wilson', '1996-03-15', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Marseille'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player9', 'Ethan', 'Moore', '1991-07-22', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Lyon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player10', 'Sophia', 'Taylor', '1994-11-09', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Toronto'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player11', 'William', 'Anderson', '1988-05-19', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Vancouver'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player12', 'Mia', 'Thomas', '1990-02-14', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Montreal'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player13', 'James', 'Jackson', '1986-10-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'São Paulo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player14', 'Charlotte', 'White', '1992-01-05', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Rio de Janeiro'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player15', 'Benjamin', 'Harris', '1993-08-17', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brasília'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player16', 'Amelia', 'Martin', '1990-04-23', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'London'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player17', 'Alexander', 'Clark', '1988-03-09', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Manchester'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player18', 'Isabella', 'Rodriguez', '1995-12-18', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Birmingham'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player19', 'Jack', 'Lopez', '1991-07-25', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Sydney'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player20', 'Amelia', 'Walker', '1994-10-12', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Melbourne'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player21', 'Sebastian', 'Young', '1993-05-03', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Brisbane'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player22', 'Emily', 'Hall', '1989-11-28', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Tokyo'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player23', 'Samuel', 'Allen', '1992-04-30', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Osaka'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player24', 'Lily', 'King', '1995-01-22', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Kyoto'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player25', 'Oliver', 'Wright', '1991-03-12', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Seoul'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player26', 'Ava', 'Lopez', '1993-09-06', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Busan'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player27', 'Henry', 'Gonzalez', '1990-08-01', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Incheon'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player28', 'Charlotte', 'Perez', '1992-10-10', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Mumbai'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player29', 'George', 'Martinez', '1991-02-17', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Delhi'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player30', 'Sophie', 'Davis', '1994-05-21', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Bengaluru'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player56', 'George', 'Martinez', '1991-02-17', 'MALE', (SELECT id FROM statistics.locations WHERE city = 'Delhi'));
+INSERT INTO statistics.players (id, username, first_name, last_name, birth_date, gender, location_id) VALUES (UUID(), 'player666', 'Sophie', 'Davis', '1994-05-21', 'FEMALE', (SELECT id FROM statistics.locations WHERE city = 'Bengaluru'));
+
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Chess' LIMIT 1), NOW(), NOW() + INTERVAL 1 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Chess') LIMIT 1), 30, 100, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player1'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Chess') LIMIT 1), 25, 80, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player2'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Risk' LIMIT 1), NOW(), NOW() + INTERVAL 3 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Risk') LIMIT 1), 40, 150, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player3'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Risk') LIMIT 1), 35, 120, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player4'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Sudoku' LIMIT 1), NOW(), NOW() + INTERVAL 30 MINUTE, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 15, 90, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player5'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 12, 80, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player6'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Tetris' LIMIT 1), NOW(), NOW() + INTERVAL 45 MINUTE, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Tetris') LIMIT 1), 50, 200, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player7'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Tetris') LIMIT 1), 45, 180, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player8'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Scrabble' LIMIT 1), NOW(), NOW() + INTERVAL 1 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Scrabble') LIMIT 1), 20, 150, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player2'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Scrabble') LIMIT 1), 18, 130, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player3'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly' LIMIT 1), NOW(), NOW() + INTERVAL 3 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly') LIMIT 1), 50, 300, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player4'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly') LIMIT 1), 45, 250, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player1'));
+
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly' LIMIT 1), NOW(), NOW() + INTERVAL 3 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly') LIMIT 1), 50, 300, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player4'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Monopoly') LIMIT 1), 45, 250, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player1'));
+
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Azul' LIMIT 1), NOW(), NOW() + INTERVAL 1 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 50, 300, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player1'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 45, 250, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player2'));
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Azul' LIMIT 1), NOW(), NOW() + INTERVAL 1 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 10, 40, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player1'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Azul') LIMIT 1), 50, 50, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player2'));
+
+
+INSERT INTO statistics.matches (id, game_id, start_time, end_time, status) VALUES (UUID(), (SELECT game_id FROM statistics.games WHERE game_name = 'Catan' LIMIT 1), NOW(), NOW() + INTERVAL 1 HOUR, 'COMPLETED');
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Catan') LIMIT 1), 10, 50, 'WIN', (SELECT id FROM statistics.players WHERE username = 'player2'));
+INSERT INTO statistics.player_matches (id, match_id, number_of_turns, score, outcome, player_id) VALUES (UUID(), (SELECT id FROM statistics.matches WHERE game_id = (SELECT game_id FROM statistics.games WHERE game_name = 'Catan') LIMIT 1), 12, 10, 'LOSS', (SELECT id FROM statistics.players WHERE username = 'player3'));
+
+
+
+
+
+
+

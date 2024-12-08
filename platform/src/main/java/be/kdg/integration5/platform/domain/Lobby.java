@@ -36,7 +36,7 @@ public class Lobby {
         this.dateCreated = dateCreated;
     }
 
-    private boolean isClosed(){
+    public boolean isClosed(){
         return this.status.equals(LobbyStatus.CLOSED);
     }
 
@@ -100,6 +100,8 @@ public class Lobby {
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+
 
     @Override
     public String toString() {

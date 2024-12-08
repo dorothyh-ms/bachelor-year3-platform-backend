@@ -60,9 +60,16 @@ Authorization: Bearer {{access_token}}
     client.global.set("invite_id", response.body.id)
 %}
 
-### Player attempts to join own lobby - should fail
+### Player1 attempts to join own lobby - should fail
 
 PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+### Player1 gets game recommendations
+
+GET http://localhost:8091/api/game-recommendations
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -105,3 +112,5 @@ PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
+
+
