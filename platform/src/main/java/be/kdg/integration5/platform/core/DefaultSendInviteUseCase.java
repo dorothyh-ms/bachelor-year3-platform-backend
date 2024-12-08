@@ -34,6 +34,7 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
         if (senderPlayer.isEmpty()) {
             throw new InvalidPlayerException("Sender not found");
         }
+
         Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new InvalidLobbyException("Lobby not found"));
         Optional<Player> recipientPlayer = getPlayerUseCase.getPlayerById(recipient);
         if (recipientPlayer.isEmpty()) {

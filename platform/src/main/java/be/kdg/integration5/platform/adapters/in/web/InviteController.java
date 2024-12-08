@@ -4,6 +4,8 @@ import be.kdg.integration5.platform.adapters.in.web.dtos.*;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.InviteAction;
 import be.kdg.integration5.platform.domain.Lobby;
+import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.ports.in.GetInvitesUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -22,10 +25,12 @@ public class InviteController {
 
     private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
     private final PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase;
+    private final GetInvitesUseCase getInvitesUseCase;
 
-    public InviteController(PlayerCreatesInviteUseCase playerCreatesInviteUseCase, PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase) {
+    public InviteController(PlayerCreatesInviteUseCase playerCreatesInviteUseCase, PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase, GetInvitesUseCase getInvitesUseCase) {
         this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
         this.playerAcceptsInviteUseCase = playerAcceptsInviteUseCase;
+        this.getInvitesUseCase = getInvitesUseCase;
     }
 
     @PostMapping("/{lobbyId}/invite")
@@ -63,5 +68,22 @@ public class InviteController {
                 lobby.getStatus()
 
         ), HttpStatus.OK);
+    }
+
+    @GetMapping("player")
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<List<InviteDto>> getAllInvites(@AuthenticationPrincipal Jwt token) {
+        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
+        List<Invite> invites = getInvitesUseCase.getInvites(userId);
+        if (!invites.isEmpty()) {
+            return new ResponseEntity<>(invites.stream().map(invite -> new InviteDto(invite.getId(),
+                        invite.getSender(),
+                        invite.getRecipient(),
+                        invite.getLobby(), invite.getInviteStatus()))
+                    .toList(),
+                    HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 }

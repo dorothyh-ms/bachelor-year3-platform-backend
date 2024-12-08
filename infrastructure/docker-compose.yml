@@ -61,6 +61,7 @@
         - "8180:8080"
       depends_on:
         - idp_mysql
+      restart: on-failure
       networks:
         - kc
 
