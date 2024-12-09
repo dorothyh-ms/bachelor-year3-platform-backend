@@ -1,22 +1,26 @@
 package be.kdg.integration5.platform.adapters.out.db.entities;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+
+import java.sql.Types;
 import java.util.UUID;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "statistics")
+@Table(catalog="platform", name = "statistics")
 public class StatisticsJpaEntity {
 
     @Id
-    @Column(name = "match_id", columnDefinition = "BINARY(16)") // UUID in MySQL stored as binary(16)
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "match_id", updatable = false, nullable = false) // UUID in MySQL stored as binary(16)
     private UUID matchId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "game_id", referencedColumnName = "game_id", columnDefinition = "BINARY(16)")
+    @ManyToOne
+    @JoinColumn(name = "game_id")
     private GameJpaEntity game;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_id", referencedColumnName = "player_id", columnDefinition = "BINARY(16)")
+    @ManyToOne
+    @JoinColumn(name = "player_id")
     private PlayerJpaEntity player;
 
     @Column(name = "win")
@@ -33,9 +37,6 @@ public class StatisticsJpaEntity {
 
     @Column(name = "end_time_date")
     private LocalDateTime endTimeDate;
-
-    @Column(name = "total_time_played")
-    private int totalTimePlayed; // Duration in minutes
 
     @Column(name = "number_of_moves")
     private int numberOfMoves;
@@ -109,14 +110,6 @@ public class StatisticsJpaEntity {
         this.endTimeDate = endTimeDate;
     }
 
-    public int getTotalTimePlayed() {
-        return totalTimePlayed;
-    }
-
-    public void setTotalTimePlayed(int totalTimePlayed) {
-        this.totalTimePlayed = totalTimePlayed;
-    }
-
     public int getNumberOfMoves() {
         return numberOfMoves;
     }
@@ -133,12 +126,4 @@ public class StatisticsJpaEntity {
         this.score = score;
     }
 
-    // Method to calculate total time played
-    @PrePersist
-    @PreUpdate
-    public void calculateTotalTimePlayed() {
-        if (startTimeDate != null && endTimeDate != null) {
-            this.totalTimePlayed = (int) java.time.Duration.between(startTimeDate, endTimeDate).toMinutes();
-        }
-    }
 }

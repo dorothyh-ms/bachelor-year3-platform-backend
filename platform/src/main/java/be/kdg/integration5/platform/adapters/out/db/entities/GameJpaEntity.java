@@ -15,6 +15,7 @@ public class GameJpaEntity {
 
     @Id
     @JdbcTypeCode(Types.VARCHAR)
+
     @Column(name = "game_id", updatable = false, nullable = false)
     private UUID id;
     private String name;

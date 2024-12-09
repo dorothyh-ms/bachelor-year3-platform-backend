@@ -25,12 +25,17 @@ public class PlayerJpaEntity {
     @Column(name = "first_name", updatable = false, nullable = false)
     private String firstName;
 
-    //TODO: should be replaced by Birthdate
+
     private int age;
+    //TODO: should be replaced by Birthdate
+//    @Column(name = "birthdate")
+//    private LocalDate birthdate;
 
 
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
+
+    @Column(name = "location")
     private String location;
 
     public String getUsername() {
