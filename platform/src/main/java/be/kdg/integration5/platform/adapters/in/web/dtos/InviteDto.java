@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.adapters.in.web.dtos;
 
+import be.kdg.integration5.platform.domain.InviteStatus;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
 
@@ -17,11 +18,20 @@ public class InviteDto {
 
     private Lobby lobby;
 
+    private InviteStatus inviteStatus;
+
     public InviteDto(UUID id, Player sender, Player recipient, Lobby lobby) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
+    }
+    public InviteDto(UUID id, Player sender, Player recipient, Lobby lobby,InviteStatus inviteStatus) {
+        this.id = id;
+        this.sender = sender;
+        this.recipient = recipient;
+        this.lobby = lobby;
+        this.inviteStatus = inviteStatus;
     }
 
     public UUID getId() {
@@ -54,5 +64,13 @@ public class InviteDto {
 
     public void setLobby(Lobby lobby) {
         this.lobby = lobby;
+    }
+
+    public InviteStatus getInviteStatus() {
+        return inviteStatus;
+    }
+
+    public void setInviteStatus(InviteStatus inviteStatus) {
+        this.inviteStatus = inviteStatus;
     }
 }
