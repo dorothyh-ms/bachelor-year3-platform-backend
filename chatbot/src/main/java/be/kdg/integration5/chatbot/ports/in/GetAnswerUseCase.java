@@ -1,7 +1,9 @@
 package be.kdg.integration5.chatbot.ports.in;
 
 
+import java.util.UUID;
+
 public interface GetAnswerUseCase {
 
-    public String getAnswer(String question);
+    public String getAnswer(String question, UUID userid, String game);
 }

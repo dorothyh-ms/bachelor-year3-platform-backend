@@ -1,18 +1,32 @@
-#POST http://localhost:8000/api/chatbot
-#Content-Type: application/json
-#
-#{
-#  "question": "What is the weather today?"
-#}
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&username=player1&password=password&grant_type=password&scope=openid
+
+> {%
+    client.global.set("access_token", response.body.access_token)
+%}
 
 ###
 
-POST http://0.0.0.0:8000/question/
+GET http://localhost:8091/api/chatbot/question
 Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
 
 {
-  "user_id": "e12bb6fd-8e23-40fd-95cc-f318abf3c38c",
-  "question": "What are the main findings in the documents?"
+  "question": "explain me the rules of the game",
+  "game": "Battleship"
 }
 
+###
+
+GET http://localhost:8091/api/chatbot/question
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "question": "What are the main findings in the documents?"
+}
 

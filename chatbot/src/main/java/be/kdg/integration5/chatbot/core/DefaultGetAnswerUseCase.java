@@ -4,6 +4,8 @@ import be.kdg.integration5.chatbot.ports.in.GetAnswerUseCase;
 import be.kdg.integration5.chatbot.ports.out.AnswerLoadPort;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class DefaultGetAnswerUseCase implements GetAnswerUseCase {
 
@@ -15,7 +17,7 @@ public class DefaultGetAnswerUseCase implements GetAnswerUseCase {
 
 
     @Override
-    public String getAnswer(String question) {
-        return answerLoadPort.loadAnswer(question);
+    public String getAnswer(String question, UUID userid, String game){
+        return answerLoadPort.loadAnswer(question, userid, game);
     }
 }

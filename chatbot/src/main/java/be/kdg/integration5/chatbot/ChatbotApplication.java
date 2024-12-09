@@ -11,7 +11,6 @@ public class ChatbotApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ChatbotApplication.class, args);
-        log.error("Starting Chatbot");
     }
 
 }

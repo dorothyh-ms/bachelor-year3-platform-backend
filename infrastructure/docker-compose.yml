@@ -4,7 +4,6 @@ services:
   fastapi_app:
     image: emrecaylar/my-fastapi-app  # Name and tag for the imaged
     container_name: chatbot-container
-
     ports:
       - "8000:8000"  # Expose FastAPI app's port
 
