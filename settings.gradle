@@ -4,4 +4,7 @@ include 'application'
 include 'common'
 include 'platform'
 include 'chatbot'
+include 'player-statistics'
+include 'recommender:recommender'
+findProject(':recommender:recommender')?.name = 'recommender'
 
