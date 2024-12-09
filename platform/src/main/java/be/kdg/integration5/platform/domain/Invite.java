@@ -94,4 +94,8 @@ public class Invite {
     public boolean isExpired(){
         return this.inviteStatus.equals(InviteStatus.EXPIRED);
     }
+
+    public boolean isRecipient(UUID id) {
+        return recipient.getPlayerId().equals(id);
+    }
 }

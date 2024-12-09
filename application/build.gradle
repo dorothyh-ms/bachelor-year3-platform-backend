@@ -6,6 +6,8 @@ plugins {
 dependencies {
     implementation project(":common")
     implementation project(':platform')
+    implementation project(':player-statistics')
+    implementation project(':recommender')
     implementation 'mysql:mysql-connector-java:8.0.33'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'

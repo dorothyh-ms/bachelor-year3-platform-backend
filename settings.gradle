@@ -3,4 +3,7 @@ rootProject.name = 'BanditGames'
 include 'application'
 include 'common'
 include 'platform'
+include 'player-statistics'
+include 'recommender:recommender'
+findProject(':recommender:recommender')?.name = 'recommender'
 
