@@ -21,12 +21,8 @@ Authorization: Bearer {{access_token}}
 
 ###
 
-GET http://localhost:8091/api/chatbot/question
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{access_token}}
 
-{
-  "question": "What are the main findings in the documents?"
-}
+#upload file should be done through postman, battlship rules is already there
+#    -ask Emre if you dont know how :-)
+# http://localhost:57462/add-rules/
 
