@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.domain;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -82,7 +83,7 @@ public class Player {
     }
 
     public Invite createInvite(Player recipient, Lobby lobby){
-        return new Invite(UUID.randomUUID(), this, recipient, lobby);
+        return new Invite(UUID.randomUUID(), this, recipient, lobby, LocalDateTime.now());
     }
 
     @Override

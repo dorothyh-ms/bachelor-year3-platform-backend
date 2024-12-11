@@ -28,13 +28,13 @@
   "oauth2DevicePollingInterval" : 5,
   "enabled" : true,
   "sslRequired" : "external",
-  "registrationAllowed" : false,
+  "registrationAllowed" : true,
   "registrationEmailAsUsername" : false,
   "rememberMe" : false,
   "verifyEmail" : false,
   "loginWithEmailAllowed" : true,
   "duplicateEmailsAllowed" : false,
-  "resetPasswordAllowed" : false,
+  "resetPasswordAllowed" : true,
   "editUsernameAllowed" : false,
   "bruteForceProtected" : false,
   "permanentLockout" : false,
@@ -68,7 +68,7 @@
       "description" : "${role_default-roles}",
       "composite" : true,
       "composites" : {
-        "realm" : [ "offline_access", "uma_authorization" ],
+        "realm" : [ "offline_access", "uma_authorization", "player" ],
         "client" : {
           "account" : [ "manage-account", "view-profile" ]
         }
@@ -76,7 +76,17 @@
       "clientRole" : false,
       "containerId" : "1ec228b1-6ac7-4a8a-9291-765e7858c676",
       "attributes" : { }
-    } ],
+    } ,
+      {
+        "id": "608eb902-8776-4542-8b9c-128f58598b9c",
+        "name": "player",
+        "description": "",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "ec6a4bf6-ac1a-4747-ac3a-67770888c52c",
+        "attributes": {}
+      }
+    ],
     "client" : {
       "realm-management" : [ {
         "id" : "bc9d0fec-6b4f-48b2-a9ab-35f90e7857f5",
@@ -248,6 +258,7 @@
       } ],
       "security-admin-console" : [ ],
       "banditgames-client" : [ ],
+      "banditgames-frontend": [],
       "admin-cli" : [ ],
       "account-console" : [ ],
       "broker" : [ {
@@ -646,6 +657,57 @@
       "defaultClientScopes" : [ "web-origins", "acr", "roles", "profile", "basic", "email" ],
       "optionalClientScopes" : [ "address", "phone", "offline_access", "microprofile-jwt" ]
     }, {
+      "id": "6089fb07-c11f-40ed-b773-fef3b656b24d",
+      "clientId": "banditgames-frontend",
+      "name": "",
+      "description": "",
+      "rootUrl": "",
+      "adminUrl": "",
+      "baseUrl": "",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "basic",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ]
+    },{
       "id" : "8833ff04-31ba-468b-86da-48ee603179a3",
       "clientId" : "security-admin-console",
       "name" : "${client_security-admin-console}",

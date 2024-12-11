@@ -17,6 +17,7 @@ public class InviteMapper {
         invite.setRecipient(PlayerMapper.toPlayer(inviteJpaEntity.getRecipient()));  // Assuming PlayerMapper exists for Player domain objects
         invite.setLobby(LobbyMapper.toLobby(inviteJpaEntity.getLobby()));  // Assuming LobbyMapper exists for Lobby domain objects
         invite.setInviteStatus(inviteJpaEntity.getInviteStatus());
+        invite.setDateSent(inviteJpaEntity.getDateSent());
 
         return invite;
     }
@@ -33,6 +34,7 @@ public class InviteMapper {
         inviteJpaEntity.setRecipient(PlayerMapper.toPlayerJpaEntity(invite.getRecipient()));  // Assuming PlayerMapper exists for PlayerJpaEntity
         inviteJpaEntity.setLobby(LobbyMapper.toLobbyJpaEntity(invite.getLobby()));  // Assuming LobbyMapper exists for LobbyJpaEntity
         inviteJpaEntity.setInviteStatus(invite.getInviteStatus());
+        inviteJpaEntity.setDateSent(invite.getDateSent());
 
         return inviteJpaEntity;
     }
