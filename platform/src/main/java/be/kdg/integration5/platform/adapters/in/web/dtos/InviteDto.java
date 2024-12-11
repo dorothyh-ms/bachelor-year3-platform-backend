@@ -13,9 +13,7 @@ public class InviteDto {
 
     private Player sender;
 
-
     private Player recipient;
-
 
     private Lobby lobby;
 
