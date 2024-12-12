@@ -1,6 +1,6 @@
-package be.kdg.integration5.domain;
+package be.kdg.integration5.common.domain;
 
-public enum Genre {
+public enum GameGenre {
     STRATEGY,          // Games that require planning and decision-making (e.g., Chess, Risk)
     PUZZLE,            // Games that challenge logic or problem-solving skills (e.g., Sudoku, Tetris)
     ADVENTURE,         // Games with a narrative focus and exploration elements (e.g., Dungeons & Dragons)

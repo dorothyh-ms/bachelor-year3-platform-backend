@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +35,8 @@ public class InviteJpaEntity {
 
     @Enumerated(value = EnumType.STRING)
     private InviteStatus inviteStatus;
+
+    private LocalDateTime dateSent;
 
     public UUID getId() {
         return id;
@@ -86,5 +89,11 @@ public class InviteJpaEntity {
         this.inviteStatus = inviteStatus;
     }
 
+    public LocalDateTime getDateSent() {
+        return dateSent;
+    }
 
+    public void setDateSent(LocalDateTime dateSent) {
+        this.dateSent = dateSent;
+    }
 }

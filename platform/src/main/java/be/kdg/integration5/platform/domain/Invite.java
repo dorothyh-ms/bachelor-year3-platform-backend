@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.domain;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Invite {
@@ -17,13 +18,16 @@ public class Invite {
 
     private InviteStatus inviteStatus;
 
+    private LocalDateTime dateSent;
 
-    public Invite(UUID id, Player sender, Player recipient, Lobby lobby) {
+
+    public Invite(UUID id, Player sender, Player recipient, Lobby lobby, LocalDateTime dateSent) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
         this.inviteStatus = InviteStatus.OPEN;
+        this.dateSent = dateSent;
     }
 
     public Invite() {
@@ -97,5 +101,13 @@ public class Invite {
 
     public boolean isRecipient(UUID id) {
         return recipient.getPlayerId().equals(id);
+    }
+
+    public LocalDateTime getDateSent() {
+        return dateSent;
+    }
+
+    public void setDateSent(LocalDateTime dateSent) {
+        this.dateSent = dateSent;
     }
 }
