@@ -16,10 +16,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class InviteDBAdaptor implements InviteCreatePort, InviteLoadPort, InviteUpdatePort {
+public class InviteDbAdapter implements InviteCreatePort, InviteLoadPort, InviteUpdatePort {
     private final InviteRepository inviteRepository;
 
-    public InviteDBAdaptor(InviteRepository inviteRepository) {
+    public InviteDbAdapter(InviteRepository inviteRepository) {
         this.inviteRepository = inviteRepository;
     }
 

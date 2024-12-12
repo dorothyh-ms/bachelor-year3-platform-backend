@@ -120,3 +120,12 @@ Accept: application/json
 Authorization: Bearer {{access_token}}
 
 
+### Player2 sees profile
+
+
+GET http://localhost:8091/api/player-profiles/me
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
+

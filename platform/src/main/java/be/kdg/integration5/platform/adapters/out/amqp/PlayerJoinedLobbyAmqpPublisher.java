@@ -27,7 +27,8 @@ public class PlayerJoinedLobbyAmqpPublisher implements LobbyJoinedPort {
 
         StartGameCommand command = new StartGameCommand(
                 lobby.getInitiatingPlayer().getPlayerId(),
-                lobby.getJoinedPlayer().getPlayerId()
+                lobby.getJoinedPlayer().getPlayerId(),
+                lobby.getMatchId()
         );
         LOGGER.info("PlayerJoinedLobbyAmqpPublisher is sending command {} with routing key {}", command, routingKey);
         rabbitTemplate.convertAndSend(EXCHANGE_NAME, routingKey, command);

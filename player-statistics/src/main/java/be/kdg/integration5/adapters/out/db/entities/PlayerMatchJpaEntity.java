@@ -32,5 +32,5 @@ public class PlayerMatchJpaEntity {
 
     @ManyToOne
     @JoinColumn(name="player_id")
-    private BoardGamePlayerJpaEntity player;
+    private PlayerProfileJpaEntity player;
 }

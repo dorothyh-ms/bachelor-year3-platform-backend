@@ -2,7 +2,7 @@ package be.kdg.integration5.adapters.out.db.entities;
 
 
 import be.kdg.integration5.common.domain.GameDifficulty;
-import be.kdg.integration5.domain.Genre;
+import be.kdg.integration5.common.domain.GameGenre;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
@@ -23,7 +23,7 @@ public class BoardGameJpaEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "genre", nullable = false)
-    private Genre genre;
+    private GameGenre genre;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "difficulty_level")
