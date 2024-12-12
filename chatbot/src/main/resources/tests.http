@@ -1,0 +1,28 @@
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&username=player1&password=password&grant_type=password&scope=openid
+
+> {%
+    client.global.set("access_token", response.body.access_token)
+%}
+
+###
+
+GET http://localhost:8091/api/chatbot/question
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "question": "explain me the rules of the game",
+  "game": "Battleship"
+}
+
+###
+
+
+#upload file should be done through postman, battlship rules is already there
+#    -ask Emre if you dont know how :-)
+# http://localhost:57462/add-rules/
+
