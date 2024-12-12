@@ -36,6 +36,10 @@ public class LobbyJpaEntity {
     @JoinColumn(name = "joined_player_id", nullable = true)
     private PlayerJpaEntity joinedPlayer;
 
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "match_id")
+    private UUID matchId;
+
     public LobbyJpaEntity() {
     }
 
@@ -48,13 +52,14 @@ public class LobbyJpaEntity {
         this.lobbyStatus = lobbyStatus;
     }
 
-    public LobbyJpaEntity(UUID id, GameJpaEntity game, PlayerJpaEntity initiatingPlayer, LocalDateTime dateCreated, LobbyStatus lobbyStatus, PlayerJpaEntity joinedPlayer) {
+    public LobbyJpaEntity(UUID id, GameJpaEntity game, PlayerJpaEntity initiatingPlayer, LocalDateTime dateCreated, LobbyStatus lobbyStatus, PlayerJpaEntity joinedPlayer, UUID matchId) {
         this.id = id;
         this.game = game;
         this.initiatingPlayer = initiatingPlayer;
         this.dateCreated = dateCreated;
         this.lobbyStatus = lobbyStatus;
         this.joinedPlayer = joinedPlayer;
+        this.matchId = matchId;
     }
 
     public LobbyStatus getLobbyStatus() {
@@ -103,5 +108,13 @@ public class LobbyJpaEntity {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public UUID getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(UUID matchId) {
+        this.matchId = matchId;
     }
 }

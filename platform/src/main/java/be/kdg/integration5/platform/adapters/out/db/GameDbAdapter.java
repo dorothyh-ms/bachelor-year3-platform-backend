@@ -32,7 +32,13 @@ public class GameDbAdapter implements GameLoadPort {
             GameJpaEntity gameJpaEntity = gameJpaEntityOptional.get();
             return Optional.of(new Game(
                     gameJpaEntity.getId(),
-                    gameJpaEntity.getName()
+                    gameJpaEntity.getName(),
+                    gameJpaEntity.getGenre(),
+                    gameJpaEntity.getDifficultyLevel(),
+                    gameJpaEntity.getPrice(),
+                    gameJpaEntity.getDescription(),
+                    gameJpaEntity.getImage(),
+                    gameJpaEntity.getUrl()
             ));
         }
         return Optional.empty();

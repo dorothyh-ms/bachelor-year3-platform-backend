@@ -1,36 +1,44 @@
 package be.kdg.integration5.platform.adapters.in.web.dtos;
 
 import be.kdg.integration5.platform.domain.LobbyStatus;
-import be.kdg.integration5.platform.domain.Player;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class LobbyDto {
     private UUID id;
-
-    private GameDto gameDto;
-
+    private GameDto game;
     private PlayerDto createdBy;
     private PlayerDto joinedPlayer;
     private LocalDateTime createdDate;
     private LobbyStatus lobbyStatus;
+    private String matchURL;
 
-    public LobbyDto(UUID id, GameDto gameDto, PlayerDto createdBy, LocalDateTime createdDate, LobbyStatus lobbyStatus) {
+    public LobbyDto(UUID id, GameDto game, PlayerDto createdBy, LocalDateTime createdDate, LobbyStatus lobbyStatus) {
         this.id = id;
-        this.gameDto = gameDto;
+        this.game = game;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.lobbyStatus = lobbyStatus;
     }
 
-    public LobbyDto(UUID id, GameDto gameDto, PlayerDto createdBy, PlayerDto joinedPlayer, LocalDateTime createdDate, LobbyStatus lobbyStatus) {
+    public LobbyDto(UUID id, GameDto game, PlayerDto createdBy, PlayerDto joinedPlayer, LocalDateTime createdDate, LobbyStatus lobbyStatus) {
         this.id = id;
-        this.gameDto = gameDto;
+        this.game = game;
         this.createdBy = createdBy;
         this.joinedPlayer = joinedPlayer;
         this.createdDate = createdDate;
         this.lobbyStatus = lobbyStatus;
+    }
+
+    public LobbyDto(UUID id, GameDto game, PlayerDto createdBy, PlayerDto joinedPlayer, LocalDateTime createdDate, LobbyStatus lobbyStatus, String matchURL) {
+        this.id = id;
+        this.game = game;
+        this.createdBy = createdBy;
+        this.joinedPlayer = joinedPlayer;
+        this.createdDate = createdDate;
+        this.lobbyStatus = lobbyStatus;
+        this.matchURL = matchURL;
     }
 
     public LobbyStatus getLobbyStatus() {
@@ -49,12 +57,12 @@ public class LobbyDto {
         this.id = id;
     }
 
-    public GameDto getGameDto() {
-        return gameDto;
+    public GameDto getGame() {
+        return game;
     }
 
-    public void setGameDto(GameDto gameDto) {
-        this.gameDto = gameDto;
+    public void setGame(GameDto game) {
+        this.game = game;
     }
 
     public PlayerDto getCreatedBy() {
@@ -79,5 +87,13 @@ public class LobbyDto {
 
     public void setJoinedPlayer(PlayerDto joinedPlayer) {
         this.joinedPlayer = joinedPlayer;
+    }
+
+    public String getMatchURL() {
+        return matchURL;
+    }
+
+    public void setMatchURL(String matchURL) {
+        this.matchURL = matchURL;
     }
 }

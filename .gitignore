@@ -10,6 +10,11 @@ infrastructure/llms/
 platform/.DS_Store
 .DS_Store
 
+.DS_Store
+platform/.DS_Store
+infrastructure/llms/
+
+
 ### Java ###
 # Compiled class file
 *.class

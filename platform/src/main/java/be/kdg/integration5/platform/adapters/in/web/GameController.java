@@ -40,7 +40,16 @@ public class GameController {
         List<Game> games = getGamesUseCase.getGames();
         if (!games.isEmpty()) {
             return new ResponseEntity<>(
-                    games.stream().map(game -> new GameDto(game.getId(), game.getName())).toList(),
+                    games.stream().map(game -> new GameDto(
+                            game.getId(),
+                            game.getName(),
+                            game.getGenre(),
+                            game.getDifficultyLevel(),
+                            game.getPrice(),
+                            game.getDescription(),
+                            game.getImage(),
+                            game.getUrl()
+                    )).toList(),
                     HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -52,11 +61,18 @@ public class GameController {
         LOGGER.info("Claims of token {}", token.getClaims());
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         Lobby lobby = playerCreatesLobbyUseCase.createLobby(new CreateLobbyCommand(userId, gameId));
+        Game game = lobby.getGame();
         return new ResponseEntity<>(new LobbyDto(
                 lobby.getId(),
                 new GameDto(
-                        lobby.getGame().getId(),
-                        lobby.getGame().getName()
+                        game.getId(),
+                        game.getName(),
+                        game.getGenre(),
+                        game.getDifficultyLevel(),
+                        game.getPrice(),
+                        game.getDescription(),
+                        game.getImage(),
+                        game.getUrl()
                 ),
                 new PlayerDto(
                         lobby.getInitiatingPlayer().getPlayerId(),
