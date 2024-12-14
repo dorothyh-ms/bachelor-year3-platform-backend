@@ -24,6 +24,7 @@
             <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/platform" />
             <option value="$PROJECT_DIR$/player-statistics" />
+            <option value="$PROJECT_DIR$/recommender" />
           </set>
         </option>
       </GradleProjectSettings>
