@@ -1,5 +1,12 @@
+version: '3.8'
 
 services:
+  fastapi_app:
+    image: emrecaylar/my-fastapi-app  # Name and tag for the imaged
+    container_name: chatbot-container
+    ports:
+      - "8000:8000"  # Expose FastAPI app's port
+
   mysql_app_db:
     image: mysql:9.0.1
     environment:
@@ -83,4 +90,7 @@ networks:
     driver: bridge
   banditGames:
     name: bg-games-back-network
+    driver: bridge
+  ollama_network:
+    name: ollama-network
     driver: bridge

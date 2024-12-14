@@ -6,13 +6,16 @@ plugins {
 dependencies {
     implementation project(":common")
     implementation project(':platform')
+    implementation project(':chatbot')
     implementation project(':player-statistics')
     implementation project(':recommender')
     implementation 'mysql:mysql-connector-java:8.0.33'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-json'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
