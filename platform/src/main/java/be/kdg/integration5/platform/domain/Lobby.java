@@ -14,6 +14,7 @@ public class Lobby {
     private Player joinedPlayer;
     private LobbyStatus status;
     private LocalDateTime dateCreated;
+    private UUID matchId;
 
 
     public Lobby() {
@@ -27,16 +28,17 @@ public class Lobby {
         this.dateCreated = LocalDateTime.now();
     }
 
-    public Lobby(UUID id, Game game, Player initiatingPlayer, Player joinedPlayer, LobbyStatus status, LocalDateTime dateCreated) {
+    public Lobby(UUID id, Game game, Player initiatingPlayer, Player joinedPlayer, LobbyStatus status, LocalDateTime dateCreated, UUID matchId) {
         this.id = id;
         this.game = game;
         this.initiatingPlayer = initiatingPlayer;
         this.joinedPlayer = joinedPlayer;
         this.status = status;
         this.dateCreated = dateCreated;
+        this.matchId = matchId;
     }
 
-    private boolean isClosed(){
+    public boolean isClosed(){
         return this.status.equals(LobbyStatus.CLOSED);
     }
 
@@ -50,6 +52,7 @@ public class Lobby {
         }
         this.joinedPlayer = player;
         setStatus(LobbyStatus.CLOSED);
+        this.matchId = UUID.randomUUID();
         return true;
     }
 
@@ -99,6 +102,14 @@ public class Lobby {
 
     public void setDateCreated(LocalDateTime dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public UUID getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(UUID matchId) {
+        this.matchId = matchId;
     }
 
     @Override

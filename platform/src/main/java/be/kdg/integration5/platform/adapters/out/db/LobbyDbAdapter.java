@@ -30,7 +30,7 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
     @Override
     public List<Lobby> loadActiveLobbies() {
         List<LobbyJpaEntity> lobbyJpaEntityList = lobbyRepository.getAllByLobbyStatusIs(LobbyStatus.OPEN);
-        if (lobbyJpaEntityList != null){
+        if (lobbyJpaEntityList != null) {
             List<Lobby> lobbyList = new ArrayList<>();
             lobbyJpaEntityList.forEach(lobbyJpaEntity -> lobbyList.add(LobbyMapper.toLobby(lobbyJpaEntity)));
             return lobbyList;
@@ -42,7 +42,7 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
     @Override
     public Optional<Lobby> loadLobby(UUID lobbyId) {
         Optional<LobbyJpaEntity> lobbyJpaEntityOptional = lobbyRepository.findById(lobbyId);
-        if (lobbyJpaEntityOptional.isPresent()){
+        if (lobbyJpaEntityOptional.isPresent()) {
             LobbyJpaEntity lobbyJpa = lobbyJpaEntityOptional.get();
             return Optional.of(new Lobby(
                     lobbyJpa.getId(),
@@ -50,8 +50,9 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
                     PlayerMapper.toPlayer(lobbyJpa.getInitiatingPlayer()),
                     PlayerMapper.toPlayer(lobbyJpa.getJoinedPlayer()),
                     lobbyJpa.getLobbyStatus(),
-                    lobbyJpa.getDateCreated()
-                    ));
+                    lobbyJpa.getDateCreated(),
+                    lobbyJpa.getMatchId()
+            ));
         }
         return Optional.empty();
     }
@@ -69,14 +70,16 @@ public class LobbyDbAdapter implements LobbyCreatePort, LobbyJoinedPort, LobbyLo
 
     @Override
     public void lobbyJoined(Lobby lobby) {
-        lobbyRepository.save(new LobbyJpaEntity(
-                lobby.getId(),
-                GameMapper.toGameJpaEntity(lobby.getGame()),
-                PlayerMapper.toPlayerJpaEntity(lobby.getInitiatingPlayer()),
-                lobby.getDateCreated(),
-                lobby.getStatus(),
-                PlayerMapper.toPlayerJpaEntity(lobby.getJoinedPlayer())
-        ));
+        lobbyRepository.save(
+                new LobbyJpaEntity(
+                        lobby.getId(),
+                        GameMapper.toGameJpaEntity(lobby.getGame()),
+                        PlayerMapper.toPlayerJpaEntity(lobby.getInitiatingPlayer()),
+                        lobby.getDateCreated(),
+                        lobby.getStatus(),
+                        PlayerMapper.toPlayerJpaEntity(lobby.getJoinedPlayer()),
+                        lobby.getMatchId()
+                ));
     }
 
 

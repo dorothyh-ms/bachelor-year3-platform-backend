@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @Service
 public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUseCase {
-    private static final Logger log = LoggerFactory.getLogger(DefaultPlayerAcceptsInviteUseCase.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPlayerAcceptsInviteUseCase.class);
     private final InviteLoadPort inviteLoadPort;
     private final LobbyLoadPort lobbyLoadPort;
     private final List<LobbyJoinedPort> lobbyJoinedPorts;
@@ -31,13 +31,14 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
     }
 
     public Lobby playerAnswersInvite(UUID inviteId, UUID userId, String action) {
+        LOGGER.debug("DefaultPlayerAcceptsInviteUseCase is running playerAnswersInvite");
         InviteAction decision = InviteAction.fromString(action);
         if (decision.equals(InviteAction.ACCEPT)) {
             return playerAcceptsInvite(inviteId, userId);
         } else if (decision.equals(InviteAction.DECLINE)) {
             return playerDeclinesInvite(inviteId, userId);
         } else {
-            log.debug("Invalid action");
+            LOGGER.debug("Invalid action");
             throw new InvalidInviteActionException("Invalid action: " + action);
         }
     }
@@ -46,49 +47,37 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
         if (optionalInvite.isEmpty()) {
-            log.debug("Invite not found");
+            LOGGER.debug("Invite not found");
             throw new InvalidInviteException("Invite not found");
-        } else {
-            log.debug("Invite found");
-            invite = optionalInvite.get();
         }
-        if (!invite.getRecipient().getPlayerId().equals(userId)) {
-            log.debug("User not recipient of invite");
+        invite = optionalInvite.get();
+        if (!invite.isRecipient(userId)) {
             throw new InvalidInviteUserException("User is not the recipient of the invite");
         }
-
         Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
         Lobby lobby;
         if (lobbyOptional.isEmpty()) {
-            log.debug("Lobby not found");
-            throw new InvalidLobbyException("Lobby not found");
-        } else {
-            log.info("Lobby found");
-            lobby = lobbyOptional.get();
+            LOGGER.debug("Lobby not found");
+            throw new LobbyNotFoundException("Lobby not found");
         }
-
-        if (lobby.getStatus().equals(LobbyStatus.CLOSED)) {
-            log.debug("Lobby is closed");
-            throw new InvalidLobbyException("Lobby is closed");
-        }
-
-        if (invite.isOpen()) {
-            log.info("Invite accepted");
-            invite.accepted();
-            lobby.admitPlayer(invite.getRecipient());
-            inviteUpdatePort.updateInvite(invite);
-            lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
-        } else if (invite.isExpired()) {
-            log.debug("Invite expired");
+        lobby = lobbyOptional.get();
+        if (invite.isExpired()) {
             throw new ExpiredInviteException("Invite has expired");
         } else if (invite.isAccepted()) {
-            log.debug("Invite already accepted");
             throw new InvalidInviteException("Invite has already been accepted");
         } else if (invite.isDenied()) {
-            log.debug("Invite already declined");
             throw new InvalidInviteException("Invite has already been declined");
         }
+
+        boolean playerWasAdmitted = lobby.admitPlayer(invite.getRecipient());
+        if (!playerWasAdmitted) {
+            throw new PlayerNotAdmittedToLobbyException("Player could not be admitted to the requested lobby");
+        }
+        invite.accepted();
+        inviteUpdatePort.updateInvite(invite);
+        lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
         return lobby;
+
     }
 
     private Lobby playerDeclinesInvite(UUID inviteId, UUID userId) {
