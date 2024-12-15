@@ -10,6 +10,4 @@ INSERT INTO platform.games(game_id, name) VALUES ('b7cc1c5e-06fb-470c-878e-2e9b4
 INSERT INTO platform.games(game_id, name) VALUES ('a2094c51-c8c3-4580-ada0-b7944887eac5', "Othello");
 
 
-
-
-
+INSERT INTO platform.friendship (friendship_id, player_id, friend_id) VALUES ('a1c99486-9f64-49d4-bbb4-22e40d649ada', 'fff2deb7-7bf2-43d5-8897-4ddd8edc6ab1', 'e12bb6fd-8e23-40fd-95cc-f318abf3c38c');

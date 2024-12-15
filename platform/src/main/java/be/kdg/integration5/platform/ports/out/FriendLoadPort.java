@@ -13,12 +13,5 @@ public interface FriendLoadPort {
      * @return A list of Player entities.
      */
     List<Player> loadFriendsByPlayerId(UUID playerId);
-
-    /**
-     * Saves a friendship between two players.
-     *
-     * @param playerId The UUID of the player.
-     * @param friendId The UUID of the friend.
-     */
-    void saveFriendship(UUID playerId, UUID friendId);
+    boolean arePlayersFriends(UUID playerId, UUID friendId);
 }

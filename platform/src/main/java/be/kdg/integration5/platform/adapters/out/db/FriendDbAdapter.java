@@ -7,15 +7,15 @@ import be.kdg.integration5.platform.adapters.out.db.repositories.FriendRepositor
 import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerRepository;
 import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.ports.out.FriendLoadPort;
+import be.kdg.integration5.platform.ports.out.FriendSavePort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class FriendDbAdapter implements FriendLoadPort {
+public class FriendDbAdapter implements FriendLoadPort, FriendSavePort {
 
     private final FriendRepository friendRepository;
     private final PlayerRepository playerRepository;
@@ -38,27 +38,30 @@ public class FriendDbAdapter implements FriendLoadPort {
     @Override
     @Transactional
     public void saveFriendship(UUID playerId, UUID friendId) {
-        Optional<PlayerJpaEntity> playerEntityOpt = playerRepository.findById(playerId);
-        Optional<PlayerJpaEntity> friendEntityOpt = playerRepository.findById(friendId);
+        PlayerJpaEntity playerEntity = playerRepository.findById(playerId)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found for ID: " + playerId));
+        PlayerJpaEntity friendEntity = playerRepository.findById(friendId)
+                .orElseThrow(() -> new IllegalArgumentException("Friend not found for ID: " + friendId));
 
-        if (playerEntityOpt.isEmpty() || friendEntityOpt.isEmpty()) {
-            throw new IllegalArgumentException("Player or Friend not found for the given IDs.");
-        }
-
-        PlayerJpaEntity playerEntity = playerEntityOpt.get();
-        PlayerJpaEntity friendEntity = friendEntityOpt.get();
-
-        // Check if the friendship already exists to prevent duplicates
-        boolean alreadyExists = friendRepository.existsByPlayerAndFriend(playerEntity, friendEntity);
-        if (alreadyExists) {
+        // Check if the friendship exists in either direction
+        if (friendRepository.arePlayersFriends(playerEntity, friendEntity)) {
             throw new IllegalStateException("Friendship already exists.");
         }
 
-        // Save the bidirectional friendship
+        // Save the friendship
         FriendshipJpaEntity friendship = new FriendshipJpaEntity(playerEntity, friendEntity);
-        FriendshipJpaEntity reverseFriendship = new FriendshipJpaEntity(friendEntity, playerEntity);
-
         friendRepository.save(friendship);
-        friendRepository.save(reverseFriendship);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean arePlayersFriends(UUID playerId, UUID friendId) {
+        PlayerJpaEntity playerEntity = playerRepository.findById(playerId)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found for ID: " + playerId));
+        PlayerJpaEntity friendEntity = playerRepository.findById(friendId)
+                .orElseThrow(() -> new IllegalArgumentException("Friend not found for ID: " + friendId));
+
+        return friendRepository.arePlayersFriends(playerEntity, friendEntity);
     }
 }
