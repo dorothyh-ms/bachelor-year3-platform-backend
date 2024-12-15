@@ -1,0 +1,65 @@
+package be.kdg.integration5.platform.adapters.in.web;
+
+import be.kdg.integration5.platform.adapters.in.web.dtos.FriendDto;
+import be.kdg.integration5.platform.exceptions.AddSelfAsFriendException;
+import be.kdg.integration5.platform.exceptions.AlreadyFriendsException;
+import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.ports.in.GetFriendsUseCase;
+import be.kdg.integration5.platform.ports.in.CreateFriendUseCase;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
+
+@RestController
+@RequestMapping("/friends")
+public class FriendController {
+    private final GetFriendsUseCase getFriendsUseCase;
+    private final CreateFriendUseCase createFriendUseCase;
+
+    public FriendController(GetFriendsUseCase getFriendsUseCase, CreateFriendUseCase createFriendUseCase) {
+        this.getFriendsUseCase = getFriendsUseCase;
+        this.createFriendUseCase = createFriendUseCase;
+    }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<List<FriendDto>> getFriends(@AuthenticationPrincipal Jwt token) {
+        UUID playerId = UUID.fromString(token.getClaimAsString("sub"));
+        List<Player> friends = getFriendsUseCase.getFriends(playerId);
+        if (!friends.isEmpty()) {
+            return new ResponseEntity<>(
+                    friends.stream()
+                            .map(friend -> new FriendDto(friend.getPlayerId(), friend.getUsername()))
+                            .toList(),
+                    HttpStatus.OK
+            );
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<Void> addFriend(@RequestParam UUID friendId, @AuthenticationPrincipal Jwt token) {
+        UUID playerId = UUID.fromString(token.getClaimAsString("sub"));
+        createFriendUseCase.addFriend(playerId, friendId);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    // Exception handlers
+
+    @ExceptionHandler(AddSelfAsFriendException.class)
+    public ResponseEntity<String> handleAddSelfAsFriendException(AddSelfAsFriendException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AlreadyFriendsException.class)
+    public ResponseEntity<String> handleAlreadyFriendsException(AlreadyFriendsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
+    }
+}
