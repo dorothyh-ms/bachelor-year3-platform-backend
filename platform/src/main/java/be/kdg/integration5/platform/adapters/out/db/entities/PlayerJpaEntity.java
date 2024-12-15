@@ -1,6 +1,6 @@
 package be.kdg.integration5.platform.adapters.out.db.entities;
 
-import be.kdg.integration5.platform.domain.Gender;
+import be.kdg.integration5.common.domain.Gender;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 

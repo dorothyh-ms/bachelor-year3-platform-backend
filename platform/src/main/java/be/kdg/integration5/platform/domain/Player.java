@@ -1,5 +1,7 @@
 package be.kdg.integration5.platform.domain;
 
+import be.kdg.integration5.common.domain.Gender;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.UUID;
