@@ -7,10 +7,25 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
     client.global.set("access_token", response.body.access_token)
 %}
 
+### Player1 exports csv
+
+
+GET http://localhost:8092/api/player-statistics/export
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+### Player1 gets player statistics list
+
+
+GET http://localhost:8092/api/player-statistics
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+
 
 ### Search players use case
 
-GET http://localhost:8091/api/players?username=player2
+GET http://localhost:8092/api/players?username=player2
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
@@ -20,7 +35,7 @@ Authorization: Bearer {{access_token}}
 
 ### Get games use case
 
-GET http://localhost:8091/api/games
+GET http://localhost:8092/api/games
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -29,7 +44,7 @@ Authorization: Bearer {{access_token}}
 
 ### Create lobby use case
 
-POST http://localhost:8091/api/games/05c99486-9f64-49d4-bbb4-22e40d649ada/lobbies
+POST http://localhost:8092/api/games/05c99486-9f64-49d4-bbb4-22e40d649ada/lobbies
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -40,14 +55,14 @@ Authorization: Bearer {{access_token}}
 
 ### Get open lobbies
 
-GET http://localhost:8091/api/lobbies
+GET http://localhost:8092/api/lobbies
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Player1 invites player2
 
-POST http://localhost:8091/api/invites/{{lobby_id}}/invite
+POST http://localhost:8092/api/invites/{{lobby_id}}/invite
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -62,14 +77,14 @@ Authorization: Bearer {{access_token}}
 
 ### Player1 attempts to join own lobby - should fail
 
-PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+PATCH http://localhost:8092/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Player1 gets game recommendations
 
-GET http://localhost:8091/api/game-recommendations
+GET http://localhost:8092/api/game-recommendations
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -87,14 +102,14 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 ### Get all invites for player2
 
-GET http://localhost:8091/api/invites/player
+GET http://localhost:8092/api/invites/player
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Player2 uses invite to join
 
-PATCH http://localhost:8091/api/invites/{{invite_id}}
+PATCH http://localhost:8092/api/invites/{{invite_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -105,7 +120,7 @@ Authorization: Bearer {{access_token}}
 
 ### Get open lobbies - should fail (no open lobbies, 204)
 
-GET http://localhost:8091/api/lobbies
+GET http://localhost:8092/api/lobbies
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -114,7 +129,7 @@ Authorization: Bearer {{access_token}}
 ### Player2 joins lobby (now closed) - should fail
 
 
-PATCH http://localhost:8091/api/lobbies/{{lobby_id}}
+PATCH http://localhost:8092/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -123,9 +138,12 @@ Authorization: Bearer {{access_token}}
 ### Player2 sees profile
 
 
-GET http://localhost:8091/api/player-profiles/me
+GET http://localhost:8092/api/player-profiles/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
+
+
+
 
 
 

@@ -1,7 +1,5 @@
 package be.kdg.integration5.platform.adapters.in.web.dtos;
 
-import be.kdg.integration5.platform.domain.Gender;
-
 import java.util.UUID;
 
 public class PlayerDto {

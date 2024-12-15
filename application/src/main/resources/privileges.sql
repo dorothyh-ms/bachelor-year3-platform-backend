@@ -1,4 +1,0 @@
-CREATE DATABASE platform;
-GRANT ALL ON platform.* TO 'user'@'%';
-GRANT SHOW DATABASES ON *.* TO 'user'@'%';
-FLUSH PRIVILEGES;
