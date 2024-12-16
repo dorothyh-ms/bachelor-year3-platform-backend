@@ -23,6 +23,7 @@ Authorization: Bearer {{access_token}}
 
 
 
+
 ### Search players use case
 
 GET http://localhost:8092/api/players?username=player2
@@ -133,17 +134,5 @@ PATCH http://localhost:8092/api/lobbies/{{lobby_id}}
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
-
-
-### Player2 sees profile
-
-
-GET http://localhost:8092/api/player-profiles/me
-Accept: application/json
-Authorization: Bearer {{access_token}}
-
-
-
-
 
 

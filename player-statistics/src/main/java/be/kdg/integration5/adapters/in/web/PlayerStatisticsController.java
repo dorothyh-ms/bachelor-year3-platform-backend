@@ -2,6 +2,7 @@ package be.kdg.integration5.adapters.in.web;
 
 
 import be.kdg.integration5.adapters.in.web.dto.PlayerStatisticsDto;
+import be.kdg.integration5.common.domain.PlayerGameClassification;
 import be.kdg.integration5.common.domain.PlayerStatistics;
 import be.kdg.integration5.ports.in.ExportPlayerStatisticsCsvUseCase;
 import be.kdg.integration5.ports.in.GetPlayerStatisticsUseCase;
@@ -35,6 +36,7 @@ public class PlayerStatisticsController {
         this.exportPlayerStatisticsCsvUseCase = exportPlayerStatisticsCsvUseCase;
         this.getPlayerStatisticsUseCase = getPlayerStatisticsUseCase;
     }
+
 
     @GetMapping()
     public ResponseEntity<List<PlayerStatisticsDto>> getPlayerStatistics(@AuthenticationPrincipal Jwt token) throws IOException {
