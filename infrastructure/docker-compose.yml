@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  fastapi_app:
+  chatbot_app:
     image: emrecaylar/my-fastapi-app  # Name and tag for the imaged
     container_name: chatbot-container
     ports:

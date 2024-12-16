@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BanditGames.iml" filepath="$PROJECT_DIR$/.idea/modules/BanditGames.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/application/BanditGames.application.main.iml" filepath="$PROJECT_DIR$/.idea/modules/application/BanditGames.application.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/platform/BanditGames.platform.main.iml" filepath="$PROJECT_DIR$/.idea/modules/platform/BanditGames.platform.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/platform/BanditGames.platform.test.iml" filepath="$PROJECT_DIR$/.idea/modules/platform/BanditGames.platform.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.main.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.test.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/BanditGames.player-statistics.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.main.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.test.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/BanditGames.recommender.test.iml" />
     </modules>
   </component>
 </project>

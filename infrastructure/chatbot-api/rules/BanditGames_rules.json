@@ -1,0 +1,51 @@
+{
+    "navigation_bar": {
+      "description": "On the left-hand side you will find the navigation bar with the following options:",
+      "options": {
+        "1": "Go to the homescreen",
+        "2": "See your library of games",
+        "3": "See your friends",
+        "4": "See your invites",
+        "5": "See lobbies"
+      }
+    },
+    "home_screen": {
+      "description": "In the home screen you can find new games and some information about them."
+    },
+    "library_tab": {
+      "description": "In the library tab you can find all the games you own with some information about them and the genre."
+    },
+    "friends_tab": {
+      "description": "In the friends tab, you can manage your friends.",
+      "features": [
+        "Add new friends",
+        "See your current friends",
+        "View their stats",
+        "Add new friends using their ID"
+      ]
+    },
+    "invites_tab": {
+      "description": "In the invites tab, you can manage invitations.",
+      "features": [
+        "Accept an invitation from a friend",
+        "Decline an invitation from a friend"
+      ]
+    },
+    "lobbies_tab": {
+      "description": "In the lobbies tab, you can manage and join game lobbies.",
+      "features": {
+        "view_open_lobbies": "See open lobbies with the user and game.",
+        "join_lobby": "Join a game from the list of open lobbies.",
+        "create_lobby": {
+          "description": "Create your own game lobby.",
+          "steps": [
+            "Click on 'Create Lobby'.",
+            "Select a game from the dropdown filled with your owned games.",
+            "Click 'Create' to finalize the process."
+          ],
+          "post_creation": "Once created, your lobby will appear in the lobbies list. You can wait for a random user to join or invite a friend from the friends tab."
+        }
+      }
+    }
+  }
+
