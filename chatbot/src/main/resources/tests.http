@@ -9,7 +9,7 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 ###
 
-GET http://localhost:8091/api/chatbot/question
+GET http://localhost:8092/api/chatbot/question
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
@@ -22,7 +22,7 @@ Authorization: Bearer {{access_token}}
 ###
 
 
-#upload file should be done through postman, battlship rules is already there
+#upload file should be done through postman, battlship and platform rules is already there
 #    -ask Emre if you dont know how :-)
-# http://localhost:57462/add-rules/
+# POST http://localhost:57462/add-rules/
 
