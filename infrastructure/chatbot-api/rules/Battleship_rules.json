@@ -1,0 +1,42 @@
+{
+  "battleship_rules": {
+    "setup": {
+      "description": "Each player prepares their grid and places their ships.",
+      "grid_size": "10x10",
+      "ship_placement_rules": [
+        "Ships are placed either horizontally or vertically.",
+        "Ships cannot overlap or go off the grid."
+      ],
+      "ship_types": {
+        "Carrier": 5,
+        "Battleship": 4,
+        "Cruiser": 3,
+        "Submarine": 3,
+        "Destroyer": 2
+      },
+      "placement_process": "Each player secretly places their ships on their grid."
+    },
+    "objective": {
+      "goal": "Sink all of your opponent's ships before they sink yours."
+    },
+    "gameplay": {
+      "turn_structure": [
+        "Players take turns calling out a coordinate (e.g., 'B5') to attack.",
+        "The opponent must declare whether the attack is a 'hit' or a 'miss.'"
+      ],
+      "hit_rules": [
+        "If the attack hits a ship, the attacking player continues until they miss or sink a ship."
+      ],
+      "sinking_rules": "A ship is sunk when all the squares it occupies are hit. The opponent must announce which ship has been sunk."
+    },
+    "end_of_game": {
+      "winning_condition": "The game ends when one player sinks all of the opponent's ships.",
+      "winner": "The player who sinks all the opponent's ships first is declared the winner."
+    },
+    "additional_rules": [
+      "Players cannot change the position of their ships once the game starts.",
+      "No 'peeking' at the opponent's grid.",
+      "A hit and miss must be marked on each player's tracking grid to keep the game organized."
+    ]
+  }
+}
