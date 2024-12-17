@@ -1,7 +1,10 @@
 package be.kdg.integration5.adapters.out;
 
+import be.kdg.integration5.adapters.in.GameRecommendationController;
 import be.kdg.integration5.domain.Game;
 import be.kdg.integration5.ports.out.GameRecommendationLoadPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
@@ -21,7 +24,7 @@ import java.util.UUID;
 
 @Repository
 public class GameRecommendationAPIAdapter implements GameRecommendationLoadPort {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(GameRecommendationAPIAdapter.class);
     private final WebClient webClient;
 
 
@@ -32,6 +35,7 @@ public class GameRecommendationAPIAdapter implements GameRecommendationLoadPort 
 
     @Override
     public List<Game> recommendGamesForUser(UUID userId) {
+        LOGGER.info("GameRecommendationAPIAdapter is running recommendGamesForUser with {}", userId);
         Mono<GameRecommendation[]> response = webClient.get()
                 .uri(String.format("/player-game-recommendations/%s", userId.toString()))
                 .accept(MediaType.APPLICATION_JSON)
@@ -40,6 +44,7 @@ public class GameRecommendationAPIAdapter implements GameRecommendationLoadPort 
                 .log();
 
         GameRecommendation[] gameRecommendations = response.block();
+        LOGGER.info("Webclient returned {}", gameRecommendations);
         if (gameRecommendations != null) {
             return Arrays.stream(gameRecommendations)
                     .map(recommendation -> new Game(

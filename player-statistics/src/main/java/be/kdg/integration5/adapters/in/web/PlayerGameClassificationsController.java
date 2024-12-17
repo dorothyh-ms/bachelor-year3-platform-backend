@@ -1,8 +1,7 @@
 package be.kdg.integration5.adapters.in.web;
 
 
-import be.kdg.integration5.adapters.in.web.dto.PlayerProfileDto;
-import be.kdg.integration5.common.domain.PlayerGameClassification;
+import be.kdg.integration5.domain.PlayerGameClassification;
 import be.kdg.integration5.ports.in.GetPlayerClassificationsUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -48,4 +48,14 @@ public class GameRecommendation {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public String toString() {
+        return "GameRecommendation{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", difficulty=" + difficulty +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

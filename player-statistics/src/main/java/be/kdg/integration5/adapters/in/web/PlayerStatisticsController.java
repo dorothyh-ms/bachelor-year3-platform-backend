@@ -2,7 +2,6 @@ package be.kdg.integration5.adapters.in.web;
 
 
 import be.kdg.integration5.adapters.in.web.dto.PlayerStatisticsDto;
-import be.kdg.integration5.common.domain.PlayerGameClassification;
 import be.kdg.integration5.common.domain.PlayerStatistics;
 import be.kdg.integration5.ports.in.ExportPlayerStatisticsCsvUseCase;
 import be.kdg.integration5.ports.in.GetPlayerStatisticsUseCase;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/player-statistics")

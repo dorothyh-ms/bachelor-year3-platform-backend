@@ -1,7 +1,32 @@
 plugins {
     id 'module-config'
     id 'spring-conventions'
+    id "com.gorylenko.gradle-git-properties" version "2.4.1"
+    id("org.owasp.dependencycheck") version "8.4.2"
+    id "org.sonarqube" version "3.5.0.2730"
+
 }
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+
+
+gitProperties {
+    extProperty = 'gitProps' // git properties will be put in a map at project.ext.gitProps
+
+}
+generateGitProperties.outputs.upToDateWhen { false } // make sure the generateGitProperties task always executes (even when git.properties is not changed)
+
+task printGitProperties(dependsOn: 'generateGitProperties') { // make sure generateGitProperties task to execute before accessing generated properties
+    doLast {
+        println "git.commit.id.abbrev=" + project.ext.gitProps['git.commit.id.abbrev']
+    }
+}
+
 
 dependencies {
     implementation project(":common")
@@ -18,4 +43,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'com.azure.spring:spring-cloud-azure-starter-actuator'
+    implementation 'com.azure.spring:spring-cloud-azure-starter-keyvault'
+    implementation 'com.azure.spring:spring-cloud-azure-starter-active-directory'
+    implementation 'com.azure.spring:spring-cloud-azure-starter'
+
 }

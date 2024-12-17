@@ -3,7 +3,7 @@ package be.kdg.integration5.adapters.out.db;
 import be.kdg.integration5.adapters.out.db.entities.LocationJpaEntity;
 import be.kdg.integration5.adapters.out.db.entities.PlayerProfileJpaEntity;
 import be.kdg.integration5.adapters.out.db.repositories.PlayerProfileRepository;
-import be.kdg.integration5.common.domain.PlayerGameClassification;
+import be.kdg.integration5.domain.PlayerGameClassification;
 import be.kdg.integration5.common.domain.PlayerStatistics;
 import be.kdg.integration5.domain.Location;
 import be.kdg.integration5.domain.PlayerProfile;
@@ -55,14 +55,14 @@ public class PlayerProfileDbAdapter implements PlayerProfileLoadPort, PlayerStat
     @Override
     public List<PlayerGameClassification> loadPlayerGameClassifications(UUID userId) {
         LOGGER.info("PlayerProfileDbAdapter is running loadPlayerGameClassifications with id {}", userId );
-        List<Object[]> classificationsObjects =  playerProfileRepository.loadPlayerClassifications(userId.toString());
+        List<PlayerGameClassificationDto> classificationsObjects =  playerProfileRepository.loadPlayerClassifications(userId.toString());
         List<PlayerGameClassification> classifications = classificationsObjects.stream().map(classification -> new PlayerGameClassification(
-                UUID.fromString((String) classification[0]),
-                UUID.fromString((String) classification[1]),
-                (String) classification[2],
-                ((BigDecimal) classification[3]).intValue(),
-                ((BigDecimal) classification[4]).intValue(),
-                (String) classification[5]
+                classification.getPlayerId(),
+                classification.getGameId(),
+                classification.getGameName(),
+                classification.getTotalWins(),
+                classification.getTotalLosses(),
+                classification.getClassification()
         )).toList();
         LOGGER.info("Returning list {}", classifications);
         return classifications;

@@ -1,8 +1,9 @@
 package be.kdg.integration5.adapters.out.db.repositories;
 
+import be.kdg.integration5.adapters.out.db.PlayerGameClassificationDto;
 import be.kdg.integration5.adapters.out.db.entities.PlayerProfileJpaEntity;
-import be.kdg.integration5.common.domain.PlayerGameClassification;
 import be.kdg.integration5.common.domain.PlayerStatistics;
+import be.kdg.integration5.domain.PlayerGameClassification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -67,6 +68,6 @@ public interface PlayerProfileRepository extends JpaRepository<PlayerProfileJpaE
     ) pwlr
     WHERE pwlr.win_loss_ratio IS NOT NULL
 """, nativeQuery = true)
-    List<Object[]> loadPlayerClassifications(@Param("userId") String userId);
+    List<PlayerGameClassificationDto> loadPlayerClassifications(@Param("userId") String userId);
 
 }

@@ -1,5 +1,6 @@
-package be.kdg.integration5.common.domain;
+package be.kdg.integration5.domain;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 public class PlayerGameClassification {
@@ -10,12 +11,12 @@ public class PlayerGameClassification {
     private int totalLosses;
     private String classification;
 
-    public PlayerGameClassification(UUID playerId, UUID gameId, String gameName, int totalWins, int totalLosses, String classification) {
-        this.playerId = playerId;
-        this.gameId = gameId;
+    public PlayerGameClassification(String playerId, String gameId, String gameName, BigDecimal totalWins, BigDecimal totalLosses, String classification) {
+        this.playerId = UUID.fromString(playerId);
+        this.gameId = UUID.fromString(gameId);
         this.gameName = gameName;
-        this.totalWins = totalWins;
-        this.totalLosses = totalLosses;
+        this.totalWins = totalWins.intValue();
+        this.totalLosses = totalLosses.intValue();
         this.classification = classification;
     }
 
