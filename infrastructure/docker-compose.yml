@@ -83,6 +83,29 @@ services:
       - banditGames
     depends_on:
       - mysql_app_db
+  azure_sql_server:
+    image: mcr.microsoft.com/azure-sql-edge
+    user: root
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "testSecure!123"
+      ACCEPT_EULA: "Y"
+    volumes:
+      - "./volumes/db:/var/opt/mssql/data"
+
+  devtools:
+    container_name: msft-dev-tools
+    image: mcr.microsoft.com/mssql-tools:latest
+    environment:
+      SA_PASSWORD: "testSecure!123"
+      ACCEPT_EULA: "Y"
+    command: [ "./var/opt/scripts/wait_for_it.sh", "localhost:1433", "--", "bash", "/var/opt/scripts/db_setup.sh" ]
+    volumes:
+      - ./scripts:/var/opt/scripts
+    depends_on:
+      - azure_sql_server
+
 
 networks:
   kc:
