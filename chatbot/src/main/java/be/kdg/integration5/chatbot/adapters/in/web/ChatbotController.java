@@ -29,7 +29,7 @@
             this.getAnswerUseCase = getAnswerUseCase;
         }
 
-        @GetMapping("/question")
+        @PostMapping("/question")
         @PreAuthorize("hasAuthority('player')")
         public ResponseEntity<String> getAnswerOnQuestion(@AuthenticationPrincipal Jwt token, @RequestBody QuestionDTO questionDTO){
 
