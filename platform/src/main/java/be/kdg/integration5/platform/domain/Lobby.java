@@ -2,11 +2,13 @@ package be.kdg.integration5.platform.domain;
 
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Lobby {
-
 
     private UUID id;
     private Game game;
@@ -44,17 +46,24 @@ public class Lobby {
 
 
     public boolean admitPlayer(Player player) {
-        if ( this.isClosed()){
+        if (this.isClosed()) {
             return false;
         }
-        if (player.equals(initiatingPlayer)){
+
+        if (player.equals(initiatingPlayer)) {
             return false;
         }
+
+        if (this.joinedPlayer != null) {
+            return false;
+        }
+
         this.joinedPlayer = player;
-        setStatus(LobbyStatus.CLOSED);
+        this.setStatus(LobbyStatus.CLOSED);
         this.matchId = UUID.randomUUID();
         return true;
     }
+
 
     public UUID getId() {
         return id;
