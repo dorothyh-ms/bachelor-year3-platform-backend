@@ -59,11 +59,15 @@ public class Lobby {
         }
 
         this.joinedPlayer = player;
-        this.setStatus(LobbyStatus.CLOSED);
+        this.close();
         this.matchId = UUID.randomUUID();
         return true;
     }
 
+
+    private void close() {
+        this.setStatus(LobbyStatus.CLOSED);
+    }
 
     public UUID getId() {
         return id;

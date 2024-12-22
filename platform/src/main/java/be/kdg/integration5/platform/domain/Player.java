@@ -3,17 +3,14 @@ package be.kdg.integration5.platform.domain;
 import be.kdg.integration5.common.domain.Gender;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
 public class Player {
     private UUID playerId = UUID.randomUUID();
     private String username;
-    private String lastName;
-    private String firstName;
-    private int age;
-    private Gender gender;
-    private String location;
+
 
     public String getUsername() {
         return username;
@@ -31,54 +28,11 @@ public class Player {
         this.playerId = playerId;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Player(UUID playerId, String username, String lastName, String firstName, int age, Gender gender, String location) {
+    public Player(UUID playerId, String username) {
         this.playerId = playerId;
         this.username = username;
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.age = age;
-        this.gender = gender;
-        this.location = location;
+
     }
 
     public Player() {
@@ -93,11 +47,6 @@ public class Player {
         return "Player{" +
                 "playerId=" + playerId +
                 ", username='" + username + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", age=" + age +
-                ", gender=" + gender +
-                ", location='" + location + '\'' +
                 '}';
     }
 

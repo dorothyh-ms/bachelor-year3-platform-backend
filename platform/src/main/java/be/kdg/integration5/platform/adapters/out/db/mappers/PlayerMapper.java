@@ -14,11 +14,6 @@ public class PlayerMapper {
         Player player = new Player();
         player.setPlayerId(playerJpaEntity.getPlayerId());
         player.setUsername(playerJpaEntity.getUsername());
-        player.setLastName(playerJpaEntity.getLastName());
-        player.setFirstName(playerJpaEntity.getFirstName());
-        player.setAge(playerJpaEntity.getAge());
-        player.setGender(playerJpaEntity.getGender());
-        player.setLocation(playerJpaEntity.getLocation());
 
         return player;
     }
@@ -32,11 +27,7 @@ public class PlayerMapper {
         PlayerJpaEntity playerJpaEntity = new PlayerJpaEntity();
         playerJpaEntity.setPlayerId(player.getPlayerId());
         playerJpaEntity.setUsername(player.getUsername());
-        playerJpaEntity.setLastName(player.getLastName());
-        playerJpaEntity.setFirstName(player.getFirstName());
-        playerJpaEntity.setAge(player.getAge());
-        playerJpaEntity.setGender(player.getGender());
-        playerJpaEntity.setLocation(player.getLocation());
+
 
         return playerJpaEntity;
     }

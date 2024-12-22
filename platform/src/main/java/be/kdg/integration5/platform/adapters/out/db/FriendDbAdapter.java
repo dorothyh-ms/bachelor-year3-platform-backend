@@ -29,8 +29,13 @@ public class FriendDbAdapter implements FriendLoadPort, FriendSavePort {
     @Transactional(readOnly = true)
     public List<Player> loadFriendsByPlayerId(UUID playerId) {
         return playerRepository.findById(playerId)
-                .map(playerEntity -> friendRepository.findByPlayer(playerEntity).stream()
-                        .map(friendship -> PlayerMapper.toPlayer(friendship.getFriend()))
+                .map(playerEntity -> friendRepository.findByPlayerOrFriend(playerEntity, playerEntity)
+                        .stream()
+                        .map(friendship -> friendship.getPlayer().getPlayerId().equals(playerId)
+                                ? friendship.getFriend()
+                                : friendship.getPlayer())
+
+                        .map(PlayerMapper::toPlayer)
                         .toList())
                 .orElse(List.of());
     }
