@@ -38,7 +38,10 @@ public class InviteDbAdapter implements InviteCreatePort, InviteLoadPort, Invite
 
     @Override
     public List<Invite> loadAllInvitesOfUser(Player player) {
-        return inviteRepository.getInvitesByRecipient(PlayerMapper.toPlayerJpaEntity(player)).stream().map(InviteMapper::toInvite).toList();
+        return inviteRepository.findAllOpenInvitesWithOpenLobbiesForRecipient(PlayerMapper.toPlayerJpaEntity(player))
+                .stream()
+                .map(InviteMapper::toInvite)
+                .toList();
     }
 
     @Override
