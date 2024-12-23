@@ -36,6 +36,7 @@ public class GameController {
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
     public ResponseEntity<List<GameDto>> getGames(@AuthenticationPrincipal Jwt token) {
+        LOGGER.info("GameController is running getGames");
 
         List<Game> games = getGamesUseCase.getGames();
         if (!games.isEmpty()) {
@@ -58,6 +59,7 @@ public class GameController {
     @PostMapping("/{gameId}/lobbies")
     @PreAuthorize("hasAuthority('player')")
     public ResponseEntity<LobbyDto> createLobby( @PathVariable UUID gameId, @AuthenticationPrincipal Jwt token) {
+        LOGGER.info("GameController is running createLobby");
         LOGGER.info("Claims of token {}", token.getClaims());
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         Lobby lobby = playerCreatesLobbyUseCase.createLobby(new CreateLobbyCommand(userId, gameId));

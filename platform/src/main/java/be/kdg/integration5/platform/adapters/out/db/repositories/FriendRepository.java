@@ -16,7 +16,7 @@ public interface FriendRepository extends JpaRepository<FriendshipJpaEntity, UUI
      * @param player The player entity.
      * @return A list of FriendshipJpaEntity objects.
      */
-    List<FriendshipJpaEntity> findByPlayer(PlayerJpaEntity player);
+    List<FriendshipJpaEntity> findByPlayerOrFriend(PlayerJpaEntity player, PlayerJpaEntity friend);
 
     /**
      * Checks if a friendship exists between two players.
