@@ -6,15 +6,21 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 > {%
     client.global.set("dev_access_token", response.body.access_token)
 %}
+### Get available genres
+
+GET http://localhost:8092/api/genres
+Authorization: Bearer {{dev_access_token}}
+Content-Type: application/json
+
 
 ### Create game
 
-POST http://localhost:8092/api/games
+POST http://localhost:8092/api/game-submissions
 Authorization: Bearer {{dev_access_token}}
 Content-Type: application/json
 
 {
-  "name": "example game",
+  "name": "example gasdassdme",
   "genre": "PUZZLE",
   "difficultyLevel": "ADVANCED",
   "price": 29.99,

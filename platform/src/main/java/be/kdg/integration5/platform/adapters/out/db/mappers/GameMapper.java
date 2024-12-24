@@ -1,13 +1,10 @@
 package be.kdg.integration5.platform.adapters.out.db.mappers;
 
-import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
-import be.kdg.integration5.platform.adapters.in.web.dtos.GameSubmissionDto;
+import be.kdg.integration5.platform.adapters.in.web.dtos.NewGameSubmissionDto;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameSubmissionJpaEntity;
-import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.GameSubmission;
-import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.domain.SubmissionState;
 import be.kdg.integration5.platform.ports.in.commands.CreateGameSubmissionCommand;
 
@@ -47,7 +44,7 @@ public class GameMapper {
         );
     }
 
-    public static CreateGameSubmissionCommand toCreateGameSubmissionCommand(GameSubmissionDto gameDto, UUID addedBy) {
+    public static CreateGameSubmissionCommand toCreateGameSubmissionCommand(NewGameSubmissionDto gameDto, UUID addedBy) {
         if (gameDto == null) {
             return null;
         }
@@ -94,6 +91,24 @@ public class GameMapper {
                 submission.getImage(),
                 submission.getUrl(),
                 submission.getSubmissionState()
+        );
+    }
+
+    // Convert CreateGameSubmissionCommand to GameSubmission
+    public static NewGameSubmissionDto toGameSubmissionDto(GameSubmission game) {
+        if (game == null) {
+            return null;
+        }
+        return new NewGameSubmissionDto(
+                game.getId(),
+                game.getName(),
+                game.getGenre(),
+                game.getDifficultyLevel(),
+                game.getPrice(),
+                game.getDescription(),
+                game.getImage(),
+                game.getUrl(),
+                game.getSubmissionState()
         );
     }
 }

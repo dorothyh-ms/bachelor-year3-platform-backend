@@ -2,11 +2,13 @@ package be.kdg.integration5.platform.adapters.in.web.dtos;
 
 import be.kdg.integration5.common.domain.GameDifficulty;
 import be.kdg.integration5.common.domain.GameGenre;
+import be.kdg.integration5.platform.domain.SubmissionState;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class GameSubmissionDto {
+public class NewGameSubmissionDto {
+    private UUID id;
 
     private String name;
 
@@ -24,7 +26,10 @@ public class GameSubmissionDto {
 
     private String url;
 
-    public GameSubmissionDto(String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url) {
+    private SubmissionState submissionState;
+
+    public NewGameSubmissionDto(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
+        this.id = id;
         this.name = name;
         this.genre = genre;
         this.difficultyLevel = difficultyLevel;
@@ -32,9 +37,10 @@ public class GameSubmissionDto {
         this.description = description;
         this.image = image;
         this.url = url;
+        this.submissionState = submissionState;
     }
 
-    public GameSubmissionDto() {
+    public NewGameSubmissionDto() {
     }
 
 
@@ -88,5 +94,21 @@ public class GameSubmissionDto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public SubmissionState getSubmissionState() {
+        return submissionState;
+    }
+
+    public void setSubmissionState(SubmissionState submissionState) {
+        this.submissionState = submissionState;
     }
 }
