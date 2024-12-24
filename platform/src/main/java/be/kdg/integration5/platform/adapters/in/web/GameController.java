@@ -1,11 +1,14 @@
 package be.kdg.integration5.platform.adapters.in.web;
 
 import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
+import be.kdg.integration5.platform.adapters.in.web.dtos.GameSubmissionDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.LobbyDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
+import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.domain.Game;
+import be.kdg.integration5.platform.domain.GameSubmission;
 import be.kdg.integration5.platform.domain.Lobby;
-import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.ports.in.CreateGameSubmissionUseCase;
 import be.kdg.integration5.platform.ports.in.GetGamesUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
@@ -26,11 +29,13 @@ import java.util.UUID;
 public class GameController {
     private final GetGamesUseCase getGamesUseCase;
     private final PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase;
+    private final CreateGameSubmissionUseCase createGameSubmissionUseCase;
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
-    public GameController(GetGamesUseCase getGamesUseCase, PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase) {
+    public GameController(GetGamesUseCase getGamesUseCase, PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase, CreateGameSubmissionUseCase createGameSubmissionUseCase) {
         this.getGamesUseCase = getGamesUseCase;
         this.playerCreatesLobbyUseCase = playerCreatesLobbyUseCase;
+        this.createGameSubmissionUseCase = createGameSubmissionUseCase;
     }
 
     @GetMapping
@@ -81,6 +86,13 @@ public class GameController {
                 lobby.getDateCreated(),
                 lobby.getStatus()
         ), HttpStatus.OK);
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<GameSubmission> createGame(@AuthenticationPrincipal Jwt token, @RequestBody GameSubmissionDto gameSubmissionDto){
+        UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
+        GameSubmission game = createGameSubmissionUseCase.createGameSubmission(GameMapper.toCreateGameSubmissionCommand(gameSubmissionDto, userId));
+        return new ResponseEntity<>(game,HttpStatus.OK);
     }
 
 }
