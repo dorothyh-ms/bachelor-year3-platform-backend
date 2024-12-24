@@ -88,11 +88,12 @@ public class GameController {
         ), HttpStatus.OK);
     }
 
-    @PostMapping("/create")
+    @PostMapping()
+    @PreAuthorize("hasAnyAuthority('gameDev')")
     public ResponseEntity<GameSubmission> createGame(@AuthenticationPrincipal Jwt token, @RequestBody GameSubmissionDto gameSubmissionDto){
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         GameSubmission game = createGameSubmissionUseCase.createGameSubmission(GameMapper.toCreateGameSubmissionCommand(gameSubmissionDto, userId));
-        return new ResponseEntity<>(game,HttpStatus.OK);
+        return new ResponseEntity<>(game,HttpStatus.CREATED);
     }
 
 }

@@ -4,6 +4,8 @@ import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.GameSubmission;
 import be.kdg.integration5.platform.domain.SubmissionState;
+import be.kdg.integration5.platform.exceptions.GameAlreadyExistsException;
+import be.kdg.integration5.platform.exceptions.InvalidGameURLException;
 import be.kdg.integration5.platform.ports.in.CreateGameSubmissionUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateGameSubmissionCommand;
 import be.kdg.integration5.platform.ports.out.GameLoadPort;
@@ -25,7 +27,14 @@ public class DefaultCreateGameSubmission implements CreateGameSubmissionUseCase 
 
     @Override
     public GameSubmission createGameSubmission(CreateGameSubmissionCommand gameSubmissionCommand) {
+        List<Game> games = gameLoadPort.loadGames();
         GameSubmission gameSubmission = GameMapper.toGameSubmission(gameSubmissionCommand, UUID.randomUUID(), SubmissionState.IN_PROGRESS);
+        if (games.stream().anyMatch(game -> game.getName().equals(gameSubmission.getName()))){
+            throw new GameAlreadyExistsException("This game already exists, if this is your own game, rename it");
+        }
+        if (!gameSubmission.isValidUrl()){
+            throw new InvalidGameURLException("The given URL is not valid.");
+        }
         gameSavePort.saveGameSubmission(gameSubmission);
         return gameSubmission;
     }

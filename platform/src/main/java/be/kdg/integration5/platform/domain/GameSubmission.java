@@ -2,6 +2,7 @@ package be.kdg.integration5.platform.domain;
 
 import be.kdg.integration5.common.domain.GameDifficulty;
 import be.kdg.integration5.common.domain.GameGenre;
+import be.kdg.integration5.common.utilities.UrlValidator;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -22,5 +23,9 @@ public class GameSubmission extends Game{
 
     public void setSubmissionState(SubmissionState submissionState) {
         this.submissionState = submissionState;
+    }
+
+    public boolean isValidUrl(){
+        return UrlValidator.isUrlValid(this.getUrl());
     }
 }
