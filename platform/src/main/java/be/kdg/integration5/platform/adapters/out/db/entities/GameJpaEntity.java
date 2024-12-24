@@ -47,6 +47,10 @@ public class GameJpaEntity {
 
     public GameJpaEntity() {
     }
+    public GameJpaEntity(UUID gameId) {
+        this.gameId = gameId;
+    }
+
 
     public GameJpaEntity(UUID gameId, String gameName, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url) {
         this.gameId = gameId;

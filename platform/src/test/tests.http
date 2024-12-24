@@ -135,4 +135,19 @@ Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Add a Game to Favorites
+POST http://localhost:8092/api/favorites/05c99486-9f64-49d4-bbb4-22e40d649ada/123e4567-e89b-12d3-a456-426614174000
+Authorization: Bearer <valid_access_token>
+
+
+### Get Player's Favorites
+GET http://localhost:8092/api/favorites/05c99486-9f64-49d4-bbb4-22e40d649ada
+Accept: application/json
+Authorization: Bearer {{access_token}}
+
+### Remove a Game from Favorites
+DELETE http://localhost:8092/api/favorites/05c99486-9f64-49d4-bbb4-22e40d649ada/123e4567-e89b-12d3-a456-426614174000
+Authorization: Bearer {{access_token}}
+
+
 
