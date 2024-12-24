@@ -9,6 +9,7 @@ import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.out.InviteCreatePort;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Qualifier("defaultSendInviteUseCase")
 public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     private final InviteCreatePort inviteCreatePort;
     private final GetPlayerUseCase getPlayerUseCase;
@@ -28,6 +30,7 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     }
 
     @Override
+
     public Invite createInvite(UUID sender, UUID recipient, UUID lobbyId) {
         Optional<Player> senderPlayer = getPlayerUseCase.getPlayerById(sender);
         if (senderPlayer.isEmpty()) {

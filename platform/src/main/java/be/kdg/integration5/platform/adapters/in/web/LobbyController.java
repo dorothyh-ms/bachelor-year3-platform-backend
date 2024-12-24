@@ -1,6 +1,5 @@
 package be.kdg.integration5.platform.adapters.in.web;
 
-
 import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.InviteDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.LobbyDto;
@@ -14,6 +13,7 @@ import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,13 +28,18 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/lobbies")
 public class LobbyController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(LobbyController.class);
+
     private final PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
     private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
     private final GetOpenLobbiesUseCase getLobbyUseCase;
 
 
-    public LobbyController(PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase, PlayerCreatesInviteUseCase playerCreatesInviteUseCase, GetOpenLobbiesUseCase getLobbyUseCase) {
+    public LobbyController(
+            PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase,
+            @Qualifier("defaultPlayerCreatesInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
+            GetOpenLobbiesUseCase getLobbyUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
         this.getLobbyUseCase = getLobbyUseCase;
@@ -46,11 +51,13 @@ public class LobbyController {
                                                   @PathVariable UUID lobbyId,
                                                   @RequestBody Map<String, String> body) {
         LOGGER.info("LobbyController is running invitePlayer");
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub"));
+        UUID userId = UUID.fromString(token.getClaimAsString("sub"));
         UUID invitedUserId = UUID.fromString(body.get("userId"));
+
         Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
         Lobby lobby = invite.getLobby();
         Game game = lobby.getGame();
+
         return new ResponseEntity<>(new InviteDto(
                 invite.getId(),
                 invite.getSender(),
@@ -75,21 +82,20 @@ public class LobbyController {
                         lobby.getDateCreated(),
                         lobby.getStatus(),
                         null
-
                 ),
                 invite.getInviteStatus(),
                 invite.getDateSent()
-
         ), HttpStatus.OK);
     }
 
     @PatchMapping("/{lobbyId}")
     @PreAuthorize("hasAuthority('player')")
     public ResponseEntity<LobbyDto> joinLobby(@PathVariable UUID lobbyId, @AuthenticationPrincipal Jwt token) {
-        LOGGER.info("LobbyController is running joinLobby ");
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub"));
+        LOGGER.info("LobbyController is running joinLobby");
+        UUID userId = UUID.fromString(token.getClaimAsString("sub"));
         Lobby lobby = playerJoinsLobbyUseCase.joinLobby(new JoinLobbyCommand(userId, lobbyId));
         Game game = lobby.getGame();
+
         return new ResponseEntity<>(new LobbyDto(
                 lobby.getId(),
                 new GameDto(
@@ -113,7 +119,6 @@ public class LobbyController {
                 lobby.getDateCreated(),
                 lobby.getStatus(),
                 String.format("%s%s", game.getUrl(), lobby.getMatchId().toString())
-
         ), HttpStatus.OK);
     }
 
@@ -121,8 +126,9 @@ public class LobbyController {
     @PreAuthorize("hasAuthority('player')")
     public ResponseEntity<List<LobbyDto>> getActiveLobbies(@AuthenticationPrincipal Jwt token) {
         LOGGER.info("LobbyController is running getActiveLobbies");
-        LOGGER.info("Looking for open lobbies with token {} ", token);
+        LOGGER.info("Looking for open lobbies with token {}", token);
         List<Lobby> lobbies = getLobbyUseCase.getOpenLobbies();
+
         if (!lobbies.isEmpty()) {
             return new ResponseEntity<>(
                     lobbies.stream().map(lobby -> {
@@ -145,12 +151,12 @@ public class LobbyController {
                                 null,
                                 lobby.getDateCreated(),
                                 lobby.getStatus()
-                                );
+                        );
                     }).toList(),
                     HttpStatus.OK);
         }
-        LOGGER.info("there were no open lobbies");
+
+        LOGGER.info("There were no open lobbies");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
