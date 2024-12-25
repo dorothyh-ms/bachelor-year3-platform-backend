@@ -15,20 +15,20 @@ public class InviteDto {
 
     private Player recipient;
 
-    private Lobby lobby;
+    private LobbyDto lobby;
 
     private InviteStatus inviteStatus;
 
     private LocalDateTime dateSent;
 
-    public InviteDto(UUID id, Player sender, Player recipient, Lobby lobby, LocalDateTime dateSent) {
+    public InviteDto(UUID id, Player sender, Player recipient, LobbyDto lobby, LocalDateTime dateSent) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
         this.lobby = lobby;
         this.dateSent = dateSent;
     }
-    public InviteDto(UUID id, Player sender, Player recipient, Lobby lobby,InviteStatus inviteStatus, LocalDateTime dateSent) {
+    public InviteDto(UUID id, Player sender, Player recipient, LobbyDto lobby,InviteStatus inviteStatus, LocalDateTime dateSent) {
         this.id = id;
         this.sender = sender;
         this.recipient = recipient;
@@ -61,11 +61,11 @@ public class InviteDto {
         this.recipient = recipient;
     }
 
-    public Lobby getLobby() {
+    public LobbyDto getLobby() {
         return lobby;
     }
 
-    public void setLobby(Lobby lobby) {
+    public void setLobby(LobbyDto lobby) {
         this.lobby = lobby;
     }
 

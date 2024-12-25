@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.core;
 
+import be.kdg.integration5.platform.adapters.in.web.PlayerController;
 import be.kdg.integration5.platform.domain.*;
 import be.kdg.integration5.platform.exceptions.*;
 import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
@@ -30,57 +31,62 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         this.inviteUpdatePort = inviteUpdatePort;
     }
 
-    public Lobby playerAnswersInvite(UUID inviteId, UUID userId, String action) {
-        LOGGER.debug("DefaultPlayerAcceptsInviteUseCase is running playerAnswersInvite");
+    public Invite playerAnswersInvite(UUID inviteId, UUID userId, String action) {
         InviteAction decision = InviteAction.fromString(action);
         if (decision.equals(InviteAction.ACCEPT)) {
             return playerAcceptsInvite(inviteId, userId);
-        } else if (decision.equals(InviteAction.DECLINE)) {
-            return playerDeclinesInvite(inviteId, userId);
-        } else {
-            LOGGER.debug("Invalid action");
-            throw new InvalidInviteActionException("Invalid action: " + action);
         }
+        return playerDeclinesInvite(inviteId, userId);
+
     }
 
-    private Lobby playerAcceptsInvite(UUID inviteId, UUID userId) {
+    private Invite playerAcceptsInvite(UUID inviteId, UUID userId) {
+        LOGGER.info("DefaultPlayerAcceptsInviteUseCase is running playerAcceptsInvite");
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
         if (optionalInvite.isEmpty()) {
-            LOGGER.debug("Invite not found");
+            LOGGER.info("Invite not found");
             throw new InvalidInviteException("Invite not found");
         }
         invite = optionalInvite.get();
         if (!invite.isRecipient(userId)) {
-            throw new InvalidInviteUserException("User is not the recipient of the invite");
+            LOGGER.info("Player cannot except own invite");
+            throw new InvalidInviteUserException("Player is not the recipient of the invite");
         }
         Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
         Lobby lobby;
         if (lobbyOptional.isEmpty()) {
-            LOGGER.debug("Lobby not found");
+            LOGGER.info("Lobby not found");
             throw new LobbyNotFoundException("Lobby not found");
         }
         lobby = lobbyOptional.get();
         if (invite.isExpired()) {
+            LOGGER.info("Invite expired");
             throw new ExpiredInviteException("Invite has expired");
         } else if (invite.isAccepted()) {
+            LOGGER.info("Invite already accepted");
             throw new InvalidInviteException("Invite has already been accepted");
         } else if (invite.isDenied()) {
+            LOGGER.info("Invite already declined");
             throw new InvalidInviteException("Invite has already been declined");
         }
 
         boolean playerWasAdmitted = lobby.admitPlayer(invite.getRecipient());
         if (!playerWasAdmitted) {
+            LOGGER.info("Player not admitted");
             throw new PlayerNotAdmittedToLobbyException("Player could not be admitted to the requested lobby");
         }
+
+        LOGGER.info("Invite accepted successfully");
         invite.accepted();
+        invite.setLobby(lobby);
         inviteUpdatePort.updateInvite(invite);
         lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
-        return lobby;
+        return invite;
 
     }
 
-    private Lobby playerDeclinesInvite(UUID inviteId, UUID userId) {
+    private Invite playerDeclinesInvite(UUID inviteId, UUID userId) {
 //            TODO: implement decline invite
         return null;
     }

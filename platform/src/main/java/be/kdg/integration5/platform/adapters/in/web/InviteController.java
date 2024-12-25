@@ -21,70 +21,68 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/invites")
 public class InviteController {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(InviteController.class);
-    private final PlayerCreatesInviteUseCase playerCreatesInviteUseCase;
     private final PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase;
     private final GetInvitesUseCase getInvitesUseCase;
+    private Invite invite;
 
-    public InviteController(PlayerCreatesInviteUseCase playerCreatesInviteUseCase, PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase, GetInvitesUseCase getInvitesUseCase) {
-        this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
+    public InviteController( PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase, GetInvitesUseCase getInvitesUseCase) {
+
         this.playerAcceptsInviteUseCase = playerAcceptsInviteUseCase;
         this.getInvitesUseCase = getInvitesUseCase;
     }
 
-    @PostMapping("/{lobbyId}/invite")
-    @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<InviteDto> invitePlayer(@AuthenticationPrincipal Jwt token,
-                                                  @PathVariable UUID lobbyId,
-                                                  @RequestBody Map<String, String> body) {
-        LOGGER.info("InviteController is running invitePlayer");
-        UUID userId = UUID.fromString((String) token.getClaims().get("sub"));
-        UUID invitedUserId = UUID.fromString(body.get("userId"));
-        Invite invite = playerCreatesInviteUseCase.createInvite(userId, invitedUserId, lobbyId);
-        return new ResponseEntity<>(new InviteDto(
-                invite.getId(),
-                invite.getSender(),
-                invite.getRecipient(),
-                invite.getLobby(),
-                invite.getDateSent()
-        ), HttpStatus.OK);
-    }
+
 
     @PatchMapping("/{inviteId}")
-    public ResponseEntity<LobbyDto> answerInvite(@AuthenticationPrincipal Jwt token,
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<InviteDto> answerInvite(@AuthenticationPrincipal Jwt token,
                                                  @PathVariable UUID inviteId,
                                                  @RequestBody InviteActionDTO action) {
         LOGGER.info("InviteController is running answerInvite");
         UUID userId = UUID.fromString((String) token.getClaims().get("sub"));
-        Lobby lobby = playerAcceptsInviteUseCase.playerAnswersInvite(inviteId, userId, action.getAction());
-        Game game = lobby.getGame();
-        return new ResponseEntity<>(new LobbyDto(
-                lobby.getId(),
-                new GameDto(
-                        game.getId(),
-                        game.getName(),
-                        game.getGenre(),
-                        game.getDifficultyLevel(),
-                        game.getPrice(),
-                        game.getDescription(),
-                        game.getImage(),
-                        game.getUrl()
-                ),
-                new PlayerDto(
-                        lobby.getInitiatingPlayer().getPlayerId(),
-                        lobby.getInitiatingPlayer().getUsername()
-                ),
-                new PlayerDto(
-                        lobby.getJoinedPlayer().getPlayerId(),
-                        lobby.getJoinedPlayer().getUsername()
-                ),
-                lobby.getDateCreated(),
-                lobby.getStatus(),
-                String.format("%s%s", game.getUrl(), lobby.getMatchId().toString()
-                )
 
-        ), HttpStatus.OK);
+            Invite invite = playerAcceptsInviteUseCase.playerAnswersInvite(inviteId, userId, action.getAction());
+            Lobby lobby = invite.getLobby();
+            Game game = lobby.getGame();
+            return new ResponseEntity<>(
+                    new InviteDto(
+                            invite.getId(),
+                            invite.getSender(),
+                            invite.getRecipient(),
+                            new LobbyDto(
+                                    lobby.getId(),
+                                    new GameDto(
+                                            game.getId(),
+                                            game.getName(),
+                                            game.getGenre(),
+                                            game.getDifficultyLevel(),
+                                            game.getPrice(),
+                                            game.getDescription(),
+                                            game.getImage(),
+                                            game.getUrl()
+                                    ),
+                                    new PlayerDto(
+                                            lobby.getInitiatingPlayer().getPlayerId(),
+                                            lobby.getInitiatingPlayer().getUsername()
+                                    ),
+                                    new PlayerDto(
+                                            lobby.getJoinedPlayer().getPlayerId(),
+                                            lobby.getJoinedPlayer().getUsername()
+                                    ),
+                                    lobby.getDateCreated(),
+                                    lobby.getStatus(),
+                                    String.format("%s%s", game.getUrl(), lobby.getMatchId().toString())
+
+                            ),
+                            invite.getInviteStatus(),
+                            invite.getDateSent()
+            ), HttpStatus.OK);
+
     }
+
+
 
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
@@ -93,13 +91,37 @@ public class InviteController {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub"));
         List<Invite> invites = getInvitesUseCase.getInvites(userId);
         if (!invites.isEmpty()) {
-            return new ResponseEntity<>(invites.stream().map(invite -> new InviteDto(invite.getId(),
+            return new ResponseEntity<>(invites.stream().map(invite -> {
+                Lobby lobby = invite.getLobby();
+                Game game = lobby.getGame();
+                return new InviteDto(invite.getId(),
                             invite.getSender(),
                             invite.getRecipient(),
-                            invite.getLobby(),
+                            new LobbyDto(
+                                    lobby.getId(),
+                                    new GameDto(
+                                            game.getId(),
+                                            game.getName(),
+                                            game.getGenre(),
+                                            game.getDifficultyLevel(),
+                                            game.getPrice(),
+                                            game.getDescription(),
+                                            game.getImage(),
+                                            game.getUrl()
+                                    ),
+                                    new PlayerDto(
+                                            lobby.getInitiatingPlayer().getPlayerId(),
+                                            lobby.getInitiatingPlayer().getUsername()
+                                    ),
+                                    null,
+                                    lobby.getDateCreated(),
+                                    lobby.getStatus(),
+                                    null
+
+                            ),
                             invite.getInviteStatus(),
                             invite.getDateSent()
-                            )
+                            );}
                     )
                     .toList(),
                     HttpStatus.OK);
