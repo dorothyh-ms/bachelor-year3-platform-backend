@@ -8,14 +8,14 @@ from pydantic import BaseModel
 import os
 
 # Load data from environment-defined paths
-# DATA_PATH = os.getenv("DATA_PATH", "./data")
+DATA_PATH = os.getenv("DATA_PATH", "./data")
 
-countries = pd.read_csv(os.path.join("countries.csv"))
-locations = pd.read_csv(os.path.join("locations.csv"))
-players = pd.read_csv(os.path.join("players.csv"))
-games = pd.read_csv(os.path.join("games.csv"))
-matches = pd.read_csv(os.path.join("matches.csv"))
-player_matches = pd.read_csv(os.path.join("player_matches.csv"))
+countries = pd.read_csv(os.path.join(DATA_PATH, "countries.csv"))
+locations = pd.read_csv(os.path.join(DATA_PATH, "locations.csv"))
+players = pd.read_csv(os.path.join(DATA_PATH, "players.csv"))
+games = pd.read_csv(os.path.join(DATA_PATH, "games.csv"))
+matches = pd.read_csv(os.path.join(DATA_PATH, "matches.csv"))
+player_matches = pd.read_csv(os.path.join(DATA_PATH, "player_matches.csv"))
 
 # Step 1: Merge Data into a Single Dataset
 # Merge locations with countries
@@ -117,4 +117,5 @@ def predict_minutes(request: PredictionRequest):
     # Predict total minutes played
     predicted_minutes = model.predict(input_data)[0]
     return {"player_id": player_id, "date": input_date, "predicted_minutes": round(predicted_minutes, 2)}
+
 
