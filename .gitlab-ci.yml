@@ -19,7 +19,9 @@ services:
 build-fastapi-apps:
   stage: buildServices
   script:
+    - echo "Building chatbot image"
     - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
+    - echo "Building game recommender image"
     - cd ../game-recommender-api && docker build -t game-recommender-api:latest .
   artifacts:
     paths:
@@ -30,15 +32,12 @@ deploy-fastapi-apps:
   stage: deployServices
   image: mcr.microsoft.com/azure-cli
   before_script:
+    - if ! docker info > /dev/null 2>&1; then echo "This script uses docker, and it isn't running - please start docker and try again!"; exit 1
     - echo "Logging in as serivice principal $AZURE_APP_ID"
     - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
     - echo "Logging into ACR"
-    - az acr login --name acrbanditgamesplatform.azurecr.io -u $IMAGE_USERNAME -p $IMAGE_PASSWORD
-#    - az appservice plan create \
-#    --name banditgames-app \
-#    --resource-group BanditGames \
-#    --sku B1 \
-#    --is-linux
+    - az acr login --name acrbanditgamesplatform.azurecr.io -u $IMAGE_USERNAME -p $IMAGE_PASSWORD --debug
+    - echo "ACR login successful"
   script:
     - cd ../game-recommender-api && docker tag game-recommender-api:latest acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Deploying game recommender api..."
