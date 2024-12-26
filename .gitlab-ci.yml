@@ -32,7 +32,7 @@ deploy-fastapi-apps:
   stage: deployServices
   image: mcr.microsoft.com/azure-cli
   before_script:
-    - if ! docker info > /dev/null 2>&1; then echo "This script uses docker, and it isn't running - please start docker and try again!"; exit 1
+    - docker info
     - echo "Logging in as serivice principal $AZURE_APP_ID"
     - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
     - echo "Logging into ACR"
