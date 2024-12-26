@@ -22,13 +22,13 @@ build-fastapi-apps:
     - echo "Logging into acrbanditgamesplatform..."
     - docker login -u $IMAGE_USERNAME -p $IMAGE_PASSWORD acrbanditgamesplatform.azurecr.io
     - echo "Building game recommender image..."
-    - cd ../game-recommender-api && docker build -t game-recommender-api:latest .
+    - cd infrastructure/game-recommender-api && docker build -t game-recommender-api:latest .
     - docker tag game-recommender-api:latest acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Pushing game recommender image to ACR..."
     - docker push acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Successfully pushed game recommender api image!"
     - echo "Building chatbot image..."
-    - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
+    - cd ../chatbot-api && docker build -t chatbot-api:latest .
     - docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
     - echo "Pushing game recommender image to ACR..."
     - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
