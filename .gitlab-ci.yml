@@ -1,0 +1,109 @@
+stages:
+  - buildServices
+  - deployServices
+  - compile
+  - test
+  - build
+  - deploy
+
+variables:
+  DOCKER_DRIVER: overlay2
+  DOCKER_HOST: "tcp://docker:2375"
+  DOCKER_TLS_CERTDIR: ""
+  # no certificates used
+
+build-fastapi-apps:
+  stage: buildServices
+  script:
+    - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
+    - cd ../game-recommender-api && docker build -t game-recommender-api:latest .
+  artifacts:
+    paths:
+      - infrastructure/chatbot-api/Dockerfile
+      - infrastructure/game-recommender-api/Dockerfile
+
+deploy-fastapi-apps:
+  stage: deployServices
+  image: mcr.microsoft.com/azure-cli
+  before_script:
+    - echo "Logging in as serivice principal $AZURE_APP_ID"
+    - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
+    - echo "Logging into ACR"
+    - az acr login --name acrbanditgamesplatform.azurecr.io -u $IMAGE_USERNAME -p $IMAGE_PASSWORD
+#    - az appservice plan create \
+#    --name banditgames-app \
+#    --resource-group BanditGames \
+#    --sku B1 \
+#    --is-linux
+  script:
+    - cd ../game-recommender-api && docker tag game-recommender-api:latest acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Deploying game recommender api..."
+    - docker push acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Successfully pushed game recommender API to ACR"
+    - az webapp up --resource-group BanditGames --plan appservice-bandigames --name game-recommender-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Successfully created game recommender webapp"
+    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
+    - echo "Chatbot URL $GAME_RECOMMENDER_API_URL"
+    - echo "Deploying chatbot api..."
+    - cd infrastructure/chatbot-api && docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - echo "Successfully pushed chatbot API to ACR"
+    - az webapp create --resource-group BanditGames --plan appservice-bandigames  --name chatbot-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - export CHATBOT_API_URL=$(az webapp show --name chatbot-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
+    - echo "Chatbot URL $CHATBOT_API_URL"
+
+
+
+# Using latest docker
+image: docker:latest
+services:
+  - docker:dind
+
+# security testing: https://docs.gitlab.com/ee/user/application_security/
+# According to gitlab doc, this is the way to go.. so let's do this!
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Secret-Detection.gitlab-ci.yml
+
+cache:
+  key: "$CI_COMMIT_REF_NAME"
+  policy: push
+  paths:
+    - build
+    - .gradle
+
+
+# gradle is running docker environment, load new containers in that container
+# for every stage, separate container, doing steps
+# compile java, then do tests, publish artifacts
+compile:
+  image: gradle:8.11.0-jdk21
+  stage: compile
+  script:
+    - gradle compileJava
+
+
+test:
+  image: gradle:8.11.0-jdk21
+  stage: test
+  script:
+    - gradle test
+  artifacts:
+    when: always
+    reports:
+      junit: ./build/test-results/test/**/TEST-*.xml
+
+
+# build boot image : couple of ways to make container image
+# do it by hand with dockerfile,
+#boot build image supported by spring
+# uses builders that you can choose
+build:
+  image: gradle:8.11.0-jdk21
+  stage: build
+  script:
+    - gradle clean bootBuildImage --stacktrace
+  only:
+    - main
+
+# no nice github integration
