@@ -48,7 +48,7 @@ deploy-fastapi-apps:
     - echo "Logging into ACR"
   script:
     - echo "Starting game recommender webapp..."
-    - az webapp create --resource-group BanditGames --plan appservice-banditgames --name game-recommender-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - az webapp up --resource-group BanditGames--name game-recommender-api-app --runtime "PYTHON:3.11" --docker-image acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Successfully created game recommender webapp"
     - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
     - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
@@ -103,7 +103,7 @@ build:
   stage: build
   script:
     - gradle clean bootBuildImage --stacktrace
-  only:
-    - main
+#  only:
+#    - main
 
 # no nice github integration
