@@ -10,6 +10,7 @@ group = 'be.kdg.integration5'
 version = '0.0.1-SNAPSHOT'
 java {
     sourceCompatibility = '21'
+    targetCompatibility = '21'
 }
 configurations {
     compileOnly {
@@ -71,6 +72,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
 }
+
+
+bootJar {
+    enabled = true
+}
+jar {
+    enabled = false
+}
+
 dependencyManagement {
     imports {
         mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"

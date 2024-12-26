@@ -44,7 +44,6 @@ public class GameRecommendationAPIAdapter implements GameRecommendationLoadPort 
                 .log();
 
         GameRecommendation[] gameRecommendations = response.block();
-        LOGGER.info("Webclient returned {}", gameRecommendations);
         if (gameRecommendations != null) {
             return Arrays.stream(gameRecommendations)
                     .map(recommendation -> new Game(
