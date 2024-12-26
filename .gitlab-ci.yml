@@ -12,6 +12,10 @@ variables:
   DOCKER_TLS_CERTDIR: ""
   # no certificates used
 
+image: docker:latest
+services:
+  - docker:dind
+
 build-fastapi-apps:
   stage: buildServices
   script:
@@ -53,11 +57,6 @@ deploy-fastapi-apps:
     - echo "Chatbot URL $CHATBOT_API_URL"
 
 
-
-# Using latest docker
-image: docker:latest
-services:
-  - docker:dind
 
 # security testing: https://docs.gitlab.com/ee/user/application_security/
 # According to gitlab doc, this is the way to go.. so let's do this!
