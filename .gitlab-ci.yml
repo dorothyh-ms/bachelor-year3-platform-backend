@@ -19,10 +19,21 @@ services:
 build-fastapi-apps:
   stage: buildServices
   script:
-    - echo "Building chatbot image"
-    - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
-    - echo "Building game recommender image"
+    - echo "Logging into acrbanditgamesplatform..."
+    - docker login -u $IMAGE_USERNAME -p $IMAGE_PASSWORD acrbanditgamesplatform.azurecr.io
+    - echo "Building game recommender image..."
     - cd ../game-recommender-api && docker build -t game-recommender-api:latest .
+    - docker tag game-recommender-api:latest acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Pushing game recommender image to ACR..."
+    - docker push acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Successfully pushed game recommender api image!"
+    - echo "Building chatbot image..."
+    - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
+    - docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - echo "Pushing game recommender image to ACR..."
+    - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - echo "Successfully pushed chatbot api image!"
+
   artifacts:
     paths:
       - infrastructure/chatbot-api/Dockerfile
@@ -37,20 +48,18 @@ deploy-fastapi-apps:
     - echo "Logging in as service principal $AZURE_APP_ID"
     - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
     - echo "Logging into ACR"
-    - az acr login --name acrbanditgamesplatform.azurecr.io -u $IMAGE_USERNAME -p $IMAGE_PASSWORD --debug
-    - echo "ACR login successful"
+
   script:
-    - cd ../game-recommender-api && docker tag game-recommender-api:latest acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+
     - echo "Deploying game recommender api..."
-    - docker push acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Successfully pushed game recommender API to ACR"
     - az webapp up --resource-group BanditGames --plan appservice-bandigames --name game-recommender-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Successfully created game recommender webapp"
     - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
     - echo "Chatbot URL $GAME_RECOMMENDER_API_URL"
     - echo "Deploying chatbot api..."
-    - cd infrastructure/chatbot-api && docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
-    - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+    - cd infrastructure/chatbot-api && d
+
     - echo "Successfully pushed chatbot API to ACR"
     - az webapp create --resource-group BanditGames --plan appservice-bandigames  --name chatbot-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/chatbot-api:latest
     - export CHATBOT_API_URL=$(az webapp show --name chatbot-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
