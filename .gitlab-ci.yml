@@ -1,5 +1,4 @@
 stages:
-  - buildServices
   - deployServices
   - compile
   - test
@@ -47,9 +46,8 @@ deploy-fastapi-apps:
     - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
     - echo "Logging into ACR"
   script:
-    - echo "Deploying game recommender api..."
-    - echo "Successfully pushed game recommender API to ACR"
-    - az webapp up --resource-group BanditGames --plan appservice-banditgames --name game-recommender-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+    - echo "Starting game recommender webapp..."
+    - az webapp create --resource-group BanditGames --plan appservice-banditgames --name game-recommender-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
     - echo "Successfully created game recommender webapp"
     - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
     - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
