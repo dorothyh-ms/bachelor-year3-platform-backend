@@ -5,7 +5,6 @@ import be.kdg.integration5.platform.adapters.in.web.dtos.LobbyDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Lobby;
-import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.ports.in.GetGamesUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
@@ -84,5 +83,4 @@ public class GameController {
                 lobby.getStatus()
         ), HttpStatus.OK);
     }
-
 }
