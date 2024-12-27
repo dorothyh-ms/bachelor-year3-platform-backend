@@ -58,6 +58,7 @@ dependencies {
 
     implementation project(":common")
     implementation project(':platform')
+    implementation project(':chatbot')
     implementation project(':player-statistics')
     implementation project(':recommender')
     implementation 'mysql:mysql-connector-java:8.0.33'
