@@ -19,4 +19,5 @@ bootJar {
 }
 jar {
     enabled = true
+    archiveClassifier.set("")
 }
