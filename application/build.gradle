@@ -58,7 +58,6 @@ dependencies {
 
     implementation project(":common")
     implementation project(':platform')
-    implementation project(':chatbot')
     implementation project(':player-statistics')
     implementation project(':recommender')
     implementation 'mysql:mysql-connector-java:8.0.33'
@@ -95,8 +94,8 @@ bootBuildImage {
     publish = true
     docker {
         publishRegistry {
-            username =  System.getenv("IMAGE_USERNAME")
-            password = System.getenv("IMAGE_PASSWORD")
+            username =  "acrbanditgamesplatform"
+            password = "XHqKFM9npgVycTsyeOb0bOyshu6biMomIMsFdQdwUT+ACRAN0OB9"
         }
     }
 }

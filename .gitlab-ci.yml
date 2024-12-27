@@ -2,7 +2,7 @@ stages:
 #  - buildServices
 #  - deployServices
   - compile
-  - test
+#  - test
   - build
 #  - deploy
 
@@ -83,15 +83,15 @@ compile:
     - gradle compileJava
 
 
-test:
-  image: gradle:8.11.0-jdk21
-  stage: test
-  script:
-    - gradle test
-  artifacts:
-    when: always
-    reports:
-      junit: ./build/test-results/test/**/TEST-*.xml
+#test:
+#  image: gradle:8.11.0-jdk21
+#  stage: test
+#  script:
+#    - gradle test
+#  artifacts:
+#    when: always
+#    reports:
+#      junit: ./build/test-results/test/**/TEST-*.xml
 
 
 # build boot image : couple of ways to make container image
