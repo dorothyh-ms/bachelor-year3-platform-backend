@@ -1,10 +1,10 @@
 stages:
 #  - buildServices
-  - deployServices
+#  - deployServices
   - compile
   - test
   - build
-  - deploy
+#  - deploy
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -39,23 +39,23 @@ services:
 #      - infrastructure/chatbot-api/Dockerfile
 #      - infrastructure/game-recommender-api/Dockerfile
 
-deploy-fastapi-apps:
-  stage: deployServices
-  image: mcr.microsoft.com/azure-cli
-  before_script:
-    - echo "Logging in as service principal $AZURE_APP_ID"
-    - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
-    - echo "Logging into ACR"
-  script:
-    - echo "Starting game recommender webapp..."
-    - az webapp up --resource-group BanditGames--name game-recommender-api-app --runtime "PYTHON:3.11" --docker-image acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
-    - echo "Successfully created game recommender webapp"
-    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
-    - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
-    - echo "Deploying chatbot api..."
-    - az webapp create --resource-group BanditGames --plan appservice-banditgames  --name chatbot-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/chatbot-api:latest
-    - export CHATBOT_API_URL=$(az webapp show --name chatbot-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
-    - echo "Chatbot URL $CHATBOT_API_URL"
+#deploy-fastapi-apps:
+#  stage: deployServices
+#  image: mcr.microsoft.com/azure-cli
+#  before_script:
+#    - echo "Logging in as service principal $AZURE_APP_ID"
+#    - az login --service-principal -u $AZURE_APP_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT
+#    - echo "Logging into ACR"
+#  script:
+#    - echo "Starting game recommender webapp..."
+#    - az webapp up --resource-group BanditGames--name game-recommender-api-app --runtime "PYTHON:3.11" --docker-image acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
+#    - echo "Successfully created game recommender webapp"
+#    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
+#    - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
+#    - echo "Deploying chatbot api..."
+#    - az webapp create --resource-group BanditGames --plan appservice-banditgames  --name chatbot-api-app --deployment-container-image-name acrbanditgamesplatform.azurecr.io/chatbot-api:latest
+#    - export CHATBOT_API_URL=$(az webapp show --name chatbot-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
+#    - echo "Chatbot URL $CHATBOT_API_URL"
 
 
 
