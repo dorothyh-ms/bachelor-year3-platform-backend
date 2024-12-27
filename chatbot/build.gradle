@@ -22,3 +22,6 @@ jar {
     enabled = true
     archiveClassifier.set("")
 }
+tasks.named('bootBuildImage') {
+    dependsOn tasks.named('jar')
+}
