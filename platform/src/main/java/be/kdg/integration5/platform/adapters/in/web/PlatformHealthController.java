@@ -1,13 +1,13 @@
-package be.kdg.integration5.chatbot.adapters.in.web;
+package be.kdg.integration5.platform.adapters.in.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/chatbot-check-health")
-public class HealthController {
-    public HealthController() {
+@RequestMapping("/platform-check-health")
+public class PlatformHealthController {
+    public PlatformHealthController() {
     }
 
     @GetMapping
