@@ -91,7 +91,7 @@ dependencyManagement {
 bootBuildImage {
     builder = "paketobuildpacks/builder-jammy-base:latest"
     imageName = "acrbanditgamesplatform.azurecr.io/banditgames"
-    tags = ["acrbanditgamesplatform.azurecr.io/banditgames-backend:${-> project.ext.gitProps['git.commit.id.abbrev']}"]
+    tags = ["acrbanditgamesplatform.azurecr.io/banditgames:${-> project.ext.gitProps['git.commit.id.abbrev']}"]
     publish = true
     docker {
         publishRegistry {

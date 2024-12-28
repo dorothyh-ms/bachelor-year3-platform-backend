@@ -35,7 +35,9 @@ public class SecurityConfig {
                         .requestMatchers("/players/**").authenticated()
                         .requestMatchers("/games/**").authenticated()
                         .requestMatchers("/error").permitAll()
-                        .requestMatchers("/check-health").permitAll()
+                        .requestMatchers("/statistics-check-health").permitAll()
+                        .requestMatchers("/platform-check-health").permitAll()
+                        .requestMatchers("/chatbot-check-health").permitAll()
                         .anyRequest().authenticated()
                 ).sessionManagement(mgmt -> mgmt.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(rs -> rs.jwt(jwt -> jwtAuthenticationConverter()));
