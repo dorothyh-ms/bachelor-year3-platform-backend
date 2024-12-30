@@ -9,14 +9,23 @@ public class PlayerGameClassification {
     private int totalWins;
     private int totalLosses;
     private String classification;
+    private double totalSecondsPlayed;
+    private int totalMatchesPlayed;
 
-    public PlayerGameClassification(UUID playerId, UUID gameId, String gameName, int totalWins, int totalLosses, String classification) {
+    public PlayerGameClassification(UUID playerId, UUID gameId, String gameName, int totalWins, int totalLosses,
+                                    int totalMatchesPlayed,
+                                    double totalSecondsPlayed,
+
+                                    String classification
+                                    ) {
         this.playerId = playerId;
         this.gameId = gameId;
         this.gameName = gameName;
         this.totalWins = totalWins;
         this.totalLosses = totalLosses;
         this.classification = classification;
+        this.totalSecondsPlayed = totalSecondsPlayed;
+        this.totalMatchesPlayed = totalMatchesPlayed;
     }
 
     public UUID getPlayerId() {
@@ -69,6 +78,23 @@ public class PlayerGameClassification {
 
     public void setGameName(String gameName) {
         this.gameName = gameName;
+    }
+
+
+    public double getTotalSecondsPlayed() {
+        return totalSecondsPlayed;
+    }
+
+    public void setTotalSecondsPlayed(double totalSecondsPlayed) {
+        this.totalSecondsPlayed = totalSecondsPlayed;
+    }
+
+    public int getTotalMatchesPlayed() {
+        return totalMatchesPlayed;
+    }
+
+    public void setTotalMatchesPlayed(int totalMatchesPlayed) {
+        this.totalMatchesPlayed = totalMatchesPlayed;
     }
 
     @Override
