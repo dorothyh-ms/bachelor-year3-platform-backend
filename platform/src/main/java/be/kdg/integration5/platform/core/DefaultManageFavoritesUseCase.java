@@ -18,19 +18,16 @@ public class DefaultManageFavoritesUseCase implements ManageFavoritesUseCase {
 
     @Override
     public void addToFavorites(String playerId, String gameId) {
-
         manageFavoritesAdapter.addToFavorites(playerId, gameId);
     }
 
     @Override
-    public void removeFromFavorites(String playerId, String gameId) {
-
-        manageFavoritesAdapter.removeFromFavorites(playerId, gameId);
+    public void removeFromFavorites(String favoriteId) {
+        manageFavoritesAdapter.removeFromFavorites(favoriteId);
     }
 
     @Override
     public List<FavoriteDto> getFavorites(String playerId) {
-
         return manageFavoritesAdapter.getFavorites(playerId);
     }
 }

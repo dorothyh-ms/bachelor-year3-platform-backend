@@ -38,16 +38,15 @@ public class ManageFavoritesAdapter implements ManageFavoritesUseCase {
         GameJpaEntity game = fetchGameById(UUID.fromString(gameId));
 
         if (!favoriteRepository.existsByPlayerAndGame(player, game)) {
-            favoriteRepository.save(new FavoriteJpaEntity(player, game));
+            FavoriteJpaEntity favorite = new FavoriteJpaEntity(player, game);
+            favoriteRepository.save(favorite);
         }
     }
 
     @Override
-    public void removeFromFavorites(String playerId, String gameId) {
-        PlayerJpaEntity player = fetchPlayerById(UUID.fromString(playerId));
-        GameJpaEntity game = fetchGameById(UUID.fromString(gameId));
-
-        favoriteRepository.deleteByPlayerAndGame(player, game);
+    public void removeFromFavorites(String favoriteId) {
+        FavoriteJpaEntity favorite = fetchFavoriteById(UUID.fromString(favoriteId));
+        favoriteRepository.delete(favorite);
     }
 
     @Override
@@ -64,5 +63,9 @@ public class ManageFavoritesAdapter implements ManageFavoritesUseCase {
         return playerRepository.findById(playerId).orElseThrow(() ->
                 new IllegalArgumentException("Player with ID " + playerId + " not found"));
     }
-}
 
+    private FavoriteJpaEntity fetchFavoriteById(UUID favoriteId) {
+        return favoriteRepository.findById(favoriteId).orElseThrow(() ->
+                new IllegalArgumentException("Favorite with ID " + favoriteId + " not found"));
+    }
+}

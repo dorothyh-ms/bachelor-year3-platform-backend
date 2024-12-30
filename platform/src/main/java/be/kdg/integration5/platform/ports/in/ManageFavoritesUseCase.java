@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface ManageFavoritesUseCase {
     void addToFavorites(String playerId, String gameId);
-    void removeFromFavorites(String playerId, String gameId);
+
+    void removeFromFavorites(String favoriteId);
 
     List<FavoriteDto> getFavorites(String playerId);
 }
