@@ -14,3 +14,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 }
 
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    archiveClassifier.set("")
+}
+
+
+
+tasks.named('bootBuildImage').configure {
+    enabled = false
+}
