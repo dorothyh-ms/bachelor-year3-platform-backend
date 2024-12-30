@@ -34,12 +34,15 @@ public interface PlayerProfileRepository extends JpaRepository<PlayerProfileJpaE
         pwlr.game_name AS gameName,
         pwlr.total_wins,
         pwlr.total_losses,
+        pwlr.total_matches,
+        pwlr.total_seconds_played,
         CASE
             WHEN (pwlr.total_wins + pwlr.total_losses > 5) AND pwlr.win_loss_ratio >= 4.0 THEN 'Legend'
             WHEN (pwlr.total_wins + pwlr.total_losses > 5) AND pwlr.win_loss_ratio >= 2.0 THEN 'Elite'
             WHEN (pwlr.total_wins + pwlr.total_losses > 3) AND pwlr.win_loss_ratio >= 1.0 THEN 'Competitor'
             ELSE 'Beginner'
         END AS classification
+        
     FROM (
         SELECT
             pwl.player_id,
@@ -47,6 +50,8 @@ public interface PlayerProfileRepository extends JpaRepository<PlayerProfileJpaE
             pwl.game_name,
             pwl.total_wins,
             pwl.total_losses,
+            pwl.total_matches,
+            pwl.total_seconds_played,
             CASE
                 WHEN pwl.total_losses = 0 THEN NULL
                 ELSE ROUND(pwl.total_wins / pwl.total_losses, 2)
@@ -57,7 +62,9 @@ public interface PlayerProfileRepository extends JpaRepository<PlayerProfileJpaE
                 m.game_id,
                 bg.game_name,
                 SUM(CASE WHEN pm.outcome = 'WIN' THEN 1 ELSE 0 END) AS total_wins,
-                SUM(CASE WHEN pm.outcome = 'LOSS' THEN 1 ELSE 0 END) AS total_losses
+                SUM(CASE WHEN pm.outcome = 'LOSS' THEN 1 ELSE 0 END) AS total_losses,
+                COUNT(pm.match_id) AS total_matches,
+                SUM(TIMESTAMPDIFF(SECOND, m.start_time, m.end_time)) AS total_seconds_played
             FROM statistics.player_matches pm
             JOIN statistics.matches m ON pm.match_id = m.id
             JOIN statistics.games bg ON m.game_id = bg.game_id

@@ -90,10 +90,10 @@ async def get_recommendations(userId: str):
     try:
         # Load data from the database
         player_match_stats = pd.read_sql('''
-        SELECT p.id as player_id, game_id, username, gender, 
-               (SELECT TIMESTAMPDIFF(YEAR, p.birth_date, CURDATE())) AS age, 
-               c.name, outcome, 
-               TIMESTAMPDIFF(SECOND, start_time, end_time) as duration_played 
+        SELECT p.id as player_id, game_id, username, gender,
+               (SELECT TIMESTAMPDIFF(YEAR, p.birth_date, CURDATE())) AS age,
+               c.name, outcome,
+               TIMESTAMPDIFF(SECOND, start_time, end_time) as duration_played
         FROM statistics.player_matches pm
         JOIN statistics.matches m on pm.match_id=m.id
         JOIN statistics.players p on pm.player_id=p.id

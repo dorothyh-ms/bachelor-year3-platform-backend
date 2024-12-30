@@ -56,13 +56,24 @@ public class PlayerProfileDbAdapter implements PlayerProfileLoadPort, PlayerStat
     public List<PlayerGameClassification> loadPlayerGameClassifications(UUID userId) {
         LOGGER.info("PlayerProfileDbAdapter is running loadPlayerGameClassifications with id {}", userId );
         List<Object[]> classificationsObjects =  playerProfileRepository.loadPlayerClassifications(userId.toString());
+        System.out.println(classificationsObjects.get(1)[0]);
+        System.out.println(classificationsObjects.get(1)[1]);
+        System.out.println(classificationsObjects.get(1)[2]);
+        System.out.println(classificationsObjects.get(1)[3]);
+        System.out.println(classificationsObjects.get(1)[4]);
+        System.out.println(classificationsObjects.get(1)[5]);
+        System.out.println(classificationsObjects.get(1)[6]);
+        System.out.println(classificationsObjects.get(1)[7]);
         List<PlayerGameClassification> classifications = classificationsObjects.stream().map(classification -> new PlayerGameClassification(
                 UUID.fromString((String) classification[0]),
                 UUID.fromString((String) classification[1]),
                 (String) classification[2],
-                ((BigDecimal) classification[3]).intValue(),
-                ((BigDecimal) classification[4]).intValue(),
-                (String) classification[5]
+                ((Number) classification[3]).intValue(),
+                ((Number) classification[4]).intValue(),
+                ((Number) classification[5]).intValue(),
+                ((Number) classification[6]).doubleValue(),
+                (String) classification[7]
+
         )).toList();
         LOGGER.info("Returning list {}", classifications);
         return classifications;
