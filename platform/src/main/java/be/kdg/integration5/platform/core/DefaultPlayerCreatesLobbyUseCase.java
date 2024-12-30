@@ -3,6 +3,8 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.exceptions.GameNotFoundException;
+import be.kdg.integration5.platform.exceptions.PlayerNotFoundException;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
 import be.kdg.integration5.platform.ports.out.GameLoadPort;
@@ -31,15 +33,20 @@ public class DefaultPlayerCreatesLobbyUseCase implements PlayerCreatesLobbyUseCa
     public Lobby createLobby(CreateLobbyCommand command) {
         Optional<Game> gameOptional = gameLoadPort.loadGameById(command.gameId());
         Optional<Player> playerOptional = playerLoadPort.loadPlayerById(command.initiatingPlayerId());
-        if (gameOptional.isPresent() && playerOptional.isPresent()) {
-            Lobby lobby = new Lobby(
-                    UUID.randomUUID(),
-                    gameOptional.get(),
-                    playerOptional.get()
-            );
-            lobbyCreatePort.lobbyCreated(lobby);
-            return lobby;
+        if (gameOptional.isEmpty()) {
+            throw new GameNotFoundException(String.format("Game with id %s does not exist", command.gameId().toString()));
         }
-        return null;
+        if (playerOptional.isEmpty()) {
+            throw new PlayerNotFoundException(String.format("Player with id %s does not exist", command.initiatingPlayerId().toString()));
+        }
+
+        Lobby lobby = new Lobby(
+                UUID.randomUUID(),
+                gameOptional.get(),
+                playerOptional.get()
+        );
+        lobbyCreatePort.lobbyCreated(lobby);
+        return lobby;
+
     }
 }

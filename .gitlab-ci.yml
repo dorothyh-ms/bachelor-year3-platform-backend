@@ -103,7 +103,7 @@ build:
   stage: build
   script:
     - gradle clean bootBuildImage --stacktrace
-#  only:
-#    - main
+  only:
+    - main
 
 # no nice github integration
