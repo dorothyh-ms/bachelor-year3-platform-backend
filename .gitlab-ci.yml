@@ -28,7 +28,7 @@ build-fastapi-apps:
 #    - docker push acrbanditgamesplatform.azurecr.io/game-recommender-api:latest
 #    - echo "Successfully pushed game recommender api image!"
     - echo "Building chatbot image..."
-    - cd ../chatbot-api && docker build -t chatbot-api:latest .
+    - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
     - docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
     - echo "Pushing game recommender image to ACR..."
     - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
