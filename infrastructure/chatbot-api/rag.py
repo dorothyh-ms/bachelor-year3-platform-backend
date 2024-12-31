@@ -1,3 +1,4 @@
+# run using: streamlit run .\group22\w2\ragSystem.py
 from pydantic import BaseModel
 from uuid import UUID
 import os
@@ -13,6 +14,7 @@ from langchain.text_splitter import CharacterTextSplitter
 import subprocess
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import json
+from fastapi.responses import StreamingResponse
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -20,7 +22,6 @@ app = FastAPI()
 RULES_FOLDER = "./rules"
 # Ensure the folder exists
 os.makedirs(RULES_FOLDER, exist_ok=True)
-
 
 # Define request model
 class QueryRequest(BaseModel):
@@ -120,7 +121,8 @@ def process_input(user_id: UUID, question: str, game: str):
     # Full conversation as context
 
     if game != "BanditGames":
-        validation_template = f"""Is this question: {question} related to {game} and the information in {game}_rules.json? answer in 1 word: true or false"""
+        validation_template = f"""Is this question: {question} related to {game} and the information in {game}_rules
+        .json or the game in general? answer in 1 word: true or false"""
 
         validation_prompt = ChatPromptTemplate.from_template(validation_template)
         validation_chain = (
@@ -147,7 +149,7 @@ def process_input(user_id: UUID, question: str, game: str):
     if answer.split(' ')[0].strip() in "True":
         print("true, answer question")
         after_rag_template = f"""Only answer if the question is related to {game}
-        Answer the question based only on the following context, the conversation history, and the content of the file {game}_rules.json only if the question is based on the game do not mention the document in your answer:
+        Answer the question based only on the following context, the conversation history, and the content of the file {game}_rules.json, do not mention the document in your answer:
         Context: {context}
         Game: {game}
         Question: {question}
@@ -167,7 +169,7 @@ def process_input(user_id: UUID, question: str, game: str):
 
         return answer
     else:
-        answer = f"I'm sorry, I can only answer questions about {game}."
+        answer = f"I'm sorry, I can only answer questions about {game}, if you think the answer is wrong try asking again"
         return answer
 
 
@@ -177,7 +179,7 @@ async def question(request: QueryRequest):
     try:
         user_id = request.user_id  # Retrieve user_id (UUID) from the request
         answer = process_input(user_id, request.question, request.game)
-        return {"answer": answer}
+        return StreamingResponse(answer)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
 
