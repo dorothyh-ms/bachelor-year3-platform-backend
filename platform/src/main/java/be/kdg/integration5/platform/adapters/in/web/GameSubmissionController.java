@@ -1,9 +1,11 @@
 package be.kdg.integration5.platform.adapters.in.web;
 
+import be.kdg.integration5.platform.adapters.in.web.dtos.GameSubmissionDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.NewGameSubmissionDto;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.domain.GameSubmission;
 import be.kdg.integration5.platform.ports.in.CreateGameSubmissionUseCase;
+import be.kdg.integration5.platform.ports.in.GetGameSubmissionsUseCase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -11,6 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -18,17 +21,24 @@ import java.util.UUID;
 public class GameSubmissionController {
 
     private final CreateGameSubmissionUseCase createGameSubmissionUseCase;
+    private final GetGameSubmissionsUseCase getGameSubmissionsUseCase;
 
-    public GameSubmissionController(CreateGameSubmissionUseCase createGameSubmissionUseCase) {
+
+    public GameSubmissionController(CreateGameSubmissionUseCase createGameSubmissionUseCase, GetGameSubmissionsUseCase getGameSubmissionsUseCase) {
         this.createGameSubmissionUseCase = createGameSubmissionUseCase;
+        this.getGameSubmissionsUseCase = getGameSubmissionsUseCase;
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('admin')")
-    public ResponseEntity<GameSubmission> getAllGameSubmissions(){
-//               TODO: add function
-
-        return null;
+    @PreAuthorize("hasAnyAuthority('platformAdmin')")
+    public ResponseEntity<List<GameSubmissionDto>> getAllGameSubmissions(){
+        List<GameSubmission> gameSubmissionList = getGameSubmissionsUseCase.getGameSubmission();
+        if (!gameSubmissionList.isEmpty()) {
+            return new ResponseEntity<>(
+                    gameSubmissionList.stream().map(GameMapper::toGameSubmissionDto).toList(),
+                    HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 
@@ -38,6 +48,6 @@ public class GameSubmissionController {
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         GameSubmission game = createGameSubmissionUseCase.createGameSubmission(GameMapper.toCreateGameSubmissionCommand(newGameSubmissionDto, userId));
         //        return dto
-        return new ResponseEntity<>(GameMapper.toGameSubmissionDto(game), HttpStatus.CREATED);
+        return new ResponseEntity<>(GameMapper.toNewGameSubmissionDto(game), HttpStatus.CREATED);
     }
 }

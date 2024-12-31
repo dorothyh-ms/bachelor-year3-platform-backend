@@ -1,5 +1,6 @@
 package be.kdg.integration5.platform.adapters.out.db.mappers;
 
+import be.kdg.integration5.platform.adapters.in.web.dtos.GameSubmissionDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.NewGameSubmissionDto;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameSubmissionJpaEntity;
@@ -93,13 +94,46 @@ public class GameMapper {
                 submission.getSubmissionState()
         );
     }
+    public static GameSubmission toGameSubmissionEntity(GameSubmissionJpaEntity submissionJpaEntity) {
+        if (submissionJpaEntity == null) {
+            return null;
+        }
+        return new GameSubmission(
+                submissionJpaEntity.getGameId(),
+                submissionJpaEntity.getGameName(),
+                submissionJpaEntity.getGenre(),
+                submissionJpaEntity.getDifficultyLevel(),
+                submissionJpaEntity.getPrice(),
+                submissionJpaEntity.getDescription(),
+                submissionJpaEntity.getImage(),
+                submissionJpaEntity.getUrl(),
+                submissionJpaEntity.getSubmissionState()
+        );
+    }
 
     // Convert CreateGameSubmissionCommand to GameSubmission
-    public static NewGameSubmissionDto toGameSubmissionDto(GameSubmission game) {
+    public static NewGameSubmissionDto toNewGameSubmissionDto(GameSubmission game) {
         if (game == null) {
             return null;
         }
         return new NewGameSubmissionDto(
+                game.getId(),
+                game.getName(),
+                game.getGenre(),
+                game.getDifficultyLevel(),
+                game.getPrice(),
+                game.getDescription(),
+                game.getImage(),
+                game.getUrl(),
+                game.getSubmissionState()
+        );
+    }
+
+    public static GameSubmissionDto toGameSubmissionDto(GameSubmission game) {
+        if (game == null) {
+            return null;
+        }
+        return new GameSubmissionDto(
                 game.getId(),
                 game.getName(),
                 game.getGenre(),

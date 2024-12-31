@@ -67,4 +67,68 @@ public class GameSubmissionJpaEntity{
     public void setSubmissionState(SubmissionState submissionState) {
         this.submissionState = submissionState;
     }
+
+    public UUID getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(UUID gameId) {
+        this.gameId = gameId;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public GameGenre getGenre() {
+        return genre;
+    }
+
+    public void setGenre(GameGenre genre) {
+        this.genre = genre;
+    }
+
+    public GameDifficulty getDifficultyLevel() {
+        return difficultyLevel;
+    }
+
+    public void setDifficultyLevel(GameDifficulty difficultyLevel) {
+        this.difficultyLevel = difficultyLevel;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 }
