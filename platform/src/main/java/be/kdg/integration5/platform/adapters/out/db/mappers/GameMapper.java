@@ -74,7 +74,8 @@ public class GameMapper {
                 command.description(),
                 command.image(),
                 command.url(),
-                submissionState
+                submissionState,
+                command.addedBy()
         );
     }
     // Convert GameSubmission to GameSubmissionJpaEntity
@@ -107,7 +108,8 @@ public class GameMapper {
                 submissionJpaEntity.getDescription(),
                 submissionJpaEntity.getImage(),
                 submissionJpaEntity.getUrl(),
-                submissionJpaEntity.getSubmissionState()
+                submissionJpaEntity.getSubmissionState(),
+                submissionJpaEntity.getCreatedBy()
         );
     }
 
@@ -125,7 +127,8 @@ public class GameMapper {
                 game.getDescription(),
                 game.getImage(),
                 game.getUrl(),
-                game.getSubmissionState()
+                game.getSubmissionState(),
+                game.getCreatedBy()
         );
     }
 

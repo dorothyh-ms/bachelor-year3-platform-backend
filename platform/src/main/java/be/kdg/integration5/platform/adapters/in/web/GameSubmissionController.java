@@ -47,7 +47,18 @@ public class GameSubmissionController {
     public ResponseEntity<NewGameSubmissionDto> createGame(@AuthenticationPrincipal Jwt token, @RequestBody NewGameSubmissionDto newGameSubmissionDto){
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         GameSubmission game = createGameSubmissionUseCase.createGameSubmission(GameMapper.toCreateGameSubmissionCommand(newGameSubmissionDto, userId));
-        //        return dto
         return new ResponseEntity<>(GameMapper.toNewGameSubmissionDto(game), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/my-submissions")
+    @PreAuthorize("hasAnyAuthority('gameDev')")
+    public ResponseEntity<List<GameSubmissionDto>> getMySubmissions(){
+        List<GameSubmission> gameSubmissionList = getGameSubmissionsUseCase.getGameSubmission();
+        if (!gameSubmissionList.isEmpty()) {
+            return new ResponseEntity<>(
+                    gameSubmissionList.stream().map(GameMapper::toGameSubmissionDto).toList(),
+                    HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

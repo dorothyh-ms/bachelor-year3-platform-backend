@@ -28,7 +28,9 @@ public class NewGameSubmissionDto {
 
     private SubmissionState submissionState;
 
-    public NewGameSubmissionDto(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
+    private UUID createdBy;
+
+    public NewGameSubmissionDto(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy) {
         this.id = id;
         this.name = name;
         this.genre = genre;
@@ -38,6 +40,7 @@ public class NewGameSubmissionDto {
         this.image = image;
         this.url = url;
         this.submissionState = submissionState;
+        this.createdBy = createdBy;
     }
 
     public NewGameSubmissionDto() {
@@ -110,5 +113,17 @@ public class NewGameSubmissionDto {
 
     public void setSubmissionState(SubmissionState submissionState) {
         this.submissionState = submissionState;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public UUID getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UUID createdBy) {
+        this.createdBy = createdBy;
     }
 }

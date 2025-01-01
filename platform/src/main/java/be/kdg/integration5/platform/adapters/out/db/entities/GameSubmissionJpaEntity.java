@@ -43,6 +43,7 @@ public class GameSubmissionJpaEntity{
     @Column(name="url")
     private String url;
     private SubmissionState submissionState;
+    private UUID createdBy;
 
     public GameSubmissionJpaEntity() {
         // Default constructor for JPA
@@ -130,5 +131,13 @@ public class GameSubmissionJpaEntity{
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public UUID getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UUID createdBy) {
+        this.createdBy = createdBy;
     }
 }
