@@ -50,7 +50,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         }
         invite = optionalInvite.get();
         if (!invite.isRecipient(userId)) {
-            LOGGER.info("Player cannot except own invite");
+            LOGGER.info("Player cannot accept own invite");
             throw new InvalidInviteUserException("Player is not the recipient of the invite");
         }
         Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
@@ -88,6 +88,40 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
 
     private Invite playerDeclinesInvite(UUID inviteId, UUID userId) {
 //            TODO: implement decline invite
-        return null;
+        LOGGER.info("DefaultPlayerAcceptsInviteUseCase is running playerAcceptsInvite");
+        Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
+        Invite invite;
+        if (optionalInvite.isEmpty()) {
+            LOGGER.info("Invite not found");
+            throw new InvalidInviteException("Invite not found");
+        }
+        invite = optionalInvite.get();
+        if (!invite.isRecipient(userId)) {
+            LOGGER.info("Player cannot decline own invite");
+            throw new InvalidInviteUserException("Player is not the recipient of the invite");
+        }
+        Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
+        Lobby lobby;
+        if (lobbyOptional.isEmpty()) {
+            LOGGER.info("Lobby not found");
+            throw new LobbyNotFoundException("Lobby not found");
+        }
+        lobby = lobbyOptional.get();
+        if (invite.isExpired()) {
+            LOGGER.info("Invite expired");
+            throw new ExpiredInviteException("Invite has expired");
+        } else if (invite.isAccepted()) {
+            LOGGER.info("Invite already accepted");
+            throw new InvalidInviteException("Invite has already been accepted");
+        } else if (invite.isDenied()) {
+            LOGGER.info("Invite already declined");
+            throw new InvalidInviteException("Invite has already been declined");
+        }
+
+        LOGGER.info("Invite declined successfully");
+        invite.denied();
+        invite.setLobby(lobby);
+        inviteUpdatePort.updateInvite(invite);
+        return invite;
     }
 }
