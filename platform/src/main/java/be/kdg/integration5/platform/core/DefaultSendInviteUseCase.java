@@ -10,6 +10,7 @@ import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.out.InviteCreatePort;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Service
 @Qualifier("defaultSendInviteUseCase")
+@Profile("!test")
 public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     private final InviteCreatePort inviteCreatePort;
     private final GetPlayerUseCase getPlayerUseCase;

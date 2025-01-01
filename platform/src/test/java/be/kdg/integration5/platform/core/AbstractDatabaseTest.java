@@ -1,4 +1,4 @@
-
+package be.kdg.integration5.platform.core;
 
 
 import org.junit.jupiter.api.Test;
@@ -14,11 +14,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.TestPropertySourceUtils;
 import org.testcontainers.containers.MySQLContainer;
 
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.testcontainers.shaded.org.bouncycastle.cms.RecipientId.password;
 
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
@@ -31,10 +29,12 @@ public abstract class AbstractDatabaseTest {
 
 
     static {
-        DATABASE = new MySQLContainer<>("mysql:8.0.30").withUsername("root").withPassword("").withPrivilegedMode(true);
+        DATABASE = new MySQLContainer<>("mysql:8.0.30")
+                .withUsername("root")
+                .withPassword("")
+                .withPrivilegedMode(true);
         DATABASE.withInitScript("initScript.sql");
         DATABASE.start();
-
     }
 
     @Test

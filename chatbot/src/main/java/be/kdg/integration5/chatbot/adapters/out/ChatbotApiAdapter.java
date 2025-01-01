@@ -39,8 +39,8 @@ public class ChatbotApiAdapter implements AnswerLoadPort {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         // Make the POST request
-        String response = restTemplate.postForObject(pythonApiUrl, requestEntity, String.class);
-        return response != null ? response : "Sorry, I couldn't process your question.";
+
+        return restTemplate.postForObject(pythonApiUrl, requestEntity, String.class);
     }
 
     @Override
