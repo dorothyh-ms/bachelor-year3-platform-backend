@@ -11,15 +11,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class AppConfig {
 
-    @Bean
-    public GetAnswerUseCase getAnswerUseCase(AnswerLoadPort answerLoadPort) {
-        return new DefaultGetAnswerUseCase(answerLoadPort);
-    }
 
-    @Bean
-    public AnswerLoadPort answerLoadPort() {
-        return new ChatbotApiAdapter();
-    }
 
     @Bean
     public RestTemplate restTemplate() {

@@ -42,6 +42,8 @@ public class GameSubmissionJpaEntity{
 
     @Column(name="url")
     private String url;
+
+    @Enumerated(value = EnumType.STRING)
     private SubmissionState submissionState;
 
     public GameSubmissionJpaEntity() {
