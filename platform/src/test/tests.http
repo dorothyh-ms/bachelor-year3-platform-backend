@@ -103,7 +103,7 @@ client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&user
 
 ### Get all invites for player2
 
-GET http://localhost:8092/api/invites/player
+GET http://localhost:8092/api/invites
 Content-Type: application/json
 Accept: application/json
 Authorization: Bearer {{access_token}}
