@@ -30,7 +30,7 @@ build-fastapi-apps:
     - echo "Building chatbot image..."
     - cd infrastructure/chatbot-api && docker build -t chatbot-api:latest .
     - docker tag chatbot-api:latest acrbanditgamesplatform.azurecr.io/chatbot-api:latest
-    - echo "Pushing game recommender image to ACR..."
+    - echo "Pushing chatbot image to ACR..."
     - docker push acrbanditgamesplatform.azurecr.io/chatbot-api:latest
     - echo "Successfully pushed chatbot api image!"
 
@@ -53,15 +53,16 @@ deploy-fastapi-apps:
 #    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
 #    - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
     - echo "Deploying chatbot api..."
-    - az containerapp up --name chatbot-api-ca --resource-group BanditGames --location westeurope 
-      --target-port 8000 --ingress external
-      --image "acrbanditgamesplatform.azurecr.io/chatbot-api:latest"
-    - az containerapp update --name chatbot-api-ca --resource-group BanditGames
-      --cpu 1 --memory 4Gi
-      --min-replicas 1 --max-replicas 4
-
-    - export CHATBOT_API_URL=$(az containerapp show --name chatbot-api-ca --resource-group BanditGames --query 'defaultHostName' -o tsv)
-    - echo "Chatbot URL $CHATBOT_API_URL"
+    - az containerapp up --name chatbot-api-ca 
+      --resource-group BanditGames 
+      --location westeurope 
+      --target-port 8000 
+      --ingress external 
+      --image "acrbanditgamesplatform.azurecr.io/chatbot-api:latest"  
+      --environment "/subscriptions/8b2ab0c8-52c8-4906-8b85-c40ab946e6ff/resourceGroups/Battleship/providers/Microsoft.App/containerAppEnvironments/battleship-env"
+    - az containerapp update --name chatbot-api-ca --resource-group BanditGames --cpu 2.75 --memory 5.5Gi --min-replicas 1 --max-replicas 4
+    - export CHATBOT_API_URL=$(az containerapp show --name chatbot-api-ca --resource-group BanditGames --query "properties.configuration.ingress.fqdn" -o tsv)
+    - echo "Successfully deployed chatbot at $CHATBOT_API_URL"
 
 
 

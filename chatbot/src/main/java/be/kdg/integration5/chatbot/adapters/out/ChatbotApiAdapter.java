@@ -1,6 +1,7 @@
 package be.kdg.integration5.chatbot.adapters.out;
 
 import be.kdg.integration5.chatbot.ports.out.AnswerLoadPort;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,12 +12,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class PythonFastApiAdapter implements AnswerLoadPort {
+public class ChatbotApiAdapter implements AnswerLoadPort {
 
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String pythonApiUrl = "http://0.0.0.0:8000/question/";
+    private final String pythonApiUrl;
 
-    public PythonFastApiAdapter() {}
+    public ChatbotApiAdapter(@Value("${chatbot.api.url}") String pythonApiUrl) {
+        this.pythonApiUrl = pythonApiUrl;
+    }
 
     @Override
     public String loadAnswer(String question, UUID userId, String game) {

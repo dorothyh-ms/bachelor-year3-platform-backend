@@ -1,6 +1,6 @@
 package be.kdg.integration5.chatbot.config;
 
-import be.kdg.integration5.chatbot.adapters.out.PythonFastApiAdapter;
+import be.kdg.integration5.chatbot.adapters.out.ChatbotApiAdapter;
 import be.kdg.integration5.chatbot.core.DefaultGetAnswerUseCase;
 import be.kdg.integration5.chatbot.ports.in.GetAnswerUseCase;
 import be.kdg.integration5.chatbot.ports.out.AnswerLoadPort;
@@ -18,7 +18,7 @@ public class AppConfig {
 
     @Bean
     public AnswerLoadPort answerLoadPort() {
-        return new PythonFastApiAdapter();
+        return new ChatbotApiAdapter();
     }
 
     @Bean
