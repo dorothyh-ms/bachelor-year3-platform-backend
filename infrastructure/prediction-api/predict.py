@@ -90,6 +90,9 @@ feature_names = X_train.columns.tolist()
 
 # FastAPI Integration
 app = FastAPI()
+@app.get("/")
+async def home():
+    return "hi from predict.py!"
 
 class PredictionRequest(BaseModel):
     player_id: str
