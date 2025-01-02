@@ -1,3 +1,13 @@
 plugins {
     id 'module-config'
 }
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    archiveClassifier.set("")
+}
+tasks.named('bootBuildImage').configure {
+    enabled = false
+}

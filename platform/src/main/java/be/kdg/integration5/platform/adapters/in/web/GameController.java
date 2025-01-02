@@ -6,6 +6,7 @@ import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerDto;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.ports.in.GetGameUseCase;
 import be.kdg.integration5.platform.ports.in.GetGamesUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
@@ -25,12 +26,34 @@ import java.util.UUID;
 @RequestMapping("/games")
 public class GameController {
     private final GetGamesUseCase getGamesUseCase;
+    private final GetGameUseCase getGameUseCase;
     private final PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase;
     private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
-    public GameController(GetGamesUseCase getGamesUseCase, PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase) {
+    public GameController(GetGamesUseCase getGamesUseCase, GetGameUseCase getGameUseCase, PlayerCreatesLobbyUseCase playerCreatesLobbyUseCase) {
         this.getGamesUseCase = getGamesUseCase;
+        this.getGameUseCase = getGameUseCase;
         this.playerCreatesLobbyUseCase = playerCreatesLobbyUseCase;
+    }
+
+    @GetMapping("/{gameId}")
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<GameDto> getGameById( @PathVariable UUID gameId,@AuthenticationPrincipal Jwt token) {
+        LOGGER.info("GameController is running getGameById");
+
+        Game game = getGameUseCase.getGameById(gameId);
+        return new ResponseEntity<>(
+                 new GameDto(
+                        game.getId(),
+                        game.getName(),
+                        game.getGenre(),
+                        game.getDifficultyLevel(),
+                        game.getPrice(),
+                        game.getDescription(),
+                        game.getImage(),
+                        game.getUrl()
+                ),
+                HttpStatus.OK);
     }
 
     @GetMapping
