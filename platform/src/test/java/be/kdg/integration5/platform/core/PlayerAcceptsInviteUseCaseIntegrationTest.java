@@ -1,6 +1,5 @@
 package be.kdg.integration5.platform.core;
 
-import be.kdg.integration5.common.domain.GameGenre;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.InviteJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.LobbyJpaEntity;
@@ -13,11 +12,6 @@ import be.kdg.integration5.platform.domain.InviteStatus;
 import be.kdg.integration5.platform.domain.LobbyStatus;
 import be.kdg.integration5.platform.exceptions.InvalidInviteUserException;
 import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
-import be.kdg.integration5.platform.ports.out.InviteLoadPort;
-import be.kdg.integration5.platform.ports.out.InviteUpdatePort;
-import be.kdg.integration5.platform.ports.out.LobbyJoinedPort;
-import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -34,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class PlayerAcceptsInviteIntegrationTest extends AbstractDatabaseTest{
+public class PlayerAcceptsInviteUseCaseIntegrationTest extends AbstractDatabaseTest{
 
     @Autowired
     private GameRepository gameRepository;
@@ -66,7 +60,7 @@ public class PlayerAcceptsInviteIntegrationTest extends AbstractDatabaseTest{
         GameJpaEntity gameJpaEntity = new GameJpaEntity(GAME_ID, GAME_NAME, GENRE, DIFFICULTY, GAME_PRICE, GAME_DESCRIPTION, GAME_IMAGE, GAME_URL);
         gameJpaEntity = gameRepository.save(gameJpaEntity);
 
-        LobbyJpaEntity lobbyJpa = new LobbyJpaEntity(LOBBY_ID, gameJpaEntity,player1Jpa, LocalDateTime.now(), LobbyStatus.OPEN);
+        LobbyJpaEntity lobbyJpa = new LobbyJpaEntity(OPEN_LOBBY_ID, gameJpaEntity,player1Jpa, LocalDateTime.now(), LobbyStatus.OPEN);
         lobbyRepository.save(lobbyJpa);
 
         InviteJpaEntity inviteJpa = new InviteJpaEntity(INVITE_ID, player1Jpa, player2Jpa, lobbyJpa, InviteStatus.OPEN);
@@ -90,12 +84,17 @@ public class PlayerAcceptsInviteIntegrationTest extends AbstractDatabaseTest{
     @Test
     public void acceptInviteShouldFailForWrongRecipientAndInviteShouldNotHaveAcceptedStatus() {
 
+        UUID nonExistentUserId = UUID.randomUUID();
+        // ASSERT
         assertThrows(InvalidInviteUserException.class, () ->
-                { playerAcceptsInviteUseCase.playerAnswersInvite(INVITE_ID, UUID.randomUUID(), "ACCEPT");}
+                // ACT
+                { playerAcceptsInviteUseCase.playerAnswersInvite(INVITE_ID, nonExistentUserId, "ACCEPT");}
         );
+
 
         final Optional<InviteJpaEntity> inviteJpaOptional = inviteRepository.findById(INVITE_ID);
         InviteJpaEntity inviteJpa = inviteJpaOptional.get();
+        // ASSERT
         assertEquals(inviteJpa.getInviteStatus(), InviteStatus.OPEN);
 
     }

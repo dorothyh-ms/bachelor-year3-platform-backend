@@ -3,6 +3,7 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
+import be.kdg.integration5.platform.exceptions.LobbyClosedException;
 import be.kdg.integration5.platform.exceptions.LobbyNotFoundException;
 import be.kdg.integration5.platform.exceptions.PlayerNotFoundException;
 import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
@@ -18,8 +19,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Qualifier("defaultSendInviteUseCase")
-@Profile("!test")
 public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     private final InviteCreatePort inviteCreatePort;
     private final GetPlayerUseCase getPlayerUseCase;
@@ -32,16 +31,18 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
     }
 
     @Override
-
     public Invite createInvite(UUID sender, UUID recipient, UUID lobbyId) {
         Optional<Player> senderPlayer = getPlayerUseCase.getPlayerById(sender);
         if (senderPlayer.isEmpty()) {
             throw new PlayerNotFoundException("Sender not found");
         }
-        Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new LobbyNotFoundException("Lobby not found"));
         Optional<Player> recipientPlayer = getPlayerUseCase.getPlayerById(recipient);
         if (recipientPlayer.isEmpty()) {
             throw new PlayerNotFoundException("Recipient not found");
+        }
+        Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new LobbyNotFoundException("Lobby not found"));
+        if (!lobby.isOpen()){
+            throw new LobbyClosedException("Cannot create invitation for closed lobby");
         }
         Invite invite = senderPlayer.get().createInvite(recipientPlayer.get(), lobby);
         inviteCreatePort.createInvite(invite);

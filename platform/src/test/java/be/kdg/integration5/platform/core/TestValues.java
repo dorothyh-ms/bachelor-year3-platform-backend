@@ -22,7 +22,8 @@ public class TestValues {
     public static final String GAME_IMAGE = "Test";
     public static final String GAME_URL="Test";
 
-    public static final UUID LOBBY_ID = UUID.randomUUID();
+    public static final UUID OPEN_LOBBY_ID = UUID.randomUUID();
+    public static final UUID CLOSED_LOBBY_ID = UUID.randomUUID();
     public static final UUID INVITE_ID = UUID.randomUUID();
 
     public static final Game GAME = new Game(

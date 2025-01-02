@@ -33,7 +33,7 @@ public class InviteController {
     private final ApplicationEventPublisher eventPublisher;
 
     public InviteController(
-            @Qualifier("defaultPlayerCreatesInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
+           PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
             PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase,
             GetInvitesUseCase getInvitesUseCase,
             ApplicationEventPublisher eventPublisher) {
