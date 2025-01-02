@@ -12,6 +12,7 @@ import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.InviteStatus;
 import be.kdg.integration5.platform.domain.LobbyStatus;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -74,4 +75,6 @@ public class PlayerCreatesInviteUseCaseIntegrationTest extends AbstractDatabaseT
         assertEquals(inviteJpa.getRecipient().getPlayerId(), PLAYER2_ID);
         assertEquals(inviteJpa.getLobby().getId(), OPEN_LOBBY_ID);
     }
+
+
 }

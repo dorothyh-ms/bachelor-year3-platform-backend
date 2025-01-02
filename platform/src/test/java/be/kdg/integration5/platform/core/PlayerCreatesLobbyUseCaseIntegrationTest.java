@@ -12,6 +12,7 @@ import be.kdg.integration5.platform.exceptions.GameNotFoundException;
 import be.kdg.integration5.platform.exceptions.PlayerNotFoundException;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateLobbyCommand;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -86,4 +87,6 @@ public class PlayerCreatesLobbyUseCaseIntegrationTest extends AbstractDatabaseTe
             playerCreatesLobbyUseCase.createLobby(new CreateLobbyCommand(UUID.randomUUID(), GAME_ID));
         });
     }
+
+
 }

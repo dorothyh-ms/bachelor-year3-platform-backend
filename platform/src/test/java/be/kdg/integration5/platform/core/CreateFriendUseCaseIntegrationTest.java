@@ -7,6 +7,7 @@ import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerRepositor
 import be.kdg.integration5.platform.exceptions.AlreadyFriendsException;
 import be.kdg.integration5.platform.ports.in.CreateFriendUseCase;
 import be.kdg.integration5.platform.ports.in.commands.AddFriendCommand;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,8 +38,7 @@ class CreateFriendUseCaseIntegrationTest extends AbstractDatabaseTest{
 
     @BeforeEach
     public void setup(){
-        friendRepository.deleteAll();
-        playerRepository.deleteAll();
+
 
         // ARRANGE
         player1JpaEntity = new PlayerJpaEntity(PLAYER1_ID, PLAYER1_USERNAME);
@@ -82,4 +82,6 @@ class CreateFriendUseCaseIntegrationTest extends AbstractDatabaseTest{
         assertTrue(friendRepository.arePlayersFriends(player1JpaEntity, player2JpaEntity));
         assertTrue(friendRepository.arePlayersFriends(player2JpaEntity, player1JpaEntity));
     }
+
+
 }

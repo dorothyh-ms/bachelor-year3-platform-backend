@@ -1,8 +1,13 @@
 package be.kdg.integration5.platform.core;
 
 
+import be.kdg.integration5.platform.adapters.out.db.repositories.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +30,23 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 @EnableAutoConfiguration(exclude = {RabbitAutoConfiguration.class})
 public abstract class AbstractDatabaseTest {
+
+
     public static final MySQLContainer<?> DATABASE;
+    @Autowired
+    private GameRepository gameRepository;
+
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    @Autowired
+    private InviteRepository inviteRepository;
+
+    @Autowired
+    private LobbyRepository lobbyRepository;
+
+    @Autowired
+    private FriendRepository friendRepository;
 
 
     static {
@@ -58,6 +79,17 @@ public abstract class AbstractDatabaseTest {
 
         }
     }
+
+    @AfterEach
+    void teardown(){
+        inviteRepository.deleteAll();
+        lobbyRepository.deleteAll();
+        friendRepository.deleteAll();
+        playerRepository.deleteAll();
+        gameRepository.deleteAll();
+    }
+
+
 }
 
 

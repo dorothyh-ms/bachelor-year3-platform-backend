@@ -3,15 +3,13 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.LobbyJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
-import be.kdg.integration5.platform.adapters.out.db.repositories.GameRepository;
-import be.kdg.integration5.platform.adapters.out.db.repositories.InviteRepository;
-import be.kdg.integration5.platform.adapters.out.db.repositories.LobbyRepository;
-import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerRepository;
+import be.kdg.integration5.platform.adapters.out.db.repositories.*;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.LobbyStatus;
 import be.kdg.integration5.platform.exceptions.PlayerNotAdmittedToLobbyException;
 import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -31,6 +29,7 @@ class PlayerJoinsLobbyUseCaseIntegrationTest extends AbstractDatabaseTest{
 
     @Autowired
     private PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase;
+
     @Autowired
     private GameRepository gameRepository;
 
@@ -44,11 +43,11 @@ class PlayerJoinsLobbyUseCaseIntegrationTest extends AbstractDatabaseTest{
     private LobbyRepository lobbyRepository;
 
 
+
+
     @BeforeEach
     public void setup(){
-        lobbyRepository.deleteAll();
-        gameRepository.deleteAll();
-        playerRepository.deleteAll();
+
 
         // ARRANGE
         PlayerJpaEntity player1Jpa = new PlayerJpaEntity(PLAYER1_ID, PLAYER1_USERNAME);
@@ -97,5 +96,6 @@ class PlayerJoinsLobbyUseCaseIntegrationTest extends AbstractDatabaseTest{
             playerJoinsLobbyUseCase.joinLobby(new JoinLobbyCommand(PLAYER2_ID, CLOSED_LOBBY_ID));
         });
     }
+
 
 }
