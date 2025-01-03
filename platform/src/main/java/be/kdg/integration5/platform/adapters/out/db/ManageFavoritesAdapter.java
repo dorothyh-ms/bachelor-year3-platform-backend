@@ -7,14 +7,13 @@ import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.repositories.FavoriteRepository;
 import be.kdg.integration5.platform.adapters.out.db.repositories.GameRepository;
 import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerRepository;
-import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.ports.in.ManageFavoritesUseCase;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
 
 @Component("manageFavoritesAdapter")
 @Transactional

@@ -1,7 +1,5 @@
 package be.kdg.integration5.platform.core;
-
 import be.kdg.integration5.platform.adapters.in.web.dtos.FavoriteDto;
-import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.ports.in.ManageFavoritesUseCase;
 import org.springframework.stereotype.Service;
 
