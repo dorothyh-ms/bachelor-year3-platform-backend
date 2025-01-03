@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-
 @RequestMapping("/invites")
 public class InviteController {
 
@@ -33,7 +32,7 @@ public class InviteController {
     private final ApplicationEventPublisher eventPublisher;
 
     public InviteController(
-            @Qualifier("defaultPlayerCreatesInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
+            @Qualifier("defaultSendInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase, // Updated qualifier
             PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase,
             GetInvitesUseCase getInvitesUseCase,
             ApplicationEventPublisher eventPublisher) {

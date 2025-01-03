@@ -38,7 +38,7 @@ public class LobbyController {
 
     public LobbyController(
             PlayerJoinsLobbyUseCase playerJoinsLobbyUseCase,
-            @Qualifier("defaultPlayerCreatesInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
+            @Qualifier("defaultSendInviteUseCase") PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
             GetOpenLobbiesUseCase getLobbyUseCase) {
         this.playerJoinsLobbyUseCase = playerJoinsLobbyUseCase;
         this.playerCreatesInviteUseCase = playerCreatesInviteUseCase;
