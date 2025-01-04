@@ -70,9 +70,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0'
+
 
 }
 
+ext {
+    set('springCloudVersion', "2024.0.0")
+}
 
 bootJar {
     enabled = true
@@ -83,6 +88,7 @@ jar {
 
 dependencyManagement {
     imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         mavenBom "com.azure.spring:spring-cloud-azure-dependencies:${springCloudAzureVersion}"
     }
 }
