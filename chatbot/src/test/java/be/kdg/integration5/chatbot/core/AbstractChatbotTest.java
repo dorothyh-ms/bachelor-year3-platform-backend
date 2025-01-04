@@ -2,6 +2,8 @@ package be.kdg.integration5.chatbot.core;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -15,6 +17,7 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.MySQLContainer;
 
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.images.builder.ImageFromDockerfile;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -31,10 +34,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @ContextConfiguration(initializers = AbstractChatbotTest.ChatbotServiceInitalizer.class)
 public abstract class AbstractChatbotTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractChatbotTest.class);
     public static final GenericContainer<?> CHATBOT_SERVICE;
 
     static {
-        CHATBOT_SERVICE = new GenericContainer(
+        long memoryInBytes = 32l * 1024l * 1024l;
+
+        long memorySwapInBytes = 64l * 1024l * 1024l;
+        CHATBOT_SERVICE = new GenericContainer<>(
                 DockerImageName.parse("emrecaylar/my-fastapi-app"))
                 .withExposedPorts(8000)
                 .waitingFor(
@@ -42,6 +49,8 @@ public abstract class AbstractChatbotTest {
                                 .withStartupTimeout(java.time.Duration.ofSeconds(360))
                 );
         CHATBOT_SERVICE.start();
+        Slf4jLogConsumer logConsumer = new Slf4jLogConsumer(LOGGER);
+        CHATBOT_SERVICE.followOutput(logConsumer);
     }
 
     @Test

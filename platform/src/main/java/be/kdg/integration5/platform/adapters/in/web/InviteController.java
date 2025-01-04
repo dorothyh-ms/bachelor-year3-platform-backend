@@ -64,7 +64,7 @@ public class InviteController {
     public ResponseEntity<InviteDto> answerInvite(
             @AuthenticationPrincipal Jwt token,
             @PathVariable UUID inviteId,
-            @RequestBody InviteActionDTO action) {
+            @RequestBody InviteActionDto action) {
         LOGGER.info("InviteController is running answerInvite");
         UUID userId = UUID.fromString(token.getClaimAsString("sub"));
 
