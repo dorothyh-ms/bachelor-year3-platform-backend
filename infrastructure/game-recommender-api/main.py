@@ -2,18 +2,13 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List
 import pandas as pd
-import mysql.connector
 from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import NearestNeighbors
-import os
 
-# # Database connection
-db = mysql.connector.connect(
-    host=os.getenv('MYSQL_HOST', 'localhost'),
-    user=os.getenv('MYSQL_USER', 'user'),
-    password=os.getenv('MYSQL_PASSWORD', 'password')
-)
-
+# File paths for CSV data
+PLAYER_MATCHES_FILE = "player_matches.csv"
+MATCHES_FILE = "matches.csv"
+GAMES_FILE = "games.csv"
 
 # Game Recommender Class
 class GameRecommender:
@@ -40,7 +35,7 @@ class GameRecommender:
         ).fillna(0)
         self.player_raw_playtimes = raw_playtimes
         self.player_vectors = self.preprocess_player_match_statistics(raw_playtimes)
-        self.games=games_df
+        self.games = games_df
 
     def get_all_recommendations(self, player_id):
         if player_id not in self.player_vectors.index:
@@ -63,24 +58,37 @@ class GameRecommender:
         unplayed_game_ids = self.recommend_unplayed_games(player_id, games_scores)
         game_recommendations = []
         for id in unplayed_game_ids:
-            print("id", id)
-            print(self.games.shape)
-            name =self.games.loc[self.games['game_id'] == id, 'game_name'].iloc[0]
-            difficulty =self.games.loc[self.games['game_id'] == id, 'difficulty_level'].iloc[0]
-            description =self.games.loc[self.games['game_id'] == id, 'description'].iloc[0]
-            print("name", type(name))
+            name = self.games.loc[self.games['game_id'] == id, 'game_name'].iloc[0]
             game_recommendations.append({
-                "id" : id,
-                "name" : name,
-                "difficulty": difficulty,
-                "description": description
+                "id": id,
+                "name": name,
             })
-        print(game_recommendations)
         return game_recommendations
 
+        # Load data from CSV files
+player_matches = pd.read_csv(PLAYER_MATCHES_FILE)
+matches = pd.read_csv(MATCHES_FILE)
+games = pd.read_csv(GAMES_FILE)
+
+        # Perform joins to replicate SQL query
+player_match_stats = player_matches.merge(matches, left_on="match_id", right_on="id")
+player_match_stats['start_time'] = pd.to_datetime(player_match_stats['start_time'])
+player_match_stats['end_time'] = pd.to_datetime(player_match_stats['end_time'])
+
+        # Calculate the duration in seconds
+player_match_stats['duration_played'] = (
+                player_match_stats['end_time'] - player_match_stats['start_time']
+        ).dt.total_seconds()
+
+player_match_stats = player_match_stats[["player_id", "game_id", "duration_played"]]
+print(player_match_stats[0:50])
+
+        # Initialize recommender
+recommender = GameRecommender(player_match_stats, games)
 
 # FastAPI app
 app = FastAPI()
+
 @app.get("/")
 async def home():
     return "hi!"
@@ -88,32 +96,9 @@ async def home():
 @app.get("/player-game-recommendations/{userId}")
 async def get_recommendations(userId: str):
     try:
-        # Load data from the database
-        player_match_stats = pd.read_sql('''
-        SELECT p.id as player_id, game_id, username, gender,
-               (SELECT TIMESTAMPDIFF(YEAR, p.birth_date, CURDATE())) AS age,
-               c.name, outcome,
-               TIMESTAMPDIFF(SECOND, start_time, end_time) as duration_played
-        FROM statistics.player_matches pm
-        JOIN statistics.matches m on pm.match_id=m.id
-        JOIN statistics.players p on pm.player_id=p.id
-        JOIN statistics.locations l on l.id=p.location_id
-        JOIN statistics.countries c on l.country_id=c.id
-        ''', con=db)
-
-        games = pd.read_sql("""
-                            SELECT game_id, game_name, difficulty_level, description FROM statistics.games
-                            """, con=db)
-
-
-        # Initialize recommender
-        recommender = GameRecommender(player_match_stats, games)
-
         recommendations = recommender.get_all_recommendations(userId)
         return recommendations
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail="An error occurred while processing recommendations.")
-
-

@@ -64,6 +64,10 @@ public class Lobby {
         return true;
     }
 
+    public boolean isOpen() {
+        return this.status.equals(LobbyStatus.OPEN);
+    }
+
 
     private void close() {
         this.setStatus(LobbyStatus.CLOSED);

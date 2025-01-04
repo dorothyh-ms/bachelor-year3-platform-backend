@@ -5,10 +5,12 @@ import be.kdg.integration5.platform.ports.out.LobbyJoinedPort;
 import be.kdg.integration5.platform.ports.out.StartGameCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 @Component
+@Profile("!test")
 public class PlayerJoinedLobbyAmqpPublisher implements LobbyJoinedPort {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerJoinedLobbyAmqpPublisher.class);
