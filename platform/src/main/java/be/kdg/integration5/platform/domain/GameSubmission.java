@@ -10,10 +10,12 @@ import java.util.UUID;
 public class GameSubmission extends Game{
 
     private SubmissionState submissionState;
+    private UUID createdBy;
 
-    public GameSubmission(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
+    public GameSubmission(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy) {
         super(id, name, genre, difficultyLevel, price, description, image, url);
         this.submissionState = submissionState;
+        this.createdBy = createdBy;
     }
 
 
@@ -27,5 +29,13 @@ public class GameSubmission extends Game{
 
     public boolean isValidUrl(){
         return UrlValidator.isUrlValid(this.getUrl());
+    }
+
+    public UUID getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(UUID createdBy) {
+        this.createdBy = createdBy;
     }
 }

@@ -1,8 +1,6 @@
 package be.kdg.integration5.platform.adapters.in.web.dtos;
 
-import be.kdg.integration5.platform.domain.InviteAction;
-
-public class InviteActionDTO {
+public class InviteActionDto {
     String action;
 
     public String getAction() {
@@ -13,10 +11,10 @@ public class InviteActionDTO {
         this.action = action;
     }
 
-    public InviteActionDTO(String action) {
+    public InviteActionDto(String action) {
         this.action = action;
     }
 
-    public InviteActionDTO() {
+    public InviteActionDto() {
     }
 }

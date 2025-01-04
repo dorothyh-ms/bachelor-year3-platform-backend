@@ -7,7 +7,8 @@ import be.kdg.integration5.platform.domain.SubmissionState;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-public class NewGameSubmissionDto {
+public class GameSubmissionDto {
+
     private UUID id;
 
     private String name;
@@ -28,9 +29,7 @@ public class NewGameSubmissionDto {
 
     private SubmissionState submissionState;
 
-    private UUID createdBy;
-
-    public NewGameSubmissionDto(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy) {
+    public GameSubmissionDto(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
         this.id = id;
         this.name = name;
         this.genre = genre;
@@ -40,10 +39,9 @@ public class NewGameSubmissionDto {
         this.image = image;
         this.url = url;
         this.submissionState = submissionState;
-        this.createdBy = createdBy;
     }
 
-    public NewGameSubmissionDto() {
+    public GameSubmissionDto() {
     }
 
 
@@ -113,17 +111,5 @@ public class NewGameSubmissionDto {
 
     public void setSubmissionState(SubmissionState submissionState) {
         this.submissionState = submissionState;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public UUID getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(UUID createdBy) {
-        this.createdBy = createdBy;
     }
 }
