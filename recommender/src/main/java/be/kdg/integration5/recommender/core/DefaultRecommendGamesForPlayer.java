@@ -1,8 +1,9 @@
-package be.kdg.integration5.core;
+package be.kdg.integration5.recommender.core;
 
-import be.kdg.integration5.domain.Game;
-import be.kdg.integration5.ports.in.RecommendGamesForPlayerUseCase;
-import be.kdg.integration5.ports.out.GameRecommendationLoadPort;
+import be.kdg.integration5.recommender.domain.Game;
+import be.kdg.integration5.recommender.exceptions.PlayerNotFoundException;
+import be.kdg.integration5.recommender.ports.in.RecommendGamesForPlayerUseCase;
+import be.kdg.integration5.recommender.ports.out.GameRecommendationLoadPort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +20,10 @@ public class DefaultRecommendGamesForPlayer implements RecommendGamesForPlayerUs
 
     @Override
     public List<Game> recommendGamesForPlayer(UUID playerId) {
-        return gameRecommendationLoadPort.recommendGamesForUser(playerId);
+        List<Game> games =  gameRecommendationLoadPort.recommendGamesForUser(playerId);
+        if (games.isEmpty()){
+            throw new PlayerNotFoundException(String.format("Player with ID %s does not exist in the game recommender", playerId));
+        };
+        return games;
     }
 }

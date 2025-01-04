@@ -1,4 +1,4 @@
-package be.kdg.integration5;
+package be.kdg.integration5.recommender;
 
 
 import org.slf4j.Logger;

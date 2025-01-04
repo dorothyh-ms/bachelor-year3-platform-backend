@@ -1,6 +1,6 @@
-package be.kdg.integration5.ports.out;
+package be.kdg.integration5.recommender.ports.out;
 
-import be.kdg.integration5.domain.Game;
+import be.kdg.integration5.recommender.domain.Game;
 
 import java.util.List;
 import java.util.UUID;

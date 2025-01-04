@@ -30,11 +30,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test")
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 @ContextConfiguration(initializers = AbstractChatbotTest.ChatbotServiceInitalizer.class)
-
 public abstract class AbstractChatbotTest {
     public static final GenericContainer<?> CHATBOT_SERVICE;
-
-
 
     static {
         CHATBOT_SERVICE = new GenericContainer(
@@ -61,8 +58,6 @@ public abstract class AbstractChatbotTest {
                     applicationContext,
                     "chatbot.api.url=" + String.format("http://%s:%s/question/", CHATBOT_SERVICE.getHost(), CHATBOT_SERVICE.getMappedPort(8000))
             );
-
-
         }
     }
 

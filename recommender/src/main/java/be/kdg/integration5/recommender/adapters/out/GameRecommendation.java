@@ -1,4 +1,4 @@
-package be.kdg.integration5.adapters.out;
+package be.kdg.integration5.recommender.adapters.out;
 
 import be.kdg.integration5.common.domain.GameDifficulty;
 

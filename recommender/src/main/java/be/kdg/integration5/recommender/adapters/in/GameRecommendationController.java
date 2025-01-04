@@ -1,10 +1,9 @@
-package be.kdg.integration5.adapters.in;
+package be.kdg.integration5.recommender.adapters.in;
 
 
-import be.kdg.integration5.adapters.in.dtos.GameDto;
-import be.kdg.integration5.adapters.out.GameRecommendation;
-import be.kdg.integration5.domain.Game;
-import be.kdg.integration5.ports.in.RecommendGamesForPlayerUseCase;
+import be.kdg.integration5.recommender.adapters.in.dtos.GameDto;
+import be.kdg.integration5.recommender.domain.Game;
+import be.kdg.integration5.recommender.ports.in.RecommendGamesForPlayerUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -37,7 +36,7 @@ public class GameRecommendationController {
         List<Game> games = recommendGamesForPlayerUseCase.recommendGamesForPlayer(userId);
         return new ResponseEntity<>(
                 games.stream()
-                        .map(game -> new GameDto(game.getId(), game.getName(), game.getDifficulty(), game.getDescription()))
+                        .map(game -> new GameDto(game.getId(), game.getName()))
                         .toList()
                 , HttpStatus.OK);
     }

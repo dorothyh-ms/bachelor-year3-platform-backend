@@ -1,7 +1,7 @@
-package be.kdg.integration5.core;
+package be.kdg.integration5.recommender.core;
 
-import be.kdg.integration5.domain.Game;
-import be.kdg.integration5.ports.in.RecommendSimilarGamesUseCase;
+import be.kdg.integration5.recommender.domain.Game;
+import be.kdg.integration5.recommender.ports.in.RecommendSimilarGamesUseCase;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
