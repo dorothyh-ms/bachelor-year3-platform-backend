@@ -5,13 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/BanditGames.iml" filepath="$PROJECT_DIR$/.idea/modules/BanditGames.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/application/BanditGames.application.main.iml" filepath="$PROJECT_DIR$/.idea/modules/application/BanditGames.application.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.main~1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.main~2.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.main~2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.test~1.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.test~1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.test~2.iml" filepath="$PROJECT_DIR$/.idea/modules/player-statistics/banditgames-platform-backend.BanditGames.player-statistics.test~2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.main~1.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.main~1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.main~2.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.main~2.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.test~1.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.test~1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.test~2.iml" filepath="$PROJECT_DIR$/.idea/modules/recommender/banditgames-platform-backend.BanditGames.recommender.test~2.iml" />
     </modules>
   </component>
 </project>

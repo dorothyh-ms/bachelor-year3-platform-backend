@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/players/**").authenticated()
                         .requestMatchers("/games/**").authenticated()
                         .requestMatchers("/error").permitAll()
+                        .requestMatchers("/engagement").permitAll()
                         .requestMatchers("/statistics-check-health").permitAll()
                         .requestMatchers("/platform-check-health").permitAll()
                         .requestMatchers("/chatbot-check-health").permitAll()
