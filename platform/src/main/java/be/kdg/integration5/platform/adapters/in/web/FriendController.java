@@ -7,6 +7,7 @@ import be.kdg.integration5.platform.exceptions.AlreadyFriendsException;
 import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.ports.in.GetFriendsUseCase;
 import be.kdg.integration5.platform.ports.in.CreateFriendUseCase;
+import be.kdg.integration5.platform.ports.in.commands.AddFriendCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -53,7 +54,7 @@ public class FriendController {
     public ResponseEntity<Void> addFriend(@RequestBody NewFriendDto newFriendDto, @AuthenticationPrincipal Jwt token) {
         LOGGER.info("FriendController is running addFriend");
         UUID playerId = UUID.fromString(token.getClaimAsString("sub"));
-        createFriendUseCase.addFriend(playerId, newFriendDto.getFriendId());
+        createFriendUseCase.addFriend(new AddFriendCommand(playerId, newFriendDto.getFriendId()));
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

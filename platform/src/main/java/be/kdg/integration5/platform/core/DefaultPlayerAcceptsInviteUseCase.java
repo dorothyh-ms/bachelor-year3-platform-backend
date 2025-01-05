@@ -50,7 +50,7 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
         }
         invite = optionalInvite.get();
         if (!invite.isRecipient(userId)) {
-            LOGGER.info("Player cannot accept own invite");
+            LOGGER.info("Player cannot accept this invite");
             throw new InvalidInviteUserException("Player is not the recipient of the invite");
         }
         Optional<Lobby> lobbyOptional = lobbyLoadPort.loadLobby(invite.getLobby().getId());
@@ -77,17 +77,17 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             throw new PlayerNotAdmittedToLobbyException("Player could not be admitted to the requested lobby");
         }
 
-        LOGGER.info("Invite accepted successfully");
+
         invite.accepted();
         invite.setLobby(lobby);
         inviteUpdatePort.updateInvite(invite);
         lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
+        LOGGER.info("Invite {} accepted successfully", invite);
         return invite;
 
     }
 
     private Invite playerDeclinesInvite(UUID inviteId, UUID userId) {
-//            TODO: implement decline invite
         LOGGER.info("DefaultPlayerAcceptsInviteUseCase is running playerAcceptsInvite");
         Optional<Invite> optionalInvite = inviteLoadPort.loadInvite(inviteId);
         Invite invite;
