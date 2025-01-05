@@ -24,16 +24,16 @@ async def home():
 
 class PredictPlayerGameEngagementRequest(BaseModel):
     username: str  # Changed to 'username'
-    game_id: str
+    game_name: str
 
 @app.post("/predict-engagement")
 def predict_minutes(request: PredictPlayerGameEngagementRequest):
     username = request.username  # Use 'username' instead of 'player_id'
-    game_id = request.game_id
-    historical_data = pd.read_csv("historical_data.csv", index_col=False)
+    game_name = request.game_name
+    historical_data = pd.read_csv("data/historical_data.csv", index_col=False)
 
-    if historical_data[historical_data['game_id'] == game_id].empty:
-        raise HTTPException(status_code=404, detail=f"Game with id '{game_id}' not found.")
+    if historical_data[historical_data['game_name'].str.lower() == game_name.lower()].empty:
+        raise HTTPException(status_code=404, detail=f"Game '{game_name}' not found.")
 
     # Check if the username exists in players data
     players = pd.read_csv("data/players.csv")
@@ -44,10 +44,10 @@ def predict_minutes(request: PredictPlayerGameEngagementRequest):
 
     player_id = player_row['id'].iloc[0]  # Get the player_id based on the username
 
-    # Check if the combination of player_id and game_id exists
+    # Check if the combination of player_id and game_name exists
     filtered_row = historical_data[
         (historical_data['player_id'] == player_id) & 
-        (historical_data['game_id'] == game_id)
+        (historical_data['game_name'].str.lower() == game_name.lower())
     ].reset_index()
     player_has_played_game = not filtered_row.empty
     
@@ -58,7 +58,7 @@ def predict_minutes(request: PredictPlayerGameEngagementRequest):
     for i in range(7):
         date = datetime.today() + timedelta(days=i)
         if player_has_played_game:
-            # Proceed with the usual logic if both player_id and game_id exist
+            # Proceed with the usual logic if both player_id and game_name exist
             print("FILTERED ROW", filtered_row['player_id'][0])
 
             player_gender = player_row['gender'].iloc[0]
@@ -83,7 +83,7 @@ def predict_minutes(request: PredictPlayerGameEngagementRequest):
 
             input_df = pd.DataFrame(input_data)
             predicted_time = model.predict(input_df)[0]
-            print(f"Predicted time spent for player {username} on game {game_id} for {date}: {predicted_time:.2f} minutes")
+            print(f"Predicted time spent for player {username} on game {game_name} for {date}: {predicted_time:.2f} minutes")
             
             # Store the result for each day
             predictions.append({
@@ -99,6 +99,6 @@ def predict_minutes(request: PredictPlayerGameEngagementRequest):
 
     return {
         "username": username, 
-        "game_id": game_id, 
+        "game_name": game_name, 
         "predictions": predictions
     }

@@ -5,7 +5,7 @@ import java.util.List;
 public class PlayerEngagementPredictions {
 
     private String username;
-    private String game_id;
+    private String gameName;
     private List<Prediction> predictions;
 
     // Getters and Setters
@@ -17,12 +17,12 @@ public class PlayerEngagementPredictions {
         this.username = username;
     }
 
-    public String getGame_id() {
-        return game_id;
+    public String getGameName() {
+        return gameName;
     }
 
-    public void setGame_id(String game_id) {
-        this.game_id = game_id;
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
     }
 
     public List<Prediction> getPredictions() {
@@ -33,4 +33,12 @@ public class PlayerEngagementPredictions {
         this.predictions = predictions;
     }
 
+    @Override
+    public String toString() {
+        return "PlayerEngagementPredictions{" +
+                "username='" + username + '\'' +
+                ", game_id='" + gameName + '\'' +
+                ", predictions=" + predictions +
+                '}';
+    }
 }

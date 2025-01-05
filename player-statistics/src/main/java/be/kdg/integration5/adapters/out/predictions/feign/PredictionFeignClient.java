@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "predictionApi", url = "http://localhost:8002")
+@FeignClient(name = "predictionApi", url = "${prediction.api.base-url}")
 public interface PredictionFeignClient {
 
     @PostMapping("/predict-engagement")

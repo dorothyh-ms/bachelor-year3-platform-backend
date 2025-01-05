@@ -27,11 +27,11 @@ public class EngagementPredictionController {
     @GetMapping()
     public ResponseEntity<PlayerEngagementPredictions> getPlayerChurnPrediction(
             @RequestParam("username") String username,
-            @RequestParam("game_id") UUID gameId) {
-            LOGGER.info("Received request for churn prediction for player: {} and game id: {}", username, gameId);
+            @RequestParam("game_name") String gameName) {
+            LOGGER.info("Received request for engagement prediction for player: {} and game: {}", username, gameName);
 
 
-             PlayerEngagementPredictions predictions = getPlayerEngagementPredictionsUseCase.getPlayerEngagementPredictions(username, gameId);
+             PlayerEngagementPredictions predictions = getPlayerEngagementPredictionsUseCase.getPlayerEngagementPredictions(username, gameName);
              return new ResponseEntity<>(predictions, HttpStatusCode.valueOf(200));
 
         }

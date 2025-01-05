@@ -4,7 +4,7 @@ import java.util.List;
 
 public class PlayerEngagementPredictionsResponse {
     private String username;
-    private String game_id;
+    private String game_name;
     private List<PredictionResponse> predictions;
 
     public String getUsername() {
@@ -15,12 +15,12 @@ public class PlayerEngagementPredictionsResponse {
         this.username = username;
     }
 
-    public String getGame_id() {
-        return game_id;
+    public String getGame_name() {
+        return game_name;
     }
 
-    public void setGame_id(String game_id) {
-        this.game_id = game_id;
+    public void setGame_name(String game_name) {
+        this.game_name = game_name;
     }
 
     public List<PredictionResponse> getPredictions() {

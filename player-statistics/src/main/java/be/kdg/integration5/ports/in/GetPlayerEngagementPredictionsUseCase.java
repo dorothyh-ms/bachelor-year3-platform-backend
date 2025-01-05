@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface GetPlayerEngagementPredictionsUseCase {
 
-        PlayerEngagementPredictions getPlayerEngagementPredictions(String username, UUID gameId);
+        PlayerEngagementPredictions getPlayerEngagementPredictions(String username, String gameName);
 }
 
 

@@ -25,3 +25,11 @@ GET http://localhost:8092/api/player-classifications/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Player2 sees classifications
+
+
+GET http://localhost:8092/api/engagement?username=player1&game_name=battleship
+Accept: application/json
+
+
+

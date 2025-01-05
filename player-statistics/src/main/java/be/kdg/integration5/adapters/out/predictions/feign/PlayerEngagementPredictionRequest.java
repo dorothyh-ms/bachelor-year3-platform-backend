@@ -2,7 +2,7 @@ package be.kdg.integration5.adapters.out.predictions.feign;
 
 public class PlayerEngagementPredictionRequest {
     private String username;
-    private String game_id;
+    private String game_name;
 
     public String getUsername() {
         return username;
@@ -12,11 +12,19 @@ public class PlayerEngagementPredictionRequest {
         this.username = username;
     }
 
-    public String getGame_id() {
-        return game_id;
+    public String getGame_name() {
+        return game_name;
     }
 
-    public void setGame_id(String game_id) {
-        this.game_id = game_id;
+    public void setGame_name(String game_name) {
+        this.game_name = game_name;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerEngagementPredictionRequest{" +
+                "username='" + username + '\'' +
+                ", game_name='" + game_name + '\'' +
+                '}';
     }
 }

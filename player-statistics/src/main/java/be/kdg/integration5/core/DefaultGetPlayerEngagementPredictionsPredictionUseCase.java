@@ -22,9 +22,10 @@ public class DefaultGetPlayerEngagementPredictionsPredictionUseCase implements G
     }
 
     @Override
-    public PlayerEngagementPredictions getPlayerEngagementPredictions(String username, UUID gameId){
-        playerEngagementPredictionLoadPort.loadPlayerEngagementPredictions(username, gameId);
-        return null;
+    public PlayerEngagementPredictions getPlayerEngagementPredictions(String username, String gameName){
+        PlayerEngagementPredictions predictions = playerEngagementPredictionLoadPort.loadPlayerEngagementPredictions(username, gameName);
+        LOGGER.info("DefaultGetPlayerEngagementPredictionsPredictionUseCase is returning predictions {}", predictions);
+        return predictions;
     }
 
 
