@@ -18,6 +18,10 @@ public class DefaultGetAnswerUseCase implements GetAnswerUseCase {
 
     @Override
     public String getAnswer(String question, UUID userid, String game){
-        return answerLoadPort.loadAnswer(question, userid, game);
+        String answer =  answerLoadPort.loadAnswer(question, userid, game);
+        if (answer != null){
+            return answer;
+        }
+        return "Sorry, I couldn't process your question.";
     }
 }
