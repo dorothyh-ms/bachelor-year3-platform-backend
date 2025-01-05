@@ -84,6 +84,14 @@ services:
     depends_on:
       - mysql_app_db
 
+  prediction-api:
+    build:
+      context: ./prediction-api  # Path to the directory containing the Dockerfile
+    ports:
+      - "8002:8000"  # Expose prediction API on port 8002
+    networks:
+      - banditGames
+
 networks:
   kc:
     name: kc-network

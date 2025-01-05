@@ -77,11 +77,12 @@ public class DefaultPlayerAcceptsInviteUseCase implements PlayerAcceptsInviteUse
             throw new PlayerNotAdmittedToLobbyException("Player could not be admitted to the requested lobby");
         }
 
-        LOGGER.info("Invite accepted successfully");
+
         invite.accepted();
         invite.setLobby(lobby);
         inviteUpdatePort.updateInvite(invite);
         lobbyJoinedPorts.forEach(lobbyJoinedPort -> lobbyJoinedPort.lobbyJoined(lobby));
+        LOGGER.info("Invite {} accepted successfully", invite);
         return invite;
 
     }

@@ -24,8 +24,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static be.kdg.integration5.platform.core.TestValues.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -80,6 +79,7 @@ public class PlayerAcceptsInviteUseCaseIntegrationTest extends AbstractDatabaseT
        assertEquals(inviteJpaOptional.isPresent(), Boolean.TRUE);
        InviteJpaEntity inviteJpa = inviteJpaOptional.get();
        assertEquals(inviteJpa.getInviteStatus(), InviteStatus.ACCEPTED);
+       assertNotNull(inviteJpa.getLobby().getMatchId());
     }
 
     @Test

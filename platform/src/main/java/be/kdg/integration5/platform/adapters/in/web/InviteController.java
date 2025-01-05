@@ -115,7 +115,7 @@ public class InviteController {
                         null,
                         lobby.getDateCreated(),
                         lobby.getStatus(),
-                        null
+                        lobby.getMatchId() != null ? String.format("%s%s", game.getUrl(), lobby.getMatchId().toString()) : null
                 ),
                 invite.getInviteStatus(),
                 invite.getDateSent()
