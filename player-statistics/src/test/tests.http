@@ -25,6 +25,7 @@ GET http://localhost:8092/api/player-classifications/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+
 ### Get engagement predictions
 
 
