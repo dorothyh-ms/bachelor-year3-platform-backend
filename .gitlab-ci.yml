@@ -59,6 +59,16 @@ deploy-fastapi-apps:
 #    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
 #    - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
     - echo "Deploying chatbot api..."
+    - STATE=$(az containerapp show --name chatbot-api-ca --resource-group BanditGames --query "properties.provisioningState" -o tsv || echo "NotFound")
+    - if [ "$STATE" = "InProgress" ]; then
+      echo "Chatbot API is currently being provisioned. Waiting...";
+      sleep 30;
+      exit 1;
+      elif [ "$STATE" = "NotFound" ]; then
+      echo "Chatbot API not found. Proceeding with creation...";
+      else
+      echo "Chatbot API is ready for deployment.";
+      fi
     - az containerapp up --name chatbot-api-ca 
       --resource-group BanditGames 
       --location westeurope 
@@ -66,7 +76,7 @@ deploy-fastapi-apps:
       --ingress external 
       --image "acrbanditgamesplatform.azurecr.io/chatbot-api:latest"  
       --environment "/subscriptions/8b2ab0c8-52c8-4906-8b85-c40ab946e6ff/resourceGroups/Battleship/providers/Microsoft.App/containerAppEnvironments/battleship-env"
-    - az containerapp update --name chatbot-api-ca --resource-group BanditGames --cpu 2.75 --memory 5.5Gi --min-replicas 1 --max-replicas 4
+    - az containerapp update --name chatbot-api-ca --resource-group BanditGames --cpu 4 --memory 8Gi --min-replicas 1 --max-replicas 4
     - export CHATBOT_API_URL=$(az containerapp show --name chatbot-api-ca --resource-group BanditGames --query "properties.configuration.ingress.fqdn" -o tsv)
     - echo "Successfully deployed chatbot at $CHATBOT_API_URL"
     - echo "Deploying prediction api..."

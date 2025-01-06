@@ -26,7 +26,7 @@ os.makedirs(RULES_FOLDER, exist_ok=True)
 class QueryRequest(BaseModel):
     user_id: UUID  # Expect UUID for the user ID
     question: str
-    game: str
+    boardGame: str
 
 def setup():
     print("Pulling models...")
@@ -101,12 +101,12 @@ def process_json_data(json_data, source_path, parent_key=""):
 
 
 # Process input to get the answer with conversation history
-def process_input(user_id: UUID, question: str, game: str):
+def process_input(user_id: UUID, question: str, boardGame: str):
     # Load documents and initialize the vectorstore
     docs_list = load_json_from_path(RULES_PATHS)
     initialize_vectorstore(docs_list)
     retriever = vectorstore.as_retriever()
-    print(game)
+    print(boardGame)
     # Retrieve previous conversation history
     if user_id not in conversation_history:
         conversation_history[user_id] = []
@@ -119,12 +119,12 @@ def process_input(user_id: UUID, question: str, game: str):
     context = "\n".join([doc.page_content for doc in retriever.get_relevant_documents(question)])
     # Full conversation as context
 
-    if game != "BanditGames":
-        validation_template = f"""Is this question: {question} related to {game} and the information in {game}_rules.json? answer in 1 word: true or false"""
+    if boardGame != "BanditGames":
+        validation_template = f"""Is this question: {question} related to {boardGame} and the information in {boardGame}_rules.json? answer in 1 word: true or false"""
 
         validation_prompt = ChatPromptTemplate.from_template(validation_template)
         validation_chain = (
-                {"context": retriever, "question": RunnablePassthrough(), "game": RunnablePassthrough()}
+                {"context": retriever, "question": RunnablePassthrough(), "boardGame": RunnablePassthrough()}
                 | validation_prompt
                 | model_local
                 | StrOutputParser()
@@ -132,11 +132,11 @@ def process_input(user_id: UUID, question: str, game: str):
         answer = validation_chain.invoke(question)
         print("answer: " + answer)
     else:
-        validation_template = f"""answer in 1 word only: true or false: Based on the content of the file {game}_rules.json, determine if it contains any instructions related to the question {question}? """
+        validation_template = f"""answer in 1 word only: true or false: Based on the content of the file {boardGame}_rules.json, determine if it contains any instructions related to the question {question}? """
 
         validation_prompt = ChatPromptTemplate.from_template(validation_template)
         validation_chain = (
-                {"context": retriever, "question": RunnablePassthrough(), "game": RunnablePassthrough()}
+                {"context": retriever, "question": RunnablePassthrough(), "boardGame": RunnablePassthrough()}
                 | validation_prompt
                 | model_local
                 | StrOutputParser()
@@ -146,16 +146,16 @@ def process_input(user_id: UUID, question: str, game: str):
 
     if answer.split(' ')[0].strip() in "True":
         print("true, answer question")
-        after_rag_template = f"""Only answer if the question is related to {game}
-        Answer the question based only on the following context, the conversation history, and the content of the file {game}_rules.json only if the question is based on the game do not mention the document in your answer:
+        after_rag_template = f"""Only answer if the question is related to {boardGame}
+        Answer the question based only on the following context, the conversation history, and the content of the file {boardGame}_rules.json only if the question is based on the boardGame do not mention the document in your answer:
         Context: {context}
-        Game: {game}
+        Game: {boardGame}
         Question: {question}
         """
 
         after_rag_prompt = ChatPromptTemplate.from_template(after_rag_template)
         after_rag_chain = (
-                {"context": retriever, "question": RunnablePassthrough(), "game": RunnablePassthrough()}
+                {"context": retriever, "question": RunnablePassthrough(), "boardGame": RunnablePassthrough()}
                 | after_rag_prompt
                 | model_local
                 | StrOutputParser()
@@ -167,7 +167,7 @@ def process_input(user_id: UUID, question: str, game: str):
 
         return answer
     else:
-        answer = f"I'm sorry, I can only answer questions about {game}."
+        answer = f"I'm sorry, I can only answer questions about {boardGame}."
         return answer
 
 
@@ -176,7 +176,7 @@ def process_input(user_id: UUID, question: str, game: str):
 async def question(request: QueryRequest):
     try:
         user_id = request.user_id  # Retrieve user_id (UUID) from the request
-        answer = process_input(user_id, request.question, request.game)
+        answer = process_input(user_id, request.question, request.boardGame)
         return {"answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
