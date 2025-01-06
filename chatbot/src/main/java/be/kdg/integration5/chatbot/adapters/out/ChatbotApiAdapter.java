@@ -24,8 +24,8 @@ public class ChatbotApiAdapter implements AnswerLoadPort {
     private final String pythonApiUrl;
 
     public ChatbotApiAdapter(@Value("${chatbot.api.url}") String pythonApiUrl) {
-
-        this.pythonApiUrl = String.format("%s/%s/", pythonApiUrl, "question");
+        LOGGER.info("Creating ChatbotApiAdapter with API URL {}", pythonApiUrl);
+        this.pythonApiUrl = pythonApiUrl;
     }
 
     @Override
