@@ -1,45 +1,29 @@
-package be.kdg.integration5.playerstatistics.adapters.out.db.entities;
-
+package be.kdg.integration5.playerstatistics.domain;
 
 import be.kdg.integration5.common.domain.GameDifficulty;
 import be.kdg.integration5.common.domain.GameGenre;
-import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
 
 import java.math.BigDecimal;
-import java.sql.Types;
 import java.util.UUID;
 
-@Entity
-@Table(catalog="statistics", name="games")
-public class BoardGameJpaEntity {
-    @Id
-    @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "game_id", nullable = false, updatable = false)
+public class BoardGame {
+
     private UUID gameId;
 
-    @Column(name = "game_name", nullable = false, length = 100)
+
     private String gameName;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "genre", nullable = false)
     private GameGenre genre;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "difficulty_level")
+
     private GameDifficulty difficultyLevel;
 
 
-    @Column(name = "price", precision = 10, scale = 2)
     private BigDecimal price;
 
-    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    public BoardGameJpaEntity() {
-    }
-
-    public BoardGameJpaEntity(UUID gameId, String gameName, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description) {
+    public BoardGame(UUID gameId, String gameName, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description) {
         this.gameId = gameId;
         this.gameName = gameName;
         this.genre = genre;
@@ -94,5 +78,17 @@ public class BoardGameJpaEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "BoardGame{" +
+                "gameId=" + gameId +
+                ", gameName='" + gameName + '\'' +
+                ", genre=" + genre +
+                ", difficultyLevel=" + difficultyLevel +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                '}';
     }
 }

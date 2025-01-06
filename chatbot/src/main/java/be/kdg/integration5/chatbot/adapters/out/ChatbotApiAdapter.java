@@ -1,6 +1,9 @@
 package be.kdg.integration5.chatbot.adapters.out;
 
+import be.kdg.integration5.chatbot.adapters.in.web.ChatbotController;
 import be.kdg.integration5.chatbot.ports.out.AnswerLoadPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,11 +19,13 @@ import java.util.UUID;
 @Service
 public class ChatbotApiAdapter implements AnswerLoadPort {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatbotApiAdapter.class);
     private final RestTemplate restTemplate = new RestTemplate();
     private final String pythonApiUrl;
 
     public ChatbotApiAdapter(@Value("${chatbot.api.url}") String pythonApiUrl) {
-        this.pythonApiUrl = pythonApiUrl;
+
+        this.pythonApiUrl = String.format("%s/%s/", pythonApiUrl, "question");
     }
 
     @Override
@@ -39,6 +44,7 @@ public class ChatbotApiAdapter implements AnswerLoadPort {
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
         // Make the POST request
+        LOGGER.info("ChatbotApiAdapter is sending request {} to {}", requestBody, pythonApiUrl);
 
         return restTemplate.postForObject(pythonApiUrl, requestEntity, String.class);
     }

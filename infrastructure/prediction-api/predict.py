@@ -83,7 +83,7 @@ def predict_minutes(request: PredictPlayerGameEngagementRequest):
 
             input_df = pd.DataFrame(input_data)
             predicted_time = model.predict(input_df)[0]
-            print(f"Predicted time spent for player {username} on game {game_name} for {date}: {predicted_time:.2f} minutes")
+            print(f"Predicted time spent for player {username} on boardGame {game_name} for {date}: {predicted_time:.2f} minutes")
             
             # Store the result for each day
             predictions.append({

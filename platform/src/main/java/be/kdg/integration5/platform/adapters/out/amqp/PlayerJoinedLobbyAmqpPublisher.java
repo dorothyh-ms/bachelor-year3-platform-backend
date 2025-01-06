@@ -25,7 +25,7 @@ public class PlayerJoinedLobbyAmqpPublisher implements LobbyJoinedPort {
     @Override
     public void lobbyJoined(Lobby lobby) {
         LOGGER.info("PlayerJoinedLobbyAmqpPublisher is running lobbyJoined with lobby {}", lobby);
-        String routingKey = String.format("game.%s.start", lobby.getGame().getName().toLowerCase());
+        String routingKey = String.format("match.%s.start", lobby.getGame().getName().toLowerCase());
 
         StartGameCommand command = new StartGameCommand(
                 lobby.getInitiatingPlayer().getPlayerId(),

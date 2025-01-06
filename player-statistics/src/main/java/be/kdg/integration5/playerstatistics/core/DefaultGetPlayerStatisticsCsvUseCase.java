@@ -35,7 +35,7 @@ public class DefaultGetPlayerStatisticsCsvUseCase implements ExportPlayerStatist
         LOGGER.info("DefaultGetPlayerStatisticsCsvUseCase is retrieving {}", playerStatisticsList);
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
             CSVWriter writer = new CSVWriter(new OutputStreamWriter(out))) {
-            String[] header = {"Player Name", "Birth Date", "City", "Country", "Game Title", "Total Time Spent", "Wins", "Losses"};
+            String[] header = {"Player Name", "Birth Date", "City", "Country", "BoardGame Title", "Total Time Spent", "Wins", "Losses"};
             writer.writeNext(header);
 
             for (PlayerStatistics stat : playerStatisticsList) {

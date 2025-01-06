@@ -66,7 +66,7 @@ deploy-fastapi-apps:
       --ingress external 
       --image "acrbanditgamesplatform.azurecr.io/chatbot-api:latest"  
       --environment "/subscriptions/8b2ab0c8-52c8-4906-8b85-c40ab946e6ff/resourceGroups/Battleship/providers/Microsoft.App/containerAppEnvironments/battleship-env"
-    - az containerapp update --name chatbot-api-ca --resource-group BanditGames --cpu 2.75 --memory 5.5Gi --min-replicas 1 --max-replicas 4
+    - az containerapp update --name chatbot-api-ca --resource-group BanditGames --cpu 4 --memory 8Gi --min-replicas 1 --max-replicas 4
     - export CHATBOT_API_URL=$(az containerapp show --name chatbot-api-ca --resource-group BanditGames --query "properties.configuration.ingress.fqdn" -o tsv)
     - echo "Successfully deployed chatbot at $CHATBOT_API_URL"
     - echo "Deploying prediction api..."

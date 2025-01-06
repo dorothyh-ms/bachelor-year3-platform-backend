@@ -1,7 +1,7 @@
 # Data Schema & Relationships
 
 Below is the detailed **data schema** and their respective **relationships**. 
-Tables: **players, games, matches, countries, locations, and player-game outcomes**
+Tables: **players, games, matches, countries, locations, and player-boardGame outcomes**
 
 ---
 

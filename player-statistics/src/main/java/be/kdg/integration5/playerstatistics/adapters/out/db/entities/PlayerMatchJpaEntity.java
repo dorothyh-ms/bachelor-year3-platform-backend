@@ -1,6 +1,6 @@
 package be.kdg.integration5.playerstatistics.adapters.out.db.entities;
 
-import be.kdg.integration5.playerstatistics.domain.PlayerMatchOutcome;
+import be.kdg.integration5.common.domain.MatchOutcome;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 
@@ -28,9 +28,69 @@ public class PlayerMatchJpaEntity {
 
     @Column(name="outcome")
     @Enumerated(EnumType.STRING)
-    private PlayerMatchOutcome outcome;
+    private MatchOutcome outcome;
 
     @ManyToOne
     @JoinColumn(name="player_id")
     private PlayerProfileJpaEntity player;
+
+    public PlayerMatchJpaEntity() {
+    }
+
+    public PlayerMatchJpaEntity(UUID id, MatchJpaEntity match, int numberOfTurns, double score, MatchOutcome outcome, PlayerProfileJpaEntity player) {
+        this.id = id;
+        this.match = match;
+        this.numberOfTurns = numberOfTurns;
+        this.score = score;
+        this.outcome = outcome;
+        this.player = player;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public MatchJpaEntity getMatch() {
+        return match;
+    }
+
+    public void setMatch(MatchJpaEntity match) {
+        this.match = match;
+    }
+
+    public int getNumberOfTurns() {
+        return numberOfTurns;
+    }
+
+    public void setNumberOfTurns(int numberOfTurns) {
+        this.numberOfTurns = numberOfTurns;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public MatchOutcome getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(MatchOutcome outcome) {
+        this.outcome = outcome;
+    }
+
+    public PlayerProfileJpaEntity getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(PlayerProfileJpaEntity player) {
+        this.player = player;
+    }
 }
