@@ -38,7 +38,7 @@ player_aggregates = merged.groupby('player_id').agg(
 ).reset_index()
 
 # Add churn target
-cutoff_date = pd.to_datetime('2025-01-01')
+cutoff_date = pd.Timestamp.now()
 player_aggregates['last_played_date'] = pd.to_datetime(player_aggregates['last_played_date'])
 player_aggregates['churned'] = (cutoff_date - player_aggregates['last_played_date']).dt.days > 30
 
@@ -86,4 +86,4 @@ print(classification_report(y_test, y_pred))
 # Save the model
 joblib.dump(pipeline, 'player_churn_predictor.pkl')
 
-print("Model saved as 'player_churn_predictor.pkl'")
+
