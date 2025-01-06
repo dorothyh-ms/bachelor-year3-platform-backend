@@ -59,6 +59,7 @@ deploy-fastapi-apps:
 #    - export GAME_RECOMMENDER_API_URL=$(az webapp show --name game-recommender-api-app --resource-group BanditGames --query 'defaultHostName' -o tsv)
 #    - echo "Game recommender URL $GAME_RECOMMENDER_API_URL"
     - echo "Deploying chatbot api..."
+    - az containerapp wait --name chatbot-api-ca --resource-group BanditGames --created
     - az containerapp up --name chatbot-api-ca 
       --resource-group BanditGames 
       --location westeurope 
