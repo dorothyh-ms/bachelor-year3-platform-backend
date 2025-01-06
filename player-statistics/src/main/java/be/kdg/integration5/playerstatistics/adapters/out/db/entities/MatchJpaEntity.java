@@ -32,4 +32,55 @@ public class MatchJpaEntity {
     @Enumerated(EnumType.STRING)
     @Column(name="status")
     private MatchStatus status;
+
+    public MatchJpaEntity() {
+    }
+
+    public MatchJpaEntity(UUID id, BoardGameJpaEntity game, LocalDateTime startTime, LocalDateTime endTime, MatchStatus status) {
+        this.id = id;
+        this.game = game;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.status = status;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public BoardGameJpaEntity getGame() {
+        return game;
+    }
+
+    public void setGame(BoardGameJpaEntity game) {
+        this.game = game;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public MatchStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MatchStatus status) {
+        this.status = status;
+    }
 }

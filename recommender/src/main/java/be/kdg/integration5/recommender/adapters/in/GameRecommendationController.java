@@ -30,8 +30,8 @@ public class GameRecommendationController {
 
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<List<GameDto>> getGames(@AuthenticationPrincipal Jwt token) {
-        LOGGER.info("LobbyController is running LobbyController ");
+    public ResponseEntity<List<GameDto>> getGameRecommendation(@AuthenticationPrincipal Jwt token) {
+        LOGGER.info("GameRecommendationController is running getGameRecommendation ");
         UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
         List<Game> games = recommendGamesForPlayerUseCase.recommendGamesForPlayer(userId);
         return new ResponseEntity<>(

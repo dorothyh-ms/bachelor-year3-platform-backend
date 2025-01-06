@@ -18,15 +18,39 @@ public class RabbitMQTopology {
     // Queues
     public static final String BATTLESHIP_START_QUEUE = "battleship_queue";
 
+    public static final String MATCH_CREATE_EVENTS_QUEUE = "match_create_events_queue";
+
+    public static final String MATCH_END_EVENTS_QUEUE = "match_end_events_queue";
+
+    public static final String MATCH_TURN_EVENTS_QUEUE = "turn_events_queue";
+
 
     // Exchanges
     public static final String GAMES_TOPIC_EXCHANGE = "games_topic_exchange";
+
+
 
 
     @Bean
     Queue battleshipQueue() {
         return new Queue(BATTLESHIP_START_QUEUE, false);
     }
+
+    @Bean
+    Queue turnsQueue() {
+        return new Queue(MATCH_TURN_EVENTS_QUEUE, false);
+    }
+
+    @Bean
+    Queue matchCreatedQueue() {
+        return new Queue(MATCH_CREATE_EVENTS_QUEUE, false);
+    }
+
+    @Bean
+    Queue matchEndedQueue() {
+        return new Queue(MATCH_END_EVENTS_QUEUE, false);
+    }
+
 
 
     @Bean
@@ -43,9 +67,41 @@ public class RabbitMQTopology {
         return BindingBuilder
                 .bind(battleshipQueue)
                 .to(gameTopicExchange)
-                .with("game.battleship.start");
+                .with("match.battleship.start");
     }
 
+    @Bean
+    Binding bindGameTopicExchangeToTurnEventsQueue(
+            Queue turnsQueue,
+            TopicExchange gameTopicExchange
+    ){
+        return BindingBuilder
+                .bind(turnsQueue)
+                .to(gameTopicExchange)
+                .with("match.turns");
+    }
+
+    @Bean
+    Binding bindGameTopicExchangeToMatchCreateEventsQueue(
+            Queue matchCreatedQueue,
+            TopicExchange gameTopicExchange
+    ){
+        return BindingBuilder
+                .bind(matchCreatedQueue)
+                .to(gameTopicExchange)
+                .with("match.created");
+    }
+
+    @Bean
+    Binding bindGameTopicExchangeToMatchEndedEventsQueue(
+            Queue matchEndedQueue,
+            TopicExchange gameTopicExchange
+    ){
+        return BindingBuilder
+                .bind(matchEndedQueue)
+                .to(gameTopicExchange)
+                .with("match.ended");
+    }
 
 
     @Bean

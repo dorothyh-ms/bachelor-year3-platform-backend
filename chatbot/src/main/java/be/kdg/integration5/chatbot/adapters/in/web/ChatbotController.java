@@ -29,7 +29,7 @@
         @PostMapping("/question")
         @PreAuthorize("hasAuthority('player')")
         public ResponseEntity<String> getAnswerOnQuestion(@AuthenticationPrincipal Jwt token, @RequestBody QuestionDTO questionDTO){
-
+            LOGGER.info("ChatbotController is running getAnswerOnQuestion with question {}", questionDTO.getQuestion());
             UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
             return new ResponseEntity<>(getAnswerUseCase.getAnswer(questionDTO.getQuestion(), userId, questionDTO.getGame()), HttpStatus.OK);
         }
