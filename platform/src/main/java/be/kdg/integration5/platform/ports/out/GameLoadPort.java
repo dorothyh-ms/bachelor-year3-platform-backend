@@ -10,4 +10,6 @@ public interface GameLoadPort {
     public List<Game> loadGames();
 
     Optional<Game> loadGameById(UUID gameId);
+
+    Optional<Game> loadGameByName(String name);
 }
