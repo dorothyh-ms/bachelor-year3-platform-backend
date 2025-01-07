@@ -34,7 +34,7 @@ public class ChatbotApiAdapter implements AnswerLoadPort {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("user_id", userId.toString());
         requestBody.put("question", question);
-        requestBody.put("game", game);
+        requestBody.put("subject", game);
 
         // Set headers
         HttpHeaders headers = new HttpHeaders();
@@ -42,11 +42,12 @@ public class ChatbotApiAdapter implements AnswerLoadPort {
 
         // Create the HTTP entity with headers and payload
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        String endpoint= String.format("%s/question/", pythonApiUrl);
 
         // Make the POST request
-        LOGGER.info("ChatbotApiAdapter is sending request {} to {}", requestBody, pythonApiUrl);
+        LOGGER.info("ChatbotApiAdapter is sending request {} to {}", requestBody, endpoint);
 
-        return restTemplate.postForObject(pythonApiUrl, requestEntity, String.class);
+        return restTemplate.postForObject(endpoint, requestEntity, String.class);
     }
 
     @Override

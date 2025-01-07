@@ -26,7 +26,7 @@ os.makedirs(RULES_FOLDER, exist_ok=True)
 class QueryRequest(BaseModel):
     user_id: UUID  # Expect UUID for the user ID
     question: str
-    boardGame: str
+    subject: str
 
 def setup():
     print("Pulling models...")
@@ -176,7 +176,7 @@ def process_input(user_id: UUID, question: str, boardGame: str):
 async def question(request: QueryRequest):
     try:
         user_id = request.user_id  # Retrieve user_id (UUID) from the request
-        answer = process_input(user_id, request.question, request.boardGame)
+        answer = process_input(user_id, request.question, request.subject)
         return {"answer": answer}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred: {e}")
