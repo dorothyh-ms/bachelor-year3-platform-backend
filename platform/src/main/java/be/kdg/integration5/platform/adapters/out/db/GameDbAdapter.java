@@ -10,6 +10,7 @@ import be.kdg.integration5.platform.domain.SubmissionState;
 import be.kdg.integration5.platform.ports.out.GameLoadPort;
 import be.kdg.integration5.platform.ports.out.GameSavePort;
 import be.kdg.integration5.platform.ports.out.GameSubmissionLoadPort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -76,5 +77,11 @@ public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmission
         List<GameSubmission> list = new ArrayList<>();
         gameSubmissionRepository.getAllBySubmissionStateIs(SubmissionState.DENIED).forEach(game -> list.add(GameMapper.toGameSubmissionEntity(game)));
         return list;
+    }
+
+    @Override
+    public Optional<Game> loadGameByName(String name) {
+        Optional<GameJpaEntity> gameJpaEntityOptional = gameRepository.findFirstByGameNameEqualsIgnoreCase(name);
+        return gameJpaEntityOptional.map(GameMapper::toGame);
     }
 }
