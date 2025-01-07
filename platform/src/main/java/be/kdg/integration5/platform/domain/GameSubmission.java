@@ -11,11 +11,13 @@ public class GameSubmission extends Game{
 
     private SubmissionState submissionState;
     private UUID createdBy;
+    private String fileName;
 
-    public GameSubmission(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy) {
+    public GameSubmission(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy, String file) {
         super(id, name, genre, difficultyLevel, price, description, image, url);
         this.submissionState = submissionState;
         this.createdBy = createdBy;
+        this.fileName = file;
     }
 
 
@@ -37,5 +39,22 @@ public class GameSubmission extends Game{
 
     public void setCreatedBy(UUID createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    @Override
+    public String toString() {
+        return "GameSubmission{" +
+                "submissionState=" + submissionState +
+                ", createdBy=" + createdBy +
+                ", fileName='" + fileName + '\'' +
+                '}';
     }
 }

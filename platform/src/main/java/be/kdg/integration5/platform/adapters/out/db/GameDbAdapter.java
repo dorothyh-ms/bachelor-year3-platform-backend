@@ -1,6 +1,7 @@
 package be.kdg.integration5.platform.adapters.out.db;
 
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
+import be.kdg.integration5.platform.adapters.out.db.entities.GameSubmissionJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.adapters.out.db.repositories.GameRepository;
 import be.kdg.integration5.platform.adapters.out.db.repositories.GameSubmissionRepository;
@@ -10,6 +11,8 @@ import be.kdg.integration5.platform.domain.SubmissionState;
 import be.kdg.integration5.platform.ports.out.GameLoadPort;
 import be.kdg.integration5.platform.ports.out.GameSavePort;
 import be.kdg.integration5.platform.ports.out.GameSubmissionLoadPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -20,6 +23,7 @@ import java.util.UUID;
 @Repository
 public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmissionLoadPort {
 
+    private static final Logger log = LoggerFactory.getLogger(GameDbAdapter.class);
     private final GameRepository gameRepository;
     private final GameSubmissionRepository gameSubmissionRepository;
 
@@ -54,7 +58,9 @@ public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmission
 
     @Override
     public void saveGameSubmission(GameSubmission gameSubmission) {
-        gameSubmissionRepository.save(GameMapper.toGameSubmissionJpaEntity(gameSubmission));
+        GameSubmissionJpaEntity game = GameMapper.toGameSubmissionJpaEntity(gameSubmission);
+        log.error(String.valueOf(game));
+        gameSubmissionRepository.save(game);
     }
 
     @Override
