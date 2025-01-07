@@ -58,9 +58,7 @@ public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmission
 
     @Override
     public void saveGameSubmission(GameSubmission gameSubmission) {
-        GameSubmissionJpaEntity game = GameMapper.toGameSubmissionJpaEntity(gameSubmission);
-        log.error(String.valueOf(game));
-        gameSubmissionRepository.save(game);
+        gameSubmissionRepository.save(GameMapper.toGameSubmissionJpaEntity(gameSubmission));
     }
 
     @Override

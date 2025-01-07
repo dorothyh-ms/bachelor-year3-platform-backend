@@ -6,6 +6,8 @@ import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.domain.GameSubmission;
 import be.kdg.integration5.platform.ports.in.CreateGameSubmissionUseCase;
 import be.kdg.integration5.platform.ports.in.GetGameSubmissionsUseCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +23,7 @@ import java.util.UUID;
 @RequestMapping("/game-submissions")
 public class GameSubmissionController {
 
+    private static final Logger log = LoggerFactory.getLogger(GameSubmissionController.class);
     private final CreateGameSubmissionUseCase createGameSubmissionUseCase;
     private final GetGameSubmissionsUseCase getGameSubmissionsUseCase;
 

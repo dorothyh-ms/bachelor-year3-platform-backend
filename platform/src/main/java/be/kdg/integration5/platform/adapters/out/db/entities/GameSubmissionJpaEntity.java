@@ -54,7 +54,7 @@ public class GameSubmissionJpaEntity{
         // Default constructor for JPA
     }
 
-    public GameSubmissionJpaEntity(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
+    public GameSubmissionJpaEntity(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy, String rulesName) {
         this.gameId = id;
         this.gameName = name;
         this.genre = genre;
@@ -64,7 +64,8 @@ public class GameSubmissionJpaEntity{
         this.image = image;
         this.url = url;
         this.submissionState = submissionState;
-        this.rulesName = "rules_" + name;
+        this.createdBy = createdBy;
+        this.rulesName = rulesName;
     }
 
     public SubmissionState getSubmissionState() {

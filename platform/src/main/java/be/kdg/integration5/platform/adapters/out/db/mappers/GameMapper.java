@@ -96,7 +96,9 @@ public class GameMapper {
                 submission.getDescription(),
                 submission.getImage(),
                 submission.getUrl(),
-                submission.getSubmissionState()
+                submission.getSubmissionState(),
+                submission.getCreatedBy(),
+                submission.getFileName()
         );
     }
     public static GameSubmission toGameSubmissionEntity(GameSubmissionJpaEntity submissionJpaEntity) {
