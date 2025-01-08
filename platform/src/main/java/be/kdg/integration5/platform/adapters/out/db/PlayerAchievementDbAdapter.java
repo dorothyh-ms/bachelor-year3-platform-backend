@@ -1,11 +1,15 @@
 package be.kdg.integration5.platform.adapters.out.db;
 
 import be.kdg.integration5.platform.adapters.out.db.entities.AchievementJpaEntity;
+import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.PlayerAchievementJpaEntity;
+import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.adapters.out.db.mappers.PlayerMapper;
 import be.kdg.integration5.platform.adapters.out.db.repositories.PlayerAchievementRepository;
 import be.kdg.integration5.platform.domain.Achievement;
+import be.kdg.integration5.platform.domain.Game;
+import be.kdg.integration5.platform.domain.Player;
 import be.kdg.integration5.platform.domain.PlayerAchievement;
 import be.kdg.integration5.platform.ports.out.PlayerAchievementCreatedPort;
 import be.kdg.integration5.platform.ports.out.PlayerAchievementLoadPort;
@@ -75,6 +79,25 @@ public class PlayerAchievementDbAdapter implements PlayerAchievementCreatedPort,
                                 GameMapper.toGame(achievementJpaEntity.getGame())
                         ),
                         PlayerMapper.toPlayer(paJpa.getPlayer())
+            );
+        }
+        )).toList();
+    }
+
+    @Override
+    public List<PlayerAchievement> loadPlayerAchievementsByIdAndGame(PlayerJpaEntity player, GameJpaEntity game) {
+        List<PlayerAchievementJpaEntity> playerAchievementJpaEntities = playerAchievementRepository.findAllByPlayerAndAchievement_Game(player, game);
+        return playerAchievementJpaEntities.stream().map((paJpa ->{
+            AchievementJpaEntity achievementJpaEntity = paJpa.getAchievement();
+            return new PlayerAchievement(
+                    paJpa.getId(),
+                    new Achievement(
+                            achievementJpaEntity.getId(),
+                            achievementJpaEntity.getName(),
+                            achievementJpaEntity.getDescription(),
+                            GameMapper.toGame(achievementJpaEntity.getGame())
+                    ),
+                    PlayerMapper.toPlayer(paJpa.getPlayer())
             );
         }
         )).toList();
