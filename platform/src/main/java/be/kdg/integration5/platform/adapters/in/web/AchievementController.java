@@ -4,6 +4,7 @@ import be.kdg.integration5.platform.adapters.in.web.dtos.GameDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.PlayerAchievementDto;
 import be.kdg.integration5.platform.adapters.out.db.mappers.GameMapper;
 import be.kdg.integration5.platform.adapters.out.db.mappers.PlayerMapper;
+import be.kdg.integration5.platform.core.DefaultGetAchievementsOfPlayerByGameUseCase;
 import be.kdg.integration5.platform.domain.Achievement;
 import be.kdg.integration5.platform.domain.PlayerAchievement;
 import be.kdg.integration5.platform.ports.in.GetAchievementsOfPlayerUseCase;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,9 +25,11 @@ import java.util.UUID;
 @RequestMapping("/achievement")
 public class AchievementController {
     private final GetAchievementsOfPlayerUseCase defaultGetAchievementsOfPlayerUseCase;
+    private final DefaultGetAchievementsOfPlayerByGameUseCase defaultGetAchievementsOfPlayerByGameUseCase;
 
-    public AchievementController(GetAchievementsOfPlayerUseCase defaultGetAchievementsOfPlayerUseCase) {
+    public AchievementController(GetAchievementsOfPlayerUseCase defaultGetAchievementsOfPlayerUseCase, DefaultGetAchievementsOfPlayerByGameUseCase defaultGetAchievementsOfPlayerByGameUseCase) {
         this.defaultGetAchievementsOfPlayerUseCase = defaultGetAchievementsOfPlayerUseCase;
+        this.defaultGetAchievementsOfPlayerByGameUseCase = defaultGetAchievementsOfPlayerByGameUseCase;
     }
 
     @GetMapping
@@ -34,6 +38,27 @@ public class AchievementController {
 
         UUID userId = UUID.fromString(token.getClaimAsString("sub"));
         List<PlayerAchievement> receivedAchievements = defaultGetAchievementsOfPlayerUseCase.getPlayerAchievements(userId);
+        if (!receivedAchievements.isEmpty()) {
+            return new ResponseEntity<>(receivedAchievements.stream().map(achievement -> new PlayerAchievementDto(
+                    achievement.getId(),
+                    new Achievement(
+                            achievement.getAchievement().getId(),
+                            achievement.getAchievement().getName(),
+                            achievement.getAchievement().getDescription(),
+                            achievement.getAchievement().getGame()
+                    ),
+                    achievement.getPlayer())).toList(),
+                    HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{gameId}")
+    @PreAuthorize("hasAuthority('player')")
+    public ResponseEntity<List<PlayerAchievementDto>> getAchievementsOfPlayerForGame(@AuthenticationPrincipal Jwt token, @PathVariable UUID gameId) {
+
+        UUID userId = UUID.fromString(token.getClaimAsString("sub"));
+        List<PlayerAchievement> receivedAchievements = defaultGetAchievementsOfPlayerByGameUseCase.getPlayerAchievementsByGame(userId, gameId);
         if (!receivedAchievements.isEmpty()) {
             return new ResponseEntity<>(receivedAchievements.stream().map(achievement -> new PlayerAchievementDto(
                     achievement.getId(),

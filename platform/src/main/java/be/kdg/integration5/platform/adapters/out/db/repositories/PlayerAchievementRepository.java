@@ -1,7 +1,11 @@
 package be.kdg.integration5.platform.adapters.out.db.repositories;
 
+import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.PlayerAchievementJpaEntity;
 
+import be.kdg.integration5.platform.adapters.out.db.entities.PlayerJpaEntity;
+import be.kdg.integration5.platform.domain.Game;
+import be.kdg.integration5.platform.domain.Player;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -15,4 +19,6 @@ public interface PlayerAchievementRepository extends JpaRepository<PlayerAchieve
                                                                                                            UUID playerId);
 
     List<PlayerAchievementJpaEntity> findAllByPlayer_PlayerId(UUID playerId);
+
+    List<PlayerAchievementJpaEntity> findAllByPlayerAndAchievement_Game(PlayerJpaEntity player, GameJpaEntity game);
 }
