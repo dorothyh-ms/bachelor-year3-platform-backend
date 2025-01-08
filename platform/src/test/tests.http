@@ -151,13 +151,13 @@ Authorization: Bearer {{access_token}}
 
 ### Get all awarded achievements of player
 
-GET http://localhost:8092/api/achievement
+GET http://localhost:8092/api/achievements
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
 ### Get all achievements of player and game
 
-GET http://localhost:8092/api/achievement/01b746fb-bb8e-11ef-ae2a-0242c0a82002
+GET http://localhost:8092/api/achievements/01b746fb-bb8e-11ef-ae2a-0242c0a82002
 Accept: application/json
 Authorization: Bearer {{access_token}}
 

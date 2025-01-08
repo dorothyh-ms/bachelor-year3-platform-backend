@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/achievement")
+@RequestMapping("/achievements")
 public class AchievementController {
     private final GetAchievementsOfPlayerUseCase defaultGetAchievementsOfPlayerUseCase;
     private final DefaultGetAchievementsOfPlayerByGameUseCase defaultGetAchievementsOfPlayerByGameUseCase;
