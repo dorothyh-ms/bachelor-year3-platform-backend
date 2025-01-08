@@ -3,7 +3,6 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.domain.Invite;
 import be.kdg.integration5.platform.domain.Lobby;
 import be.kdg.integration5.platform.domain.Player;
-import be.kdg.integration5.platform.exceptions.LobbyClosedException;
 import be.kdg.integration5.platform.exceptions.LobbyNotFoundException;
 import be.kdg.integration5.platform.exceptions.PlayerNotFoundException;
 import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
@@ -14,7 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+
 import java.util.Optional;
 import java.util.UUID;
 

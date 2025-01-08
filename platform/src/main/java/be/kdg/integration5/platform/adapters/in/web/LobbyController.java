@@ -13,7 +13,6 @@ import be.kdg.integration5.platform.ports.in.PlayerJoinsLobbyUseCase;
 import be.kdg.integration5.platform.ports.in.commands.JoinLobbyCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
