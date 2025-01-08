@@ -1,0 +1,10 @@
+package be.kdg.integration5.playerstatistics.ports.in;
+
+import be.kdg.integration5.common.domain.PlayerMatchOutcome;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
+public record RecordMatchEndCommand(UUID matchId, LocalDateTime endDateTime, List<PlayerMatchOutcome> playerMatchOutcomes) {
+}
