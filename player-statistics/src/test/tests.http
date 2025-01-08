@@ -25,11 +25,16 @@ GET http://localhost:8092/api/player-classifications/me
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+
 ### Get engagement predictions
 
 
 GET http://localhost:8092/api/engagement?username=player1&game_name=battleship
 Accept: application/json
+
+
+### Predict Churn for a User
+GET http://localhost:8002/predict-churn?username=player1
 
 
 
