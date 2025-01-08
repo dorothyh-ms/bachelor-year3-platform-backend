@@ -22,7 +22,7 @@ app = FastAPI()
 
 @app.get("/")
 async def home():
-    return "Welcome to the Player Churn Prediction API!"
+    return "Hi from Player Churn Prediction API!"
 
 class ChurnPredictionRequest(BaseModel):
     username: str
@@ -54,5 +54,5 @@ def predict_churn(request: ChurnPredictionRequest):
         "username": username,
         "player_id": player_id,
         "churn": churn_prediction,
-        "message": f"The player's churn level is predicted to be '{churn_prediction}'."
+        "prediction": f"The player's churn level is predicted to be '{churn_prediction}'."
     }

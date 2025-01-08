@@ -1,4 +1,3 @@
-### train_churn_model.py ###
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -31,7 +30,7 @@ player_aggregates = merged.groupby('player_id').agg(
     last_active_date=('date', 'max')
 ).reset_index()
 
-# Merge Player Data
+# Merging Player Data
 players['birth_date'] = pd.to_datetime(players['birth_date'])
 players['age'] = (datetime.datetime.now() - players['birth_date']).dt.days // 365  # Calculate age
 players = players[['id', 'age', 'gender']]
@@ -39,14 +38,28 @@ players.rename(columns={'id': 'player_id'}, inplace=True)
 player_data = player_aggregates.merge(players, on='player_id', how='left')
 
 # Calculate churn target
-# Assuming churn levels based on inactivity
+# Analyze inactivity distribution to define thresholds
+print("Analyzing inactivity data to define churn thresholds...")
 player_data['last_active_date'] = pd.to_datetime(player_data['last_active_date'])
 days_inactive = (datetime.datetime.now() - player_data['last_active_date']).dt.days
+
+# Determine thresholds using quantiles
+low_churn_threshold = days_inactive.quantile(0.33)  # 33rd percentile
+medium_churn_threshold = days_inactive.quantile(0.66)  # 66th percentile
+
+print(f"Low churn threshold: {low_churn_threshold} days")
+print(f"Medium churn threshold: {medium_churn_threshold} days")
+
 player_data['churn_level'] = pd.cut(
     days_inactive,
-    bins=[-1, 30, 90, np.inf],  # Define ranges for low, medium, high churn
+    bins=[-1, low_churn_threshold, medium_churn_threshold, np.inf],  # Define ranges for low, medium, high churn
     labels=['low', 'medium', 'high']
 )
+
+# Justification for thresholds:
+# - Low churn: Players inactive for up to the 33rd percentile of days_inactive.
+# - Medium churn: Players inactive between the 33rd and 66th percentile.
+# - High churn: Players inactive longer than the 66th percentile.
 
 # One-hot encode gender
 gender_encoded = pd.get_dummies(player_data['gender'], prefix='gender', dtype=int)
@@ -73,14 +86,17 @@ y_pred = model.predict(X_test)
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred))
 
-# Save the model
+# Saving the model
 joblib.dump(model, 'churn_predictor.pkl')
-print("Model saved as 'churn_predictor.pkl'.")
 
-# Save aggregated data as .pkl
+
+# Save aggregated data as .pkl for deployment
 player_data.drop(columns=['last_active_date'], inplace=True)  # Drop non-predictive columns
 with open("player_churn_data.pkl", "wb") as f:
     joblib.dump(player_data, f)
-print("Aggregated player data saved as 'player_churn_data.pkl'.")
 
-print("Training complete.")
+# Export aggregated data to CSV
+player_data.to_csv('player_statistics_churn.csv', index=False)
+print("Player statistics exported as 'player_statistics_churn.csv'.")
+
+
