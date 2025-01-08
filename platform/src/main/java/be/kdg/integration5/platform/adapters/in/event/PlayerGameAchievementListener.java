@@ -22,7 +22,7 @@ public class PlayerGameAchievementListener {
 
     @RabbitListener(queues = PLAYER_ACHIEVEMENT_EVENTS)
     public void playerGainedAchievement(PlayerGameAchievementEvent event) {
-        LOGGER.info("MatchCreatedListener is running playerGainedAchievement with event {}", event);
+        LOGGER.info("MatchStartedListener is running playerGainedAchievement with event {}", event);
         createPlayerGameAchievementUseCase.createPlayerAchievement(new CreatePlayerAchievementCommand(
                 event.playerId(),
                 event.gameName(),

@@ -110,4 +110,17 @@ public class PlayerProfileJpaEntity {
     public void setLocation(LocationJpaEntity location) {
         this.location = location;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerProfileJpaEntity{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthDate=" + birthDate +
+                ", gender=" + gender +
+                ", location=" + location +
+                '}';
+    }
 }

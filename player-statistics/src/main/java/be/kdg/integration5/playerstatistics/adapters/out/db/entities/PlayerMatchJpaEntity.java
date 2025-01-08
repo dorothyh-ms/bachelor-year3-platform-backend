@@ -93,4 +93,16 @@ public class PlayerMatchJpaEntity {
     public void setPlayer(PlayerProfileJpaEntity player) {
         this.player = player;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerMatchJpaEntity{" +
+                "id=" + id +
+                ", match=" + match +
+                ", numberOfTurns=" + numberOfTurns +
+                ", score=" + score +
+                ", outcome=" + outcome +
+                ", player=" + player +
+                '}';
+    }
 }

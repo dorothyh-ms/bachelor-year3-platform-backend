@@ -4,8 +4,9 @@ import be.kdg.integration5.playerstatistics.domain.BoardGame;
 import be.kdg.integration5.playerstatistics.domain.Match;
 import be.kdg.integration5.playerstatistics.domain.PlayerMatch;
 import be.kdg.integration5.playerstatistics.domain.PlayerProfile;
-import be.kdg.integration5.playerstatistics.ports.in.CreateMatchUseCase;
-import be.kdg.integration5.playerstatistics.ports.in.commands.CreateMatchCommand;
+
+import be.kdg.integration5.playerstatistics.ports.in.RecordNewMatchCommand;
+import be.kdg.integration5.playerstatistics.ports.in.RecordNewMatchUseCase;
 import be.kdg.integration5.playerstatistics.ports.out.BoardGameLoadPort;
 import be.kdg.integration5.playerstatistics.ports.out.MatchCreatePort;
 import be.kdg.integration5.playerstatistics.ports.out.PlayerProfileLoadPort;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DefaultCreateMatchUseCase implements CreateMatchUseCase {
+public class DefaultCreateMatchUseCase implements RecordNewMatchUseCase {
     private MatchCreatePort matchCreatePort;
     private BoardGameLoadPort gameLoadPort;
     private PlayerProfileLoadPort playerProfileLoadPort;
@@ -29,7 +30,7 @@ public class DefaultCreateMatchUseCase implements CreateMatchUseCase {
     }
 
     @Override
-    public void createMatch(CreateMatchCommand createMatchCommand) {
+    public void createMatch(RecordNewMatchCommand createMatchCommand) {
         Optional<BoardGame> boardGameOptional = gameLoadPort.loadBoardGameByName(createMatchCommand.gameName());
         Optional<PlayerProfile> player1Optional = playerProfileLoadPort.loadPlayerProfileById(createMatchCommand.player1Id());
         Optional<PlayerProfile> player2Optional = playerProfileLoadPort.loadPlayerProfileById(createMatchCommand.player2Id());
