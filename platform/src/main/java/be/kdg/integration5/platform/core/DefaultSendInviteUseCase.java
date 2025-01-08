@@ -9,6 +9,8 @@ import be.kdg.integration5.platform.ports.in.GetPlayerUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import be.kdg.integration5.platform.ports.out.InviteCreatePort;
 import be.kdg.integration5.platform.ports.out.LobbyLoadPort;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 
@@ -33,10 +35,13 @@ public class DefaultSendInviteUseCase implements PlayerCreatesInviteUseCase {
         if (senderPlayer.isEmpty()) {
             throw new PlayerNotFoundException("Sender not found");
         }
-        Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new LobbyNotFoundException("Lobby not found"));
         Optional<Player> recipientPlayer = getPlayerUseCase.getPlayerById(recipient);
         if (recipientPlayer.isEmpty()) {
             throw new PlayerNotFoundException("Recipient not found");
+        }
+        Lobby lobby = lobbyLoadPort.loadLobby(lobbyId).orElseThrow(() -> new LobbyNotFoundException("Lobby not found"));
+        if (!lobby.isOpen()){
+            throw new LobbyClosedException("Cannot create invitation for closed lobby");
         }
         Invite invite = senderPlayer.get().createInvite(recipientPlayer.get(), lobby);
         inviteCreatePort.createInvite(invite);

@@ -1,0 +1,56 @@
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&username=gamedev&password=password&grant_type=password&scope=openid
+
+> {%
+    client.global.set("dev_access_token", response.body.access_token)
+%}
+### Get available genres
+
+GET http://localhost:8092/api/genres
+Authorization: Bearer {{dev_access_token}}
+Content-Type: application/json
+
+
+### Create boardGame
+
+POST http://localhost:8092/api/boardGame-submissions
+Authorization: Bearer {{dev_access_token}}
+Content-Type: application/json
+
+{
+  "name": "example gasdassdmse",
+  "genre": "PUZZLE",
+  "difficultyLevel": "ADVANCED",
+  "price": 29.99,
+  "description": "This is a sample boardGame description.",
+  "image": "https://example.com/boardGame-image.jpg",
+  "url": "https://example.com"
+}
+
+### Get my boardGame submission
+
+GET http://localhost:8092/api/boardGame-submissions/my-submissions
+Authorization: Bearer {{dev_access_token}}
+Content-Type: application/json
+
+
+### Admin login
+
+POST http://localhost:8180/realms/banditgames/protocol/openid-connect/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=banditgames-client&client_secret=QLonjXB5IgPtkkNbOuMV9vOyLR3CymL4&username=platformadmin&password=password&grant_type=password&scope=openid
+
+> {%
+    client.global.set("dev_access_token", response.body.access_token)
+%}
+
+### Get boardGame submission
+
+GET http://localhost:8092/api/boardGame-submissions
+Authorization: Bearer {{dev_access_token}}
+Content-Type: application/json
+
+

@@ -3,6 +3,7 @@ package be.kdg.integration5.platform.core;
 import be.kdg.integration5.platform.exceptions.AddSelfAsFriendException;
 import be.kdg.integration5.platform.exceptions.AlreadyFriendsException;
 import be.kdg.integration5.platform.ports.in.CreateFriendUseCase;
+import be.kdg.integration5.platform.ports.in.commands.AddFriendCommand;
 import be.kdg.integration5.platform.ports.out.FriendLoadPort;
 import be.kdg.integration5.platform.ports.out.FriendSavePort;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,9 @@ public class DefaultCreateFriendUseCase implements CreateFriendUseCase {
 
     @Override
     @Transactional
-    public boolean addFriend(UUID playerId, UUID friendId) {
+    public boolean addFriend(AddFriendCommand addFriendCommand) {
+        UUID playerId = addFriendCommand.playerId();
+        UUID friendId = addFriendCommand.friendId();
         // Validate inputs
         if (playerId == null || friendId == null) {
             throw new IllegalArgumentException("Player ID and Friend ID cannot be null.");

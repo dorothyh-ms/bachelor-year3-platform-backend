@@ -1,5 +1,7 @@
 package be.kdg.integration5.platform.ports.in;
 
+import be.kdg.integration5.platform.ports.in.commands.AddFriendCommand;
+
 import java.util.UUID;
 
 /**
@@ -13,5 +15,5 @@ public interface CreateFriendUseCase {
      * @param friendId The UUID of the friend to add.
      * @return A boolean indicating if the operation was successful.
      */
-    boolean addFriend(UUID playerId, UUID friendId);
+    boolean addFriend(AddFriendCommand addFriendCommand);
 }

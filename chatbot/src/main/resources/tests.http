@@ -15,8 +15,8 @@ Accept: application/json
 Authorization: Bearer {{access_token}}
 
 {
-  "question": "explain me the rules of the game",
-  "game": "Battleship"
+  "question": "explain me the rules of the boardGame",
+  "boardGame": "Battleship"
 }
 
 ###

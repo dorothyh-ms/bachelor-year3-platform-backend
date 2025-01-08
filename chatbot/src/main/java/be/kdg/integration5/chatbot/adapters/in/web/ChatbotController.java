@@ -8,10 +8,7 @@
     import org.springframework.security.access.prepost.PreAuthorize;
     import org.springframework.security.core.annotation.AuthenticationPrincipal;
     import org.springframework.security.oauth2.jwt.Jwt;
-    import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.web.bind.annotation.*;
     import org.slf4j.Logger;
     import org.slf4j.LoggerFactory;
 
@@ -29,10 +26,10 @@
             this.getAnswerUseCase = getAnswerUseCase;
         }
 
-        @GetMapping("/question")
+        @PostMapping("/question")
         @PreAuthorize("hasAuthority('player')")
         public ResponseEntity<String> getAnswerOnQuestion(@AuthenticationPrincipal Jwt token, @RequestBody QuestionDTO questionDTO){
-
+            LOGGER.info("ChatbotController is running getAnswerOnQuestion with question {}", questionDTO.getQuestion());
             UUID userId = UUID.fromString((String) token.getClaims().get("sub") );
             return new ResponseEntity<>(getAnswerUseCase.getAnswer(questionDTO.getQuestion(), userId, questionDTO.getGame()), HttpStatus.OK);
         }

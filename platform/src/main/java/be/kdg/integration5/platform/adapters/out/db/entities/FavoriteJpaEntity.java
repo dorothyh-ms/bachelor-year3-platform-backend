@@ -11,8 +11,7 @@ import java.util.UUID;
 public class FavoriteJpaEntity {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 

@@ -8,9 +8,24 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    testImplementation 'org.testcontainers:junit-jupiter:1.20.2'
+    testImplementation 'org.testcontainers:mysql:1.20.2'
+    implementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.testcontainers:junit-jupiter:1.20.2'
+    implementation 'mysql:mysql-connector-java:8.0.33'
 }
 
+
+bootJar {
+    enabled = false
+}
+jar {
+    enabled = true
+    archiveClassifier.set("")
+}
+tasks.named('bootBuildImage').configure {
+    enabled = false
+}
