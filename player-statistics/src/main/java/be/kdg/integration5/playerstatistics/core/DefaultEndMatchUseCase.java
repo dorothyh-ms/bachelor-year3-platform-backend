@@ -2,8 +2,9 @@ package be.kdg.integration5.playerstatistics.core;
 
 import be.kdg.integration5.playerstatistics.domain.Match;
 import be.kdg.integration5.playerstatistics.domain.PlayerMatch;
-import be.kdg.integration5.playerstatistics.ports.in.EndMatchUseCase;
-import be.kdg.integration5.playerstatistics.ports.in.commands.EndMatchCommand;
+
+import be.kdg.integration5.playerstatistics.ports.in.RecordEndMatchUseCase;
+import be.kdg.integration5.playerstatistics.ports.in.RecordMatchEndCommand;
 import be.kdg.integration5.playerstatistics.ports.out.MatchLoadPort;
 import be.kdg.integration5.playerstatistics.ports.out.MatchUpdatePort;
 import be.kdg.integration5.playerstatistics.ports.out.PlayerMatchUpdatePort;
@@ -14,11 +15,11 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class DefaultEndMatchUseCase implements EndMatchUseCase {
+public class DefaultEndMatchUseCase implements RecordEndMatchUseCase {
     private static final Logger LOGGER = LoggerFactory.getLogger(DefaultEndMatchUseCase.class);
-    private PlayerMatchUpdatePort playerMatchUpdatePort;
-    private MatchLoadPort matchLoadPort;
-    private MatchUpdatePort matchUpdatePort;
+    private final PlayerMatchUpdatePort playerMatchUpdatePort;
+    private final MatchLoadPort matchLoadPort;
+    private final MatchUpdatePort matchUpdatePort;
 
     public DefaultEndMatchUseCase( PlayerMatchUpdatePort playerMatchUpdatePort, MatchLoadPort matchLoadPort, MatchUpdatePort matchUpdatePort) {
         this.playerMatchUpdatePort = playerMatchUpdatePort;
@@ -27,7 +28,7 @@ public class DefaultEndMatchUseCase implements EndMatchUseCase {
     }
 
     @Override
-    public void endMatch(EndMatchCommand command) {
+    public void endMatch(RecordMatchEndCommand command) {
         LOGGER.info("DefaultEndMatchUseCase is running endMatch with command {}", command);
         Optional<Match> matchOptional = matchLoadPort.loadMatchById(command.matchId());
 

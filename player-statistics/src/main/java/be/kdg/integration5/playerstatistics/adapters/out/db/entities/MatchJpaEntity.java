@@ -83,4 +83,6 @@ public class MatchJpaEntity {
     public void setStatus(MatchStatus status) {
         this.status = status;
     }
+
+
 }

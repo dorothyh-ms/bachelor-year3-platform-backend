@@ -1,14 +1,14 @@
  curl -s -u myuser:mypassword -H "Accept: application/json" -H "Content-Type:application/json" -X POST -d'{
      "vhost": "/",
-     "name": "games_topic_exchange",
+     "name": "match_ended_fanout_exchange",
 "properties": {},
-"routing_key": "match.ended",
+"routing_key": "",
  "delivery_mode": "1",
  "payload": "{\"matchId\":\"b5e26938-7d4f-445d-8c61-a3335b1d100a\",\"endDateTime\":\"2025-01-06T14:32:10\",\"playerMatchOutcomes\":[{\"playerId\":\"fff2deb7-7bf2-43d5-8897-4ddd8edc6ab1\",\"outcome\":\"WIN\"},{\"playerId\":\"e12bb6fd-8e23-40fd-95cc-f318abf3c38c\",\"outcome\":\"LOSS\"}]}",
  "headers": {},
   "props": {},
  "payload_encoding": "string"
-  }' http://localhost:15672/api/exchanges/%2F/games_topic_exchange/publish
+  }' http://localhost:15672/api/exchanges/%2F/match_ended_fanout_exchange/publish
 
 
 
