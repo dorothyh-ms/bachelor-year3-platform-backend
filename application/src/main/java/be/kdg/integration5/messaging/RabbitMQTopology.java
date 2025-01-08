@@ -24,6 +24,9 @@ public class RabbitMQTopology {
 
     public static final String MATCH_TURN_EVENTS_QUEUE = "turn_events_queue";
 
+    public static final String PLAYER_ACHIEVEMENTS_QUEUE = "player_achievements_queue";
+
+
 
     // Exchanges
     public static final String GAMES_TOPIC_EXCHANGE = "games_topic_exchange";
@@ -51,6 +54,10 @@ public class RabbitMQTopology {
         return new Queue(MATCH_END_EVENTS_QUEUE, false);
     }
 
+    @Bean
+    Queue playerAchievementsQueue() {
+        return new Queue(PLAYER_ACHIEVEMENTS_QUEUE, false);
+    }
 
 
     @Bean
@@ -102,6 +109,18 @@ public class RabbitMQTopology {
                 .to(gameTopicExchange)
                 .with("match.ended");
     }
+
+    @Bean
+    Binding bindGameTopicExchangeToPlayerAchievementsQueue(
+            Queue playerAchievementsQueue,
+            TopicExchange gameTopicExchange
+    ){
+        return BindingBuilder
+                .bind(playerAchievementsQueue)
+                .to(gameTopicExchange)
+                .with("player.achievements");
+    }
+
 
 
     @Bean

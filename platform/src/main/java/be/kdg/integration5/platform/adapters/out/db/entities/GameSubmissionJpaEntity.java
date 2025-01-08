@@ -16,7 +16,6 @@ import java.util.UUID;
 @Table(catalog="platform", name="gamesSubmission")
 public class GameSubmissionJpaEntity{
     @Id
-    @JdbcTypeCode(Types.VARCHAR)
     @Column(name = "game_id", nullable = false, updatable = false)
     private UUID gameId;
 
