@@ -11,6 +11,8 @@ import be.kdg.integration5.platform.ports.out.GameLoadPort;
 import be.kdg.integration5.platform.ports.out.GameSavePort;
 import be.kdg.integration5.platform.ports.out.GameSubmissionLoadPort;
 import org.springframework.security.core.parameters.P;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import java.util.UUID;
 @Repository
 public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmissionLoadPort {
 
+    private static final Logger log = LoggerFactory.getLogger(GameDbAdapter.class);
     private final GameRepository gameRepository;
     private final GameSubmissionRepository gameSubmissionRepository;
 
