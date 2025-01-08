@@ -11,8 +11,7 @@ import java.util.UUID;
 public class FavoriteJpaEntity {
 
     @Id
-    @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.EAGER)

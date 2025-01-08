@@ -8,6 +8,7 @@ import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import be.kdg.integration5.platform.adapters.in.web.dtos.InviteActionDto;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,13 +63,14 @@ public class InviteController {
     public ResponseEntity<InviteDto> answerInvite(
             @AuthenticationPrincipal Jwt token,
             @PathVariable UUID inviteId,
-            @RequestBody InviteActionDTO action) {
+            @RequestBody InviteActionDto action) {
         LOGGER.info("InviteController is running answerInvite");
         UUID userId = UUID.fromString(token.getClaimAsString("sub"));
 
         Invite invite = playerAcceptsInviteUseCase.playerAnswersInvite(inviteId, userId, action.getAction());
         return new ResponseEntity<>(mapToInviteDto(invite), HttpStatus.OK);
     }
+
 
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
