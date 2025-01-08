@@ -1,4 +1,4 @@
-package be.kdg.integration5.playerstatistics.ports.in.commands;
+package be.kdg.integration5.platform.ports.in;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

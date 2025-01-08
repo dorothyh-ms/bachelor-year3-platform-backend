@@ -83,7 +83,7 @@ deploy-fastapi-apps:
     - az containerapp up --name prediction-api-ca
       --resource-group BanditGames
       --location westeurope
-      --target-port 8002
+      --target-port 8000
       --ingress external
       --image "acrbanditgamesplatform.azurecr.io/prediction-api:latest"
       --environment "/subscriptions/8b2ab0c8-52c8-4906-8b85-c40ab946e6ff/resourceGroups/Battleship/providers/Microsoft.App/containerAppEnvironments/battleship-env"
