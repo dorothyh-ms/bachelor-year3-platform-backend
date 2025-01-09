@@ -24,4 +24,6 @@ public class DefaultGetAnswerUseCase implements GetAnswerUseCase {
         }
         return "Sorry, I couldn't process your question.";
     }
+
+
 }

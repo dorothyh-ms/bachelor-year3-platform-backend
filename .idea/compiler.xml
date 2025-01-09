@@ -7,7 +7,7 @@
         <processorPath useClasspath="false">
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/3.1.1/aa13cb8ae0314bb67f9c75e66042a7001b5e406c/spring-boot-configuration-processor-3.1.1.jar" />
         </processorPath>
-        <module name="BanditGames.application.main" />
+        <module name="application.BanditGames.application.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

@@ -1,5 +1,4 @@
 package be.kdg.integration5.chatbot.ports.out;
-
 import java.util.Optional;
 import java.util.UUID;
 

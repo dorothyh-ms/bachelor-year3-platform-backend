@@ -161,4 +161,22 @@ GET http://localhost:8092/api/achievements/01b746fb-bb8e-11ef-ae2a-0242c0a82002
 Accept: application/json
 Authorization: Bearer {{access_token}}
 
+### Add to Favorites
+POST http://localhost:8092/api/favorites
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "gameId": "05c99486-9f64-49d4-bbb4-22e40d649ada"
+}
+
+
+### Remove from Favorites
+DELETE http://localhost:8092/api/favorites/123e4567-e89b-12d3-a456-426614174000
+Authorization: Bearer {{access_token}}
+
+### Get Favorites
+GET http://localhost:8092/api/favorites
+Authorization: Bearer {{access_token}}
+
 

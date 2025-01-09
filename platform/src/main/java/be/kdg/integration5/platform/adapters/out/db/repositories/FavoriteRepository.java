@@ -11,9 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.UUID;
 
-public interface FavoriteRepository extends JpaRepository<FavoriteJpaEntity, Long> {
+public interface FavoriteRepository extends JpaRepository<FavoriteJpaEntity, UUID> {
     boolean existsByPlayerAndGame(PlayerJpaEntity player, GameJpaEntity game);
-    void deleteByPlayerAndGame(PlayerJpaEntity player, GameJpaEntity game);
 
     @Query("SELECT new be.kdg.integration5.platform.adapters.in.web.dtos.FavoriteDto(" +
             "f.id, g.gameId, g.gameName, CAST(g.genre AS string), g.image, g.description, g.price, " +
@@ -21,5 +20,5 @@ public interface FavoriteRepository extends JpaRepository<FavoriteJpaEntity, Lon
             "FROM FavoriteJpaEntity f " +
             "JOIN f.game g WHERE f.player.playerId = :playerId")
     List<FavoriteDto> findFavoritesByPlayerId(@Param("playerId") UUID playerId);
-
 }
+

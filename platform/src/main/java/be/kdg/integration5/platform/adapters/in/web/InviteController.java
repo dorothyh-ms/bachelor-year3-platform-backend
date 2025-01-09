@@ -8,7 +8,7 @@ import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
 import be.kdg.integration5.platform.ports.in.PlayerCreatesInviteUseCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
+import be.kdg.integration5.platform.adapters.in.web.dtos.InviteActionDto;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,6 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-
 @RequestMapping("/invites")
 public class InviteController {
 
@@ -33,7 +32,7 @@ public class InviteController {
     private final ApplicationEventPublisher eventPublisher;
 
     public InviteController(
-           PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
+            PlayerCreatesInviteUseCase playerCreatesInviteUseCase,
             PlayerAcceptsInviteUseCase playerAcceptsInviteUseCase,
             GetInvitesUseCase getInvitesUseCase,
             ApplicationEventPublisher eventPublisher) {
@@ -71,6 +70,7 @@ public class InviteController {
         Invite invite = playerAcceptsInviteUseCase.playerAnswersInvite(inviteId, userId, action.getAction());
         return new ResponseEntity<>(mapToInviteDto(invite), HttpStatus.OK);
     }
+
 
     @GetMapping
     @PreAuthorize("hasAuthority('player')")
@@ -115,7 +115,7 @@ public class InviteController {
                         null,
                         lobby.getDateCreated(),
                         lobby.getStatus(),
-                        lobby.getMatchId() != null ? String.format("%s%s", game.getUrl(), lobby.getMatchId().toString()) : null
+                        null
                 ),
                 invite.getInviteStatus(),
                 invite.getDateSent()

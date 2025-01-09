@@ -2,10 +2,7 @@ package be.kdg.integration5.platform.adapters.out.db.entities;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.JdbcTypeCode;
-
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -14,8 +11,7 @@ import java.util.UUID;
 public class FavoriteJpaEntity {
 
     @Id
-    @JdbcTypeCode(Types.VARCHAR)
-    @Column(name = "id", updatable = false, nullable = false)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "VARCHAR")
     private UUID id;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,7 +34,7 @@ public class FavoriteJpaEntity {
         this.game = game;
     }
 
-    // Constructor with createdAt
+
     public FavoriteJpaEntity(PlayerJpaEntity player, GameJpaEntity game, Timestamp createdAt) {
         this.id = UUID.randomUUID();
         this.player = player;
@@ -46,7 +42,7 @@ public class FavoriteJpaEntity {
         this.createdAt = LocalDateTime.now();;
     }
 
-    // Getters and Setters
+
     public UUID getId() {
         return id;
     }

@@ -1,6 +1,4 @@
 package be.kdg.integration5.platform.core;
-
-import be.kdg.integration5.platform.adapters.in.web.PlayerController;
 import be.kdg.integration5.platform.domain.*;
 import be.kdg.integration5.platform.exceptions.*;
 import be.kdg.integration5.platform.ports.in.PlayerAcceptsInviteUseCase;
