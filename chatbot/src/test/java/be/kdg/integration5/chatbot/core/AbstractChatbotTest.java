@@ -62,7 +62,7 @@ public abstract class AbstractChatbotTest {
     public static class ChatbotServiceInitalizer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
         @Override
         public void initialize(ConfigurableApplicationContext applicationContext) {
-            String apiUrl =String.format("http://%s:%s/question/", CHATBOT_SERVICE.getHost(), CHATBOT_SERVICE.getMappedPort(8000));
+            String apiUrl =String.format("http://%s:%s/", CHATBOT_SERVICE.getHost(), CHATBOT_SERVICE.getMappedPort(8000));
             LOGGER.info("Connecting to chatbot at {}", apiUrl);
             TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
                     applicationContext,
