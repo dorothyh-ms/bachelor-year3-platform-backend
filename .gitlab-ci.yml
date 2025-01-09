@@ -1,10 +1,10 @@
 stages:
-  - buildServices
-  - deployServices
   - compile
   - test
   - build
-#  - deploy
+  - buildServices
+  - deployServices
+
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -39,11 +39,12 @@ build-fastapi-apps:
     - echo "Pushing prediction API image to ACR..."
     - docker push acrbanditgamesplatform.azurecr.io/prediction-api:latest
     - echo "Successfully pushed prediction api image!"
-
   artifacts:
     paths:
       - infrastructure/chatbot-api/Dockerfile
       - infrastructure/prediction-api/Dockerfile
+  only:
+    - main
 
 deploy-fastapi-apps:
   stage: deployServices
@@ -90,6 +91,8 @@ deploy-fastapi-apps:
     - az containerapp update --name prediction-api-ca --resource-group BanditGames --min-replicas 1 --max-replicas 4
     - export PREDICTION_API_URL=$(az containerapp show --name prediction-api-ca --resource-group BanditGames --query "properties.configuration.ingress.fqdn" -o tsv)
     - echo "Successfully deployed chatbot at PREDICTION_API_URL"
+  only:
+    - main
 
 
 
@@ -109,9 +112,6 @@ cache:
     - .gradle
 
 
-# gradle is running docker environment, load new containers in that container
-# for every stage, separate container, doing steps
-# compile java, then do tests, publish artifacts
 compile:
   image: gradle:8.11.0-jdk21
   stage: compile
@@ -127,13 +127,8 @@ test:
   artifacts:
     when: always
     reports:
-      junit: ./build/test-results/test/**/TEST-*.xml
+      junit: "*/**/build/test-results/test/**/TEST-*.xml"
 
-
-# build boot image : couple of ways to make container image
-# do it by hand with dockerfile,
-#boot build image supported by spring
-# uses builders that you can choose
 build:
   image: gradle:8.11.0-jdk21
   stage: build
