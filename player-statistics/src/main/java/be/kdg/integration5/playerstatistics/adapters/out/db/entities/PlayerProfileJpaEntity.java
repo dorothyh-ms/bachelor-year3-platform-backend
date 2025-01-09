@@ -1,6 +1,8 @@
 package be.kdg.integration5.playerstatistics.adapters.out.db.entities;
 
 
+
+
 import be.kdg.integration5.playerstatistics.domain.Gender;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -38,7 +40,7 @@ public class PlayerProfileJpaEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="location_id")
     private LocationJpaEntity location;
 

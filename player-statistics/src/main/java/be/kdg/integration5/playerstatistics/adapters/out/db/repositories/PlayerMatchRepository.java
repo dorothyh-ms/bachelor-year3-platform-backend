@@ -11,4 +11,6 @@ public interface PlayerMatchRepository extends JpaRepository< PlayerMatchJpaEnti
     public Optional<PlayerMatchJpaEntity> findFirstByMatch_IdAndPlayer_Id(UUID matchId, UUID playerId);
 
     public List<PlayerMatchJpaEntity> findByMatch_Id(UUID matchId);
+
+    boolean existsByMatch_IdAndPlayer_Id(UUID matchId, UUID player1Id);
 }
