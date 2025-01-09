@@ -6,6 +6,7 @@ import be.kdg.integration5.common.domain.GameGenre;
 import be.kdg.integration5.platform.domain.SubmissionState;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.sql.Types;
@@ -42,15 +43,17 @@ public class GameSubmissionJpaEntity{
     @Column(name="url")
     private String url;
 
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(value = EnumType.ORDINAL)
     private SubmissionState submissionState;
     private UUID createdBy;
+
+    private String rulesName;
 
     public GameSubmissionJpaEntity() {
         // Default constructor for JPA
     }
 
-    public GameSubmissionJpaEntity(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState) {
+    public GameSubmissionJpaEntity(UUID id, String name, GameGenre genre, GameDifficulty difficultyLevel, BigDecimal price, String description, String image, String url, SubmissionState submissionState, UUID createdBy, String rulesName) {
         this.gameId = id;
         this.gameName = name;
         this.genre = genre;
@@ -60,6 +63,8 @@ public class GameSubmissionJpaEntity{
         this.image = image;
         this.url = url;
         this.submissionState = submissionState;
+        this.createdBy = createdBy;
+        this.rulesName = rulesName;
     }
 
     public SubmissionState getSubmissionState() {
@@ -140,5 +145,30 @@ public class GameSubmissionJpaEntity{
 
     public void setCreatedBy(UUID createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public String getRulesName() {
+        return rulesName;
+    }
+
+    public void setRulesName(String rulesName) {
+        this.rulesName = rulesName;
+    }
+
+    @Override
+    public String toString() {
+        return "GameSubmissionJpaEntity{" +
+                "gameId=" + gameId +
+                ", gameName='" + gameName + '\'' +
+                ", genre=" + genre +
+                ", difficultyLevel=" + difficultyLevel +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", image='" + image + '\'' +
+                ", url='" + url + '\'' +
+                ", submissionState=" + submissionState +
+                ", createdBy=" + createdBy +
+                ", rulesName='" + rulesName + '\'' +
+                '}';
     }
 }

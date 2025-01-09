@@ -111,4 +111,95 @@ Locations (1) ↔ (M) Players
 Players (1) ↔ (M) PlayerMatches
 Games (1) ↔ (M) Matches
 Matches (1) ↔ (M) PlayerMatches
+```
 
+## Adding a Game to the Platform
+
+This guide will walk you through the steps required to add a new game to the platform and integrate the necessary backend components for its functionality.
+
+---
+
+### Step 1: Add the Game to the Platform
+
+1. **Login**  
+   Ensure you are logged in as either an **Administrator** or a **Game Developer**.
+
+2. **Navigate to the Add Game Section**  
+   Click on the **"Add Game"** button in the platform's admin interface.
+
+3. **Fill in the Game Details**  
+   Provide all the necessary information about the game, including its title, description, and any other required metadata.
+
+4. **Submit the Game**  
+   After filling in the details, click **"Submit"**.  
+   Once submitted, the Administrator will review and finalize the game setup.
+
+---
+
+### Step 2: Implement Backend Game Development
+
+For the game to function correctly on the platform, implement the following AMQP listeners and publishers.
+
+#### AMQP Listener: `createNewMatch`
+
+- **Purpose**: Listens for new match creation requests.
+- **Queue**: `GAMENAME_QUEUE`
+- **Parameter**: The listener receives a `StartGameCommand` object with the following structure:
+
+  ```java
+  StartGameCommand {
+      UUID player1Id;
+      UUID player2Id;
+      UUID matchId;
+  }
+  ```
+  
+#### AMQP Publisher: 3 publishers
+
+##### Match started fanout exhange
+
+- **Purpose**: Publishes a message to the platform when a match is started.
+- **Exchange**: `match_created_fanout_exchange`
+- **Parameter**: The publisher sends a `Match` object with the following structure:
+
+  ```java
+  Match {
+    private UUID id;
+    private UUID player1Id;
+    private UUID player2Id;
+    private Map<UUID, Board> boards = new HashMap<>();
+    private UUID currentPlayerId;
+    private LocalDateTime startDateTime;
+  }
+  ```
+
+##### Match ended fanout exhange
+
+- **Purpose**: Publishes a message to the platform when a match has concluded.
+- **Exchange**: `match_ended_fanout_exchange`
+- **Parameter**: The publisher sends a `Match` object with the following structure:
+
+  ```java
+  Match {
+    private UUID id;
+    private UUID player1Id;
+    private UUID player2Id;
+    private Map<UUID, Board> boards = new HashMap<>();
+    private UUID currentPlayerId;
+    private LocalDateTime startDateTime;
+  }
+  ```
+
+##### Player receives achievement 
+
+- **Purpose**: Publishes a message to the platform when a user unlocks an achievement.
+- **Queue**: `player_achievements_queue`
+- **Parameter**: The publisher sends a `Match` object with the following structure:
+
+  ```java
+  playerAchievement {    
+    private UUID playerId;
+    private String name;
+    private String description;
+  }
+  ```
