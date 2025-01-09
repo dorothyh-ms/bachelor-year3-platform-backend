@@ -11,6 +11,8 @@ import be.kdg.integration5.platform.ports.out.GameLoadPort;
 import be.kdg.integration5.platform.ports.out.GameSavePort;
 import be.kdg.integration5.platform.ports.out.GameSubmissionLoadPort;
 import org.springframework.security.core.parameters.P;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -19,14 +21,13 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmissionLoadPort {
+public class GameDbAdapter implements GameLoadPort, GameSavePort {
 
+    private static final Logger log = LoggerFactory.getLogger(GameDbAdapter.class);
     private final GameRepository gameRepository;
-    private final GameSubmissionRepository gameSubmissionRepository;
 
-    public GameDbAdapter(GameRepository gameRepository, GameSubmissionRepository gameSubmissionRepository) {
+    public GameDbAdapter(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
-        this.gameSubmissionRepository = gameSubmissionRepository;
     }
 
     @Override
@@ -54,30 +55,10 @@ public class GameDbAdapter implements GameLoadPort, GameSavePort, GameSubmission
     }
 
     @Override
-    public void saveGameSubmission(GameSubmission gameSubmission) {
-        gameSubmissionRepository.save(GameMapper.toGameSubmissionJpaEntity(gameSubmission));
+    public void SaveGame(Game game) {
+        gameRepository.save(GameMapper.toGameJpaEntity(game));
     }
 
-    @Override
-    public List<GameSubmission> loadAllGameSubmissions() {
-        List<GameSubmission> list = new ArrayList<>();
-        gameSubmissionRepository.findAll().forEach(game -> list.add(GameMapper.toGameSubmissionEntity(game)));
-        return list;
-    }
-
-    @Override
-    public List<GameSubmission> loadPendingGameSubmissions() {
-        List<GameSubmission> list = new ArrayList<>();
-        gameSubmissionRepository.getAllBySubmissionStateIs(SubmissionState.IN_PROGRESS).forEach(game -> list.add(GameMapper.toGameSubmissionEntity(game)));
-        return list;
-    }
-
-    @Override
-    public List<GameSubmission> loadDeniedGameSubmissions() {
-        List<GameSubmission> list = new ArrayList<>();
-        gameSubmissionRepository.getAllBySubmissionStateIs(SubmissionState.DENIED).forEach(game -> list.add(GameMapper.toGameSubmissionEntity(game)));
-        return list;
-    }
 
     @Override
     public Optional<Game> loadGameByName(String name) {
