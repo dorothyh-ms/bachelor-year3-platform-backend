@@ -1,4 +1,4 @@
-package be.kdg.integration5.playerstatistics.adapters.out.predictions.feign;
+package be.kdg.integration5.predictions.adapters.out.predictions.feign;
 
 import java.util.List;
 

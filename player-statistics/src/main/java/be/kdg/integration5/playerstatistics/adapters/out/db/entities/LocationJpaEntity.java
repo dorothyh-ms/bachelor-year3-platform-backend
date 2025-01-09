@@ -18,7 +18,7 @@ public class LocationJpaEntity {
 
     private String city;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="country_id")
     private CountryJpaEntity country;
 

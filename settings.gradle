@@ -6,3 +6,5 @@ include 'platform'
 include 'chatbot'
 include 'player-statistics'
 include 'recommender'
+include 'predictions'
+

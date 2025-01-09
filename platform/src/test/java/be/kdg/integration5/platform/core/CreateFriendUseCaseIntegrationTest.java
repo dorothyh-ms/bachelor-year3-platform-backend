@@ -38,8 +38,6 @@ class CreateFriendUseCaseIntegrationTest extends AbstractDatabaseTest{
 
     @BeforeEach
     public void setup(){
-
-
         // ARRANGE
         player1JpaEntity = new PlayerJpaEntity(PLAYER1_ID, PLAYER1_USERNAME);
         player1JpaEntity = playerRepository.save(player1JpaEntity);

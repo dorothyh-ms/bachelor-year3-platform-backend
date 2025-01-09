@@ -53,24 +53,5 @@ public class AchievementController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{gameId}")
-    @PreAuthorize("hasAuthority('player')")
-    public ResponseEntity<List<PlayerAchievementDto>> getAchievementsOfPlayerForGame(@AuthenticationPrincipal Jwt token, @PathVariable UUID gameId) {
 
-        UUID userId = UUID.fromString(token.getClaimAsString("sub"));
-        List<PlayerAchievement> receivedAchievements = defaultGetAchievementsOfPlayerByGameUseCase.getPlayerAchievementsByGame(userId, gameId);
-        if (!receivedAchievements.isEmpty()) {
-            return new ResponseEntity<>(receivedAchievements.stream().map(achievement -> new PlayerAchievementDto(
-                    achievement.getId(),
-                    new Achievement(
-                            achievement.getAchievement().getId(),
-                            achievement.getAchievement().getName(),
-                            achievement.getAchievement().getDescription(),
-                            achievement.getAchievement().getGame()
-                    ),
-                    achievement.getPlayer())).toList(),
-                    HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 }
