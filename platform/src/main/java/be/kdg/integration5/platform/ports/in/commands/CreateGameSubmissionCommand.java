@@ -2,6 +2,7 @@ package be.kdg.integration5.platform.ports.in.commands;
 
 import be.kdg.integration5.common.domain.GameDifficulty;
 import be.kdg.integration5.common.domain.GameGenre;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -13,5 +14,6 @@ public record CreateGameSubmissionCommand(String name,
                                           String description,
                                           String image,
                                           String url,
-                                          UUID addedBy){
+                                          UUID addedBy,
+                                          MultipartFile file){
 }

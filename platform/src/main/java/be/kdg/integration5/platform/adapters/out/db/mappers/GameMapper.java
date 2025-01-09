@@ -4,11 +4,13 @@ import be.kdg.integration5.platform.adapters.in.web.dtos.GameSubmissionDto;
 import be.kdg.integration5.platform.adapters.in.web.dtos.NewGameSubmissionDto;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameJpaEntity;
 import be.kdg.integration5.platform.adapters.out.db.entities.GameSubmissionJpaEntity;
+import be.kdg.integration5.platform.adapters.out.db.util.TemporaryFileManager;
 import be.kdg.integration5.platform.domain.Game;
 import be.kdg.integration5.platform.domain.GameSubmission;
 import be.kdg.integration5.platform.domain.SubmissionState;
 import be.kdg.integration5.platform.ports.in.commands.CreateGameSubmissionCommand;
 
+import java.io.IOException;
 import java.util.UUID;
 
 public class GameMapper {
@@ -26,6 +28,22 @@ public class GameMapper {
                 gameJpaEntity.getDescription(),
                 gameJpaEntity.getImage(),
                 gameJpaEntity.getUrl()
+        );
+    }
+
+    public static Game toGame(GameSubmission gameSubmission) {
+        if (gameSubmission == null) {
+            return null;
+        }
+        return new Game(
+                gameSubmission.getId(),
+                gameSubmission.getName(),
+                gameSubmission.getGenre(),
+                gameSubmission.getDifficultyLevel(),
+                gameSubmission.getPrice(),
+                gameSubmission.getDescription(),
+                gameSubmission.getImage(),
+                gameSubmission.getUrl()
         );
     }
 
@@ -57,11 +75,12 @@ public class GameMapper {
                 gameDto.getDescription(),
                 gameDto.getImage(),
                 gameDto.getUrl(),
-                addedBy
+                addedBy,
+                gameDto.getFile()
         );
     }
     // Convert CreateGameSubmissionCommand to GameSubmission
-    public static GameSubmission toGameSubmission(CreateGameSubmissionCommand command, UUID id, SubmissionState submissionState) {
+    public static GameSubmission toGameSubmission(CreateGameSubmissionCommand command, String fileName, UUID id, SubmissionState submissionState) {
         if (command == null) {
             return null;
         }
@@ -75,7 +94,8 @@ public class GameMapper {
                 command.image(),
                 command.url(),
                 submissionState,
-                command.addedBy()
+                command.addedBy(),
+                fileName
         );
     }
     // Convert GameSubmission to GameSubmissionJpaEntity
@@ -92,25 +112,29 @@ public class GameMapper {
                 submission.getDescription(),
                 submission.getImage(),
                 submission.getUrl(),
-                submission.getSubmissionState()
+                submission.getSubmissionState(),
+                submission.getCreatedBy(),
+                submission.getFileName()
         );
     }
     public static GameSubmission toGameSubmissionEntity(GameSubmissionJpaEntity submissionJpaEntity) {
         if (submissionJpaEntity == null) {
             return null;
         }
-        return new GameSubmission(
-                submissionJpaEntity.getGameId(),
-                submissionJpaEntity.getGameName(),
-                submissionJpaEntity.getGenre(),
-                submissionJpaEntity.getDifficultyLevel(),
-                submissionJpaEntity.getPrice(),
-                submissionJpaEntity.getDescription(),
-                submissionJpaEntity.getImage(),
-                submissionJpaEntity.getUrl(),
-                submissionJpaEntity.getSubmissionState(),
-                submissionJpaEntity.getCreatedBy()
-        );
+
+            return new GameSubmission(
+                    submissionJpaEntity.getGameId(),
+                    submissionJpaEntity.getGameName(),
+                    submissionJpaEntity.getGenre(),
+                    submissionJpaEntity.getDifficultyLevel(),
+                    submissionJpaEntity.getPrice(),
+                    submissionJpaEntity.getDescription(),
+                    submissionJpaEntity.getImage(),
+                    submissionJpaEntity.getUrl(),
+                    submissionJpaEntity.getSubmissionState(),
+                    submissionJpaEntity.getCreatedBy(),
+                    submissionJpaEntity.getRulesName()
+            );
     }
 
     // Convert CreateGameSubmissionCommand to GameSubmission
