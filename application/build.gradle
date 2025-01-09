@@ -61,6 +61,7 @@ dependencies {
     implementation project(':chatbot')
     implementation project(':player-statistics')
     implementation project(':recommender')
+    implementation project(':predictions')
     implementation 'mysql:mysql-connector-java:8.0.33'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
@@ -71,8 +72,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.2.0'
-
-
 }
 
 ext {

@@ -1,7 +1,7 @@
-package be.kdg.integration5.playerstatistics.ports.in;
+package be.kdg.integration5.predictions.ports.in;
 
 
-import be.kdg.integration5.playerstatistics.domain.PlayerEngagementPredictions;
+import be.kdg.integration5.predictions.domain.PlayerEngagementPredictions;
 
 public interface GetPlayerEngagementPredictionsUseCase {
 
