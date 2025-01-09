@@ -38,9 +38,7 @@ public abstract class AbstractChatbotTest {
     public static final GenericContainer<?> CHATBOT_SERVICE;
 
     static {
-        long memoryInBytes = 32l * 1024l * 1024l;
 
-        long memorySwapInBytes = 64l * 1024l * 1024l;
         CHATBOT_SERVICE = new GenericContainer<>(
                 DockerImageName.parse("emrecaylar/my-fastapi-app"))
                 .withExposedPorts(8000)

@@ -1,6 +1,7 @@
-package be.kdg.integration5.playerstatistics.ports.out;
+package be.kdg.integration5.predictions.ports.out;
 
-import be.kdg.integration5.playerstatistics.domain.PlayerEngagementPredictions;
+
+import be.kdg.integration5.predictions.domain.PlayerEngagementPredictions;
 
 public interface PlayerEngagementPredictionLoadPort {
      PlayerEngagementPredictions loadPlayerEngagementPredictions(String username, String gameName);

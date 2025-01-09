@@ -1,4 +1,4 @@
-package be.kdg.integration5.playerstatistics.domain;
+package be.kdg.integration5.predictions.domain;
 
 import java.time.LocalDate;
 
