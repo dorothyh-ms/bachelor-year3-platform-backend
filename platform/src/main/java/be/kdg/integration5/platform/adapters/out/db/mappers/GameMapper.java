@@ -31,6 +31,22 @@ public class GameMapper {
         );
     }
 
+    public static Game toGame(GameSubmission gameSubmission) {
+        if (gameSubmission == null) {
+            return null;
+        }
+        return new Game(
+                gameSubmission.getId(),
+                gameSubmission.getName(),
+                gameSubmission.getGenre(),
+                gameSubmission.getDifficultyLevel(),
+                gameSubmission.getPrice(),
+                gameSubmission.getDescription(),
+                gameSubmission.getImage(),
+                gameSubmission.getUrl()
+        );
+    }
+
     public static GameJpaEntity toGameJpaEntity(Game game){
         if (game == null) {
             return null;

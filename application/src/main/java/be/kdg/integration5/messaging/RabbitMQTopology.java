@@ -26,10 +26,13 @@ public class RabbitMQTopology {
 
     public static final String PLAYER_ACHIEVEMENTS_QUEUE = "player_achievements_queue";
 
+    public static final String RULES_SAVE_QUEUE = "rules.save.queue";
 
 
     // Exchanges
     public static final String GAMES_TOPIC_EXCHANGE = "games_topic_exchange";
+
+    public static final String RULES_TOPIC_EXCHANGE = "rules_topic_exchange";
 
 
 
@@ -63,6 +66,30 @@ public class RabbitMQTopology {
     @Bean
     TopicExchange gameTopicExchange() {
         return new TopicExchange(GAMES_TOPIC_EXCHANGE);
+    }
+
+    // Declare the queue for saving game rules
+    @Bean
+    public Queue rulesSaveQueue() {
+        return new Queue(RULES_SAVE_QUEUE, true); // durable queue
+    }
+
+    // Declare the exchange for game rules
+    @Bean
+    public TopicExchange rulesTopicExchange() {
+        return new TopicExchange(RULES_TOPIC_EXCHANGE); // default is durable
+    }
+
+    // Bind the queue to the exchange with routing key "rules.save"
+    @Bean
+    public Binding bindRulesTopicExchangeToRulesSaveQueue(
+            Queue rulesSaveQueue,
+            TopicExchange rulesTopicExchange
+    ) {
+        return BindingBuilder
+                .bind(rulesSaveQueue)
+                .to(rulesTopicExchange)
+                .with("rules.save");
     }
 
 

@@ -4,5 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface GameSubmissionRulesSavePort {
 
-    void saveGameRules(MultipartFile file);
+    void saveGameRules(String fileName);
 }

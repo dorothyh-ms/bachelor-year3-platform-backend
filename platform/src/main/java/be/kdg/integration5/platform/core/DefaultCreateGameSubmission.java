@@ -12,6 +12,7 @@ import be.kdg.integration5.platform.ports.in.CreateGameSubmissionUseCase;
 import be.kdg.integration5.platform.ports.in.commands.CreateGameSubmissionCommand;
 import be.kdg.integration5.platform.ports.out.GameLoadPort;
 import be.kdg.integration5.platform.ports.out.GameSavePort;
+import be.kdg.integration5.platform.ports.out.GameSubmissionRulesSavePort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,12 @@ import java.util.UUID;
 public class DefaultCreateGameSubmission implements CreateGameSubmissionUseCase {
     private final GameLoadPort gameLoadPort;
     private final GameSavePort gameSavePort;
+    private final GameSubmissionRulesSavePort gameSubmissionRulesSavePort;
 
-    public DefaultCreateGameSubmission(GameLoadPort gameLoadPort, GameSavePort gameSavePort) {
+    public DefaultCreateGameSubmission(GameLoadPort gameLoadPort, GameSavePort gameSavePort, GameSubmissionRulesSavePort gameSubmissionRulesSavePort) {
         this.gameLoadPort = gameLoadPort;
         this.gameSavePort = gameSavePort;
+        this.gameSubmissionRulesSavePort = gameSubmissionRulesSavePort;
     }
 
     @Override
@@ -41,15 +44,19 @@ public class DefaultCreateGameSubmission implements CreateGameSubmissionUseCase 
             throw new RuntimeException(e);
         }
         GameSubmission gameSubmission = GameMapper.toGameSubmission(gameSubmissionCommand, rules, UUID.randomUUID(), SubmissionState.IN_PROGRESS);
+
         if (games.stream().anyMatch(game -> game.getName().equals(gameSubmission.getName()))){
-            fileManager.deleteFile(rules);
+//            fileManager.deleteFile(rules);
             throw new GameAlreadyExistsException("This game already exists, if this is your own game, rename it");
         }
         if (!gameSubmission.isValidUrl()){
-            fileManager.deleteFile(rules);
+//            fileManager.deleteFile(rules);
             throw new InvalidGameURLException("The given URL is not valid.");
         }
-        gameSavePort.saveGameSubmission(gameSubmission);
+        Game game = GameMapper.toGame(gameSubmission);
+        gameSubmissionRulesSavePort.saveGameRules(rules);
+        gameSavePort.SaveGame(game);
+
         return gameSubmission;
     }
 }
