@@ -1,6 +1,5 @@
 package be.kdg.integration5.messaging;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.amqp.core.*;
@@ -10,20 +9,19 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 public class RabbitMQTopology {
-
 
     // Queues
     public static final String BATTLESHIP_START_QUEUE = "battleship_queue";
 
-    public static final String MATCH_CREATE_EVENTS_QUEUE = "match_create_events_queue";
+    public static final String MATCH_CREATE_EVENTS_PLATFORM_QUEUE = "match_create_events_platform_queue";
+    public static final String MATCH_CREATE_EVENTS_STATISTICS_QUEUE = "match_create_events_statistics_queue";
 
-    public static final String MATCH_END_EVENTS_QUEUE = "match_end_events_queue";
+    public static final String MATCH_END_EVENTS_PLATFORM_QUEUE = "match_end_events_platform_queue";
+    public static final String MATCH_END_EVENTS_STATISTICS_QUEUE = "match_end_events_statistics_queue";
 
     public static final String MATCH_TURN_EVENTS_QUEUE = "turn_events_queue";
-
     public static final String PLAYER_ACHIEVEMENTS_QUEUE = "player_achievements_queue";
 
     public static final String RULES_SAVE_QUEUE = "rules.save.queue";
@@ -31,11 +29,20 @@ public class RabbitMQTopology {
 
     // Exchanges
     public static final String GAMES_TOPIC_EXCHANGE = "games_topic_exchange";
+    public static final String MATCH_CREATED_FANOUT_EXCHANGE = "match_created_fanout_exchange";
+    public static final String MATCH_ENDED_FANOUT_EXCHANGE = "match_ended_fanout_exchange";
 
     public static final String RULES_TOPIC_EXCHANGE = "rules_topic_exchange";
 
+    @Bean
+    public FanoutExchange matchCreatedFanoutExchange() {
+        return new FanoutExchange(MATCH_CREATED_FANOUT_EXCHANGE);
+    }
 
-
+    @Bean
+    public FanoutExchange matchEndedFanoutExchange() {
+        return new FanoutExchange(MATCH_ENDED_FANOUT_EXCHANGE);
+    }
 
     @Bean
     Queue battleshipQueue() {
@@ -48,13 +55,23 @@ public class RabbitMQTopology {
     }
 
     @Bean
-    Queue matchCreatedQueue() {
-        return new Queue(MATCH_CREATE_EVENTS_QUEUE, false);
+    Queue matchCreatedPlatformQueue() {
+        return new Queue(MATCH_CREATE_EVENTS_PLATFORM_QUEUE, false);
     }
 
     @Bean
-    Queue matchEndedQueue() {
-        return new Queue(MATCH_END_EVENTS_QUEUE, false);
+    Queue matchCreatedStatisticsQueue() {
+        return new Queue(MATCH_CREATE_EVENTS_STATISTICS_QUEUE, false);
+    }
+
+    @Bean
+    Queue matchEndedPlatformQueue() {
+        return new Queue(MATCH_END_EVENTS_PLATFORM_QUEUE, false);
+    }
+
+    @Bean
+    Queue matchEndedStatisticsQueue() {
+        return new Queue(MATCH_END_EVENTS_STATISTICS_QUEUE, false);
     }
 
     @Bean
@@ -92,12 +109,43 @@ public class RabbitMQTopology {
                 .with("rules.save");
     }
 
+    @Bean
+    Binding bindMatchCreatedFanoutExchangeToPlatformQueue(
+            Queue matchCreatedPlatformQueue,
+            FanoutExchange matchCreatedFanoutExchange
+    ) {
+        return BindingBuilder.bind(matchCreatedPlatformQueue).to(matchCreatedFanoutExchange);
+    }
+
+    @Bean
+    Binding bindMatchCreatedFanoutExchangeToStatisticsQueue(
+            Queue matchCreatedStatisticsQueue,
+            FanoutExchange matchCreatedFanoutExchange
+    ) {
+        return BindingBuilder.bind(matchCreatedStatisticsQueue).to(matchCreatedFanoutExchange);
+    }
+
+    @Bean
+    Binding bindMatchEndedFanoutExchangeToPlatformQueue(
+            Queue matchEndedPlatformQueue,
+            FanoutExchange matchEndedFanoutExchange
+    ) {
+        return BindingBuilder.bind(matchEndedPlatformQueue).to(matchEndedFanoutExchange);
+    }
+
+    @Bean
+    Binding bindMatchEndedFanoutExchangeToStatisticsQueue(
+            Queue matchEndedStatisticsQueue,
+            FanoutExchange matchEndedFanoutExchange
+    ) {
+        return BindingBuilder.bind(matchEndedStatisticsQueue).to(matchEndedFanoutExchange);
+    }
 
     @Bean
     Binding bindGameTopicExchangeToBattleshipQueue(
             Queue battleshipQueue,
             TopicExchange gameTopicExchange
-    ){
+    ) {
         return BindingBuilder
                 .bind(battleshipQueue)
                 .to(gameTopicExchange)
@@ -108,7 +156,7 @@ public class RabbitMQTopology {
     Binding bindGameTopicExchangeToTurnEventsQueue(
             Queue turnsQueue,
             TopicExchange gameTopicExchange
-    ){
+    ) {
         return BindingBuilder
                 .bind(turnsQueue)
                 .to(gameTopicExchange)
@@ -116,39 +164,15 @@ public class RabbitMQTopology {
     }
 
     @Bean
-    Binding bindGameTopicExchangeToMatchCreateEventsQueue(
-            Queue matchCreatedQueue,
-            TopicExchange gameTopicExchange
-    ){
-        return BindingBuilder
-                .bind(matchCreatedQueue)
-                .to(gameTopicExchange)
-                .with("match.created");
-    }
-
-    @Bean
-    Binding bindGameTopicExchangeToMatchEndedEventsQueue(
-            Queue matchEndedQueue,
-            TopicExchange gameTopicExchange
-    ){
-        return BindingBuilder
-                .bind(matchEndedQueue)
-                .to(gameTopicExchange)
-                .with("match.ended");
-    }
-
-    @Bean
     Binding bindGameTopicExchangeToPlayerAchievementsQueue(
             Queue playerAchievementsQueue,
             TopicExchange gameTopicExchange
-    ){
+    ) {
         return BindingBuilder
                 .bind(playerAchievementsQueue)
                 .to(gameTopicExchange)
                 .with("player.achievements");
     }
-
-
 
     @Bean
     RabbitTemplate rabbitTemplate(final ConnectionFactory connectionFactory, ObjectMapper mapper) {
@@ -157,12 +181,9 @@ public class RabbitMQTopology {
         return rabbitTemplate;
     }
 
-
     @Bean
     Jackson2JsonMessageConverter producerJackson2MessageConverter(ObjectMapper mapper) {
         mapper.registerModule(new JavaTimeModule());
-        return  new Jackson2JsonMessageConverter(mapper);
+        return new Jackson2JsonMessageConverter(mapper);
     }
-
-
 }

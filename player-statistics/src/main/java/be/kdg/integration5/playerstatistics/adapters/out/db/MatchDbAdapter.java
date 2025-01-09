@@ -1,5 +1,6 @@
 package be.kdg.integration5.playerstatistics.adapters.out.db;
 
+import be.kdg.integration5.playerstatistics.adapters.in.amqp.TurnTakenListener;
 import be.kdg.integration5.playerstatistics.adapters.out.db.entities.*;
 import be.kdg.integration5.playerstatistics.adapters.out.db.repositories.BoardGameRepository;
 import be.kdg.integration5.playerstatistics.adapters.out.db.repositories.MatchRepository;
@@ -9,6 +10,8 @@ import be.kdg.integration5.playerstatistics.domain.*;
 import be.kdg.integration5.playerstatistics.ports.out.MatchCreatePort;
 import be.kdg.integration5.playerstatistics.ports.out.MatchLoadPort;
 import be.kdg.integration5.playerstatistics.ports.out.MatchUpdatePort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,6 +20,8 @@ import java.util.UUID;
 
 @Repository
 public class MatchDbAdapter implements MatchCreatePort, MatchUpdatePort, MatchLoadPort {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MatchDbAdapter.class);
+
     private final MatchRepository matchRepository;
     private final PlayerMatchRepository playerMatchRepository;
     private final PlayerProfileRepository playerProfileRepository;
@@ -32,6 +37,7 @@ public class MatchDbAdapter implements MatchCreatePort, MatchUpdatePort, MatchLo
 
     @Override
     public Match matchCreated(Match match) {
+        LOGGER.info("MatchDbAdapter is running matchCreated with match {}", match);
         BoardGame game = match.getBoardGame();
 
         MatchJpaEntity matchJpa = new MatchJpaEntity(
@@ -47,19 +53,26 @@ public class MatchDbAdapter implements MatchCreatePort, MatchUpdatePort, MatchLo
                 match.getStartTime(),
                 match.getEndTime(),
                 match.getStatus());
+
+        LOGGER.info("MatchDbAdapter is saving  match {}", matchJpa);
         matchJpa = matchRepository.save(matchJpa);
 
         MatchJpaEntity finalMatchJpa = matchJpa;
         match.getPlayerMatchList().forEach(pm -> {
             Optional<PlayerProfileJpaEntity> playerProfileJpaEntityOptional = playerProfileRepository.findById(pm.getPlayer().getId());
-            playerProfileJpaEntityOptional.ifPresent(playerProfileJpaEntity -> playerMatchRepository.save(new PlayerMatchJpaEntity(
-                    pm.getId(),
-                    finalMatchJpa,
-                    pm.getNumberOfTurns(),
-                    pm.getScore(),
-                    pm.getOutcome(),
-                    playerProfileJpaEntity
-            )));
+            playerProfileJpaEntityOptional.ifPresent(playerProfileJpaEntity -> {
+
+                PlayerMatchJpaEntity playerMatchJpaEntity = new PlayerMatchJpaEntity(
+                        pm.getId(),
+                        finalMatchJpa,
+                        pm.getNumberOfTurns(),
+                        pm.getScore(),
+                        pm.getOutcome(),
+                        playerProfileJpaEntity
+                );
+                LOGGER.info("MatchDbAdapter is saving player match {}", playerMatchJpaEntity);
+                playerMatchRepository.save(playerMatchJpaEntity);
+            });
         });
         return match;
     }

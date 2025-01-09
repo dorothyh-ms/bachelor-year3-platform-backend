@@ -1,10 +1,7 @@
 package be.kdg.integration5.playerstatistics.adapters.in.amqp;
 
-import be.kdg.integration5.common.events.MatchCreatedEvent;
 import be.kdg.integration5.common.events.TurnTakenEvent;
-import be.kdg.integration5.playerstatistics.ports.in.CreateMatchUseCase;
 import be.kdg.integration5.playerstatistics.ports.in.PlayerMatchProjector;
-import be.kdg.integration5.playerstatistics.ports.in.commands.CreateMatchCommand;
 import be.kdg.integration5.playerstatistics.ports.in.commands.ProjectPlayerMatchCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
